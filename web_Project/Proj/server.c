@@ -1,4 +1,4 @@
-#include <stdio.h>
+﻿#include <stdio.h>
 #include <string.h>
 #include <fcntl.h>
 #include <sys/types.h>
@@ -24,7 +24,7 @@ void do_web(int);
 void web_log(int, char[], char[], int);
 
 int log_fd;
-
+//한글주석 쓰게 utf-8형식으로 변환함
 int main(int argc, char *argv[])
 {
 	struct sockaddr_in s_addr, c_addr;
@@ -37,13 +37,14 @@ int main(int argc, char *argv[])
 
 	int pid;
 
+	//굳이 필요 없는 부분일듯 
 	if (argc != 2)
 	{
 		printf ("usage: webServer port_number\n");
 		return -1;
 	}
 
-	if (fork() != 0)
+	if (fork() != 0)	//fork를 이용한서버. thread로도 만들어보고 속도 비교해봐야함.
 		return 0;	// parent return to shell
 
 	(void)signal(SIGCLD, SIG_IGN);	// ignore child death
@@ -56,6 +57,7 @@ int main(int argc, char *argv[])
 		close (i);
 	}
 
+	//교수님 프로젝트 채점기준보면, 이런 Log찍는거 다 뺴는게 나음.
 	web_log (LOG, "STATUS", "web server start", getpid ());
 
 	if ((s_sock = socket (PF_INET, SOCK_STREAM, 0)) < 0)
