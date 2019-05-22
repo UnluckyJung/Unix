@@ -159,7 +159,7 @@ void do_web (int c_sock)
 
 	p = strtok (NULL, " ");
 	if (!strcmp (p, "/"))
-		sprintf (uri, "%s/index.html", documentRoot);
+		sprintf (uri, "%s/index.html", documentRoot);	//경로를 이런식으로 넘겨야 했네..
 	else
 		sprintf (uri, "%s%s", documentRoot, p);
 
