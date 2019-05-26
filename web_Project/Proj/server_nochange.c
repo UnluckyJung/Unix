@@ -48,21 +48,15 @@ int main(int argc, char *argv[])
 	if (fork() != 0)	//fork를 이용한서버. thread로도 만들어보고 속도 비교해봐야함.
 		return 0;	// parent return to shell
 
-	
 	(void)signal(SIGCLD, SIG_IGN);	// ignore child death
 	(void)signal(SIGHUP, SIG_IGN);	// ignore terminal hangup
-	//이거 없으면 안됨 , 갑자기 엑박남.
 
-
-	/*
 	resourceLimit.rlim_max = 0;
 	status = getrlimit(RLIMIT_NOFILE, &resourceLimit);
 	for (i = 0; i < resourceLimit.rlim_max; i++)
 	{
 		close(i);
 	}
-	*/
-	
 
 	//교수님 프로젝트 채점기준보면, 이런 Log찍는거 다 뺴는게 나음.
 	web_log(LOG, "STATUS", "web server start", getpid());
@@ -108,117 +102,7 @@ int main(int argc, char *argv[])
 		{
 
 			close(s_sock);
-			char sndBuf[BUFSIZ + 1], rcvBuf[BUFSIZ + 1];
-			char uri[100], c_type[20];;
-			int len;
-
-			int len_out;
-			int n, i;
-			char *p;
-			char method[10], f_name[20];
-			char phrase[20] = "OK";
-
-			int code = 200;
-			int fd;			// file discriptor
-
-			char file_name[20];
-			char ext[20];
-
-			struct stat sbuf;
-
-			FILE *log = fopen("testlog.txt", "a");
-			char address_log[256];
-			//sprintf(address_log,"%s is come\n", inet_ntoa(c_addr.sin_addr));
-			//fputs(address_log, log);
-			//fclose(log);
-
-
-			struct
-			{
-				char *ext;
-				char *filetype;
-			} extensions[] =
-			{
-				{
-				"gif", "image/gif"},
-				{
-				"jpg", "image/jpeg"},
-				{
-				"jpeg", "image/jpeg"},
-				{
-				"png", "image/png"},
-				{
-				"zip", "image/zip"},
-				{
-				"gz", "image/gz"},
-				{
-				"tar", "image/tar"},
-				{
-				"htm", "text/html"},
-				{
-				"html", "text/html"},
-				{
-			0, 0} };
-
-			memset(rcvBuf, 0, sizeof(rcvBuf));
-
-			int num = 1;
-
-			n = read(c_sock, rcvBuf, BUFSIZ);
-
-			sprintf(address_log, "%s %s\n", inet_ntoa(c_addr.sin_addr), rcvBuf);
-			fputs(address_log, log);
-			fclose(log);
-			//web_log(LOG, "REQUEST", rcvBuf, n);
-
-
-			p = strtok(rcvBuf, " ");
-
-
-			p = strtok(NULL, " ");
-			if (!strcmp(p, "/"))
-				sprintf(uri, "%s/index.html", documentRoot);	//경로를 이런식으로 넘겨야 했네..
-			else
-				sprintf(uri, "%s%s", documentRoot, p);
-
-			strcpy(c_type, "text/plain");
-			for (i = 0; extensions[i].ext != 0; i++)
-			{
-				len = strlen(extensions[i].ext);
-				if (!strncmp(uri + strlen(uri) - len, extensions[i].ext, len))
-				{
-					strcpy(c_type, extensions[i].filetype);
-					break;
-				}
-			}
-
-			if ((fd = open(uri, O_RDONLY)) < 0)
-			{
-				code = CODE404;
-				strcpy(phrase, PHRASE404);
-			}
-
-			p = strtok(NULL, "\r\n ");	// version
-
-			// send Header
-			sprintf(sndBuf, "HTTP/2.0 %d %s\r\n", code, phrase);
-			n = write(c_sock, sndBuf, strlen(sndBuf));
-			//web_log(LOG, "RESPONSE", sndBuf, getpid());
-
-			sprintf(sndBuf, "content-type: %s\r\n\r\n", c_type);
-			n = write(c_sock, sndBuf, strlen(sndBuf));
-			//web_log(LOG, "RESPONSE", sndBuf, getpid());
-
-			if (fd >= 0)
-			{
-				while ((n = read(fd, rcvBuf, BUFSIZ)) > 0)
-				{
-					write(c_sock, rcvBuf, n);
-				}
-			}
-
-			close(c_sock);
-			exit(-1);
+			do_web(c_sock);
 		}
 		else
 		{
@@ -226,7 +110,7 @@ int main(int argc, char *argv[])
 		}
 	}
 }
-/*
+
 void do_web(int c_sock)
 {
 	char sndBuf[BUFSIZ + 1], rcvBuf[BUFSIZ + 1];
@@ -329,7 +213,7 @@ void do_web(int c_sock)
 	close(c_sock);
 	exit(-1);
 }
-*/
+
 void web_log(int type, char s1[], char s2[], int n)
 {
 	int log_fd;
