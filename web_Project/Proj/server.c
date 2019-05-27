@@ -18,7 +18,7 @@
 #define PHRASE200 "OK"
 #define PHRASE404 "FILE NOT FOUND"
 
-char documentRoot[] = "/home/201414840/html";
+char path[] = "/home/201414840/html";
 
 int log_fd;
 //한글주석 쓰게 utf-8형식으로 변환함
@@ -175,9 +175,9 @@ int main(int argc, char *argv[])
 			p = strtok(NULL, " ");
 
 			if (!strcmp(p, "/"))
-				sprintf(uri, "%s/index.html", documentRoot);	//경로를 이런식으로 넘겨야 했네..
+				sprintf(uri, "%s/index.html", path);	//경로를 이런식으로 넘겨야 했네..
 			else
-				sprintf(uri, "%s%s", documentRoot, p);
+				sprintf(uri, "%s%s", path, p);
 
 
 
