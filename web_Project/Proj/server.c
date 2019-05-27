@@ -78,8 +78,9 @@ int main(int argc, char *argv[])
 		exit(1);
 	}
 
-	if (atoi(argv[1]) > 60000)
-		web_log(ERROR, "ERROR", "invalid port number", atoi(argv[1]));
+	
+	//if (atoi(argv[1]) > 60000)
+	//	web_log(ERROR, "ERROR", "invalid port number", atoi(argv[1]));
 
 	memset(&s_addr, 0, sizeof(s_addr));
 	s_addr.sin_family = AF_INET;
@@ -137,8 +138,11 @@ int main(int argc, char *argv[])
 
 			struct stat sbuf;
 
-			FILE *log = fopen("testlog.txt", "a");
+			FILE *log = fopen("testlog.txt", "a"); //log를 남기기위한 고수준 파일 입출력.
 			char address_log[256];
+
+			int log_fd;
+			char log_buf[BUFSIZ];	//log를 남기기위한 저수준 파일 입출력.
 
 
 
@@ -176,7 +180,6 @@ int main(int argc, char *argv[])
 			n = read(c_sock, rcvBuf, BUFSIZ);
 
 
-			//web_log(LOG, "REQUEST", rcvBuf, n);
 
 
 			p = strtok(rcvBuf, " ");
@@ -230,12 +233,25 @@ int main(int argc, char *argv[])
 				}
 			}
 
-			//이 아래부분 저수준 파일 입출력으로 바꿔야함. (속도)
-
-
+			//이 아래부분 저수준 파일 입출력으로 바꿔야함. (고수준 / 속도)
 			sprintf(address_log, "%s %s %d \n", inet_ntoa(c_addr.sin_addr), uri, size);
 			fputs(address_log, log);
 			fclose(log);
+
+
+
+			//저수준 파일 입출력
+
+			mode_t mode = S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH;	//파일권한 0644
+
+			log_fd = open("lowlevel.log", O_CREAT | O_WRONLY | O_APPEND, mode);	//
+			if (log_fd == -1) {
+				perror("Open log.txt");
+				exit(1);
+			}
+			write(log_fd, address_log, strlen(address_log));
+			close(log_fd);
+
 
 			close(c_sock);
 			exit(-1);
@@ -245,31 +261,4 @@ int main(int argc, char *argv[])
 		}
 
 	}
-}
-
-void web_log(int type, char s1[], char s2[], int n)
-{
-	int log_fd;
-	char buf[BUFSIZ];
-
-	/*
-	if (type == LOG)
-	{
-		sprintf(buf, "STATUS %s %s %d\n", s1, s2, n);
-	}
-	*/
-	if (type == ERROR)
-	{
-		sprintf(buf, "ERROR %s %s %d\n", s1, s2, n);
-	}
-
-	if ((log_fd = open("web.log", O_CREAT | O_WRONLY | O_APPEND, 0644)) >= 0)
-	{
-		write(log_fd, buf, strlen(buf));
-		close(log_fd);
-	}
-
-	if (type == ERROR)
-		exit(-1);
-
 }
