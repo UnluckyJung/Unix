@@ -90,7 +90,7 @@ int main(int argc, char *argv[])
 
 			close(sd);
 			char Send_Buf[BUFSIZ + 1] = { 0, }, Receive_Buf[BUFSIZ + 1] = { 0, };
-			char uri[100], content_type[20];
+			char uri[100], content_type[20] = { 0, };
 			int len;
 
 			int n, i;
@@ -141,7 +141,8 @@ int main(int argc, char *argv[])
 			else
 				sprintf(uri, "%s%s", path, p);
 
-
+			//memcpy strcpy 속도비교
+			//memcpy(content_type, "text/plain", sizeof("text/plain"));
 			strcpy(content_type, "text/plain");
 
 			for (i = 0; extensions[i].ext != 0; i++)	//이 for문 이해못함.
@@ -150,6 +151,8 @@ int main(int argc, char *argv[])
 				if (!strncmp(uri + strlen(uri) - len, extensions[i].ext, len))
 				{
 					strcpy(content_type, extensions[i].filetype);
+					//memset(content_type, 0, sizeof(content_type));
+					//memcpy(content_type, extensions[i].filetype, sizeof(extensions[i].filetype));
 					break;
 				}
 			}
@@ -202,6 +205,14 @@ int main(int argc, char *argv[])
 			stat(uri, &file_info);
 
 
+			//memcpy strcat 속도 측정
+			//memcpy(address_log, inet_ntoa(cli.sin_addr), sizeof(inet_ntoa(cli.sin_addr)));
+			//strcpy(address_log, inet_ntoa(cli.sin_addr));
+			//strcat(address_log, " ");
+			//strcat(address_log, uri);
+			//sprintf(address_log, "%s %d\n", address_log, (int)file_info.st_size);
+
+			//위에꺼하니 더느려짐
 
 			sprintf(address_log, "%s %s %d \n", inet_ntoa(cli.sin_addr), uri, (int)file_info.st_size);
 
