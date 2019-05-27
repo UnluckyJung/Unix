@@ -11,9 +11,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-//#define LOG 100
-//#define ERROR 200
-//
+
 #define CODE200 200
 #define CODE404 404
 
