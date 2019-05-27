@@ -96,9 +96,6 @@ int main(int argc, char *argv[])
 			int n, i;
 			char *p;
 
-			char file_name[20];
-			char ext[20];
-
 			int fd;	//파일 전송할때 필요한 변수.
 
 			int fd_log;	//log 저장할때 저수준 파일입출력 open에 필요한 변수.
