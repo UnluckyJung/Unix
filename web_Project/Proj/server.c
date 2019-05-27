@@ -12,15 +12,8 @@
 #include <unistd.h>
 
 
-#define CODE200 200
-#define CODE404 404
-
-#define PHRASE200 "OK"
-#define PHRASE404 "FILE NOT FOUND"
-
 char path[] = "/home/201414840/html";
 
-int log_fd;
 //한글주석 쓰게 utf-8형식으로 변환함
 int main(int argc, char *argv[])
 {
@@ -29,7 +22,7 @@ int main(int argc, char *argv[])
 	int len;
 	int i;
 
-	//굳이 필요 없는 부분일듯 
+	//굳이 필요 없는 부분, 일단 놔둠.
 	if (argc != 2)
 	{
 		printf("usage: webServer port_number\n");
@@ -92,27 +85,24 @@ int main(int argc, char *argv[])
 		switch (fork())
 		{
 		case 0:
+
 			//함수 부르는 시간도 아까워서 여기다 다 때려넣음
 
 			close(sd);
 			char Send_Buf[BUFSIZ + 1] = { 0, }, Receive_Buf[BUFSIZ + 1] = { 0, };
-			char uri[100], c_type[20];;
+			char uri[100], content_type[20];;
 			int len;
 
 			int n, i;
 			char *p;
-			char phrase[20] = "OK";
-
-			int code = 200;
 
 			char file_name[20];
 			char ext[20];
 
-			int fd;
-			struct stat sbuf;
+			int fd;	//파일 전송할때 필요한 변수.
 
-			int log_fd;
-			char address_log[BUFSIZ];
+			int fd_log;	//log 저장할때 저수준 파일입출력 open에 필요한 변수.
+			char address_log[BUFSIZ];	//log 저장할 BUF
 
 
 			struct
@@ -157,33 +147,33 @@ int main(int argc, char *argv[])
 
 
 
-			strcpy(c_type, "text/plain");
+			strcpy(content_type, "text/plain");
 			for (i = 0; extensions[i].ext != 0; i++)	//이 for문 이해못함.
 			{
 				len = strlen(extensions[i].ext);
 				if (!strncmp(uri + strlen(uri) - len, extensions[i].ext, len))
 				{
-					strcpy(c_type, extensions[i].filetype);
+					strcpy(content_type, extensions[i].filetype);
 					break;
 				}
 			}
 
 
-			// 404 오류메시지 띄워주는거 같은데. 나중에 제거해도 상관없을것으로 보임.
-			if ((fd = open(uri, O_RDONLY)) < 0)
+			if ((fd = open(uri, O_RDONLY)) == -1)
 			{
-				code = CODE404;
-				strcpy(phrase, PHRASE404);
+				perror("Open uri");
+				exit(1);
 			}
+			
+			p = strtok(NULL, "\r\n ");	
 
-			p = strtok(NULL, "\r\n ");	// version
 
-			// send Header
+
 			// http 형식을 보내주는것.
-			sprintf(Send_Buf, "HTTP/2.0 %d %s\r\n", code, phrase);
+			sprintf(Send_Buf, "HTTP/2.0 %d %s\r\n", 200, "OK");
 			n = write(ns, Send_Buf, strlen(Send_Buf));
 
-			sprintf(Send_Buf, "content-type: %s\r\n\r\n", c_type);
+			sprintf(Send_Buf, "content-type: %s\r\n\r\n", content_type);
 			n = write(ns, Send_Buf, strlen(Send_Buf));
 
 
@@ -208,13 +198,13 @@ int main(int argc, char *argv[])
 
 			mode_t mode = S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH;	//파일권한 0644
 
-			log_fd = open("log.txt", O_CREAT | O_WRONLY | O_APPEND, mode);	
-			if (log_fd == -1) {
+			fd_log = open("log.txt", O_CREAT | O_WRONLY | O_APPEND, mode);	
+			if (fd_log == -1) {
 				perror("Open log.txt");
 				exit(1);
 			}
-			write(log_fd, address_log, strlen(address_log));
-			close(log_fd);
+			write(fd_log, address_log, strlen(address_log));
+			close(fd_log);
 
 
 			close(ns);
