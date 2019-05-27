@@ -25,7 +25,7 @@ int log_fd;
 int main(int argc, char *argv[])
 {
 	struct sockaddr_in sin, cli;
-	int s_sock, c_sock;
+	int sd, ns;
 	int len, len_out;
 	unsigned short port;
 	int status;
@@ -58,7 +58,7 @@ int main(int argc, char *argv[])
 	*/
 
 
-	if ((s_sock = socket(AF_INET, SOCK_STREAM, 0)) == -1) {
+	if ((sd = socket(AF_INET, SOCK_STREAM, 0)) == -1) {
 		//소켓을 만든다. (서버를 만들것.)
 		// 소켓종류(INET) / 통신방식 / 프로토콜
 		perror("socket");
@@ -75,13 +75,13 @@ int main(int argc, char *argv[])
 	//1.1.1.1 이런식으로 지명해주는데, 모두가 다 받는다는 가정은 0.0.0.0으로 하는거다.
 
 
-	if (bind(s_sock, (struct sockaddr *)&sin, sizeof(sin))) { 	//bind를 함. 소켓을 IP주소와 결합하는것.
+	if (bind(sd, (struct sockaddr *)&sin, sizeof(sin))) { 	//bind를 함. 소켓을 IP주소와 결합하는것.
 		perror("bind");
 		exit(1);
 	}
 
 
-	if (listen(s_sock, 10)) {	//클라이언트 접속 요청을 대기한다.
+	if (listen(sd, 10)) {	//클라이언트 접속 요청을 대기한다.
 		perror("listen");
 		exit(1);
 	}
@@ -92,7 +92,7 @@ int main(int argc, char *argv[])
 	{
 		len = sizeof(cli);
 
-		if ((c_sock = accept(s_sock, (struct sockaddr *)&cli, &len)) == -1) {
+		if ((ns = accept(sd, (struct sockaddr *)&cli, &len)) == -1) {
 			//클라이언트와 연결하는 과정 = 클라이언트 접속.
 			//accept를 기다린다.
 			//connect가 될떄까지 기다린다.
@@ -101,14 +101,14 @@ int main(int argc, char *argv[])
 			exit(1);
 		}
 		int optvalue = 1;
-		setsockopt(c_sock, SOL_SOCKET, SO_REUSEADDR, &optvalue, sizeof(optvalue));	//소켓 초기화 도구
+		setsockopt(ns, SOL_SOCKET, SO_REUSEADDR, &optvalue, sizeof(optvalue));	//소켓 초기화 도구
 
 		switch (fork())
 		{
 		case 0:
 			//함수 부르는 시간도 아까워서 여기다 다 때려넣음
 
-			close(s_sock);
+			close(sd);
 			char sndBuf[BUFSIZ + 1], rcvBuf[BUFSIZ + 1];
 			char uri[100], c_type[20];;
 			int len;
@@ -162,7 +162,7 @@ int main(int argc, char *argv[])
 
 			int num = 1;
 
-			n = read(c_sock, rcvBuf, BUFSIZ);
+			n = read(ns, rcvBuf, BUFSIZ);
 
 
 			p = strtok(rcvBuf, " ");
@@ -200,10 +200,10 @@ int main(int argc, char *argv[])
 			// send Header
 			// http 형식을 보내주는것.
 			sprintf(sndBuf, "HTTP/2.0 %d %s\r\n", code, phrase);
-			n = write(c_sock, sndBuf, strlen(sndBuf));
+			n = write(ns, sndBuf, strlen(sndBuf));
 
 			sprintf(sndBuf, "content-type: %s\r\n\r\n", c_type);
-			n = write(c_sock, sndBuf, strlen(sndBuf));
+			n = write(ns, sndBuf, strlen(sndBuf));
 
 
 			int size = 0;
@@ -211,7 +211,7 @@ int main(int argc, char *argv[])
 			{
 				while ((n = read(fd, rcvBuf, BUFSIZ)) > 0)
 				{
-					write(c_sock, rcvBuf, n);
+					write(ns, rcvBuf, n);
 					//size++;
 				}
 			}
@@ -237,11 +237,11 @@ int main(int argc, char *argv[])
 			close(log_fd);
 
 
-			close(c_sock);
+			close(ns);
 			exit(-1);
 
 		default:
-			close(c_sock);
+			close(ns);
 		}
 
 	}
