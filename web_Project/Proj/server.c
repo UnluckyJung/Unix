@@ -42,17 +42,15 @@ int main(int argc, char *argv[])
 	}
 
 
-
-	if (fork() != 0)	//fork를 이용한서버. thread로도 만들어보고 속도 비교해봐야함.
+	/*
+	if (fork() != 0)	//이부분이 백그라운드에서 돌아가게 한부분.
 		return 0;	// parent return to shell
+	*/
 
 
-
+	//이 부분들이 없으면 , 작업도중에 엑박남.
 	(void)signal(SIGCLD, SIG_IGN);	// ignore child death
-	//이거 없으면 안됨 , 갑자기 엑박남.
-
 	(void)signal(SIGHUP, SIG_IGN);	// ignore terminal hangup
-	//이거 주석처리해도 백그라운드에서 돌아감..
 
 
 
