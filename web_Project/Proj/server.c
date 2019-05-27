@@ -26,10 +26,10 @@ int main(int argc, char *argv[])
 {
 	struct sockaddr_in sin, cli;
 	int sd, ns;
-	int len, len_out;
-	unsigned short port;
-	int status;
-	struct rlimit resourceLimit;
+	int len;
+	//unsigned short port;
+	//int status;
+	//struct rlimit resourceLimit;
 	int i;
 
 	int pid;
@@ -109,22 +109,20 @@ int main(int argc, char *argv[])
 			//함수 부르는 시간도 아까워서 여기다 다 때려넣음
 
 			close(sd);
-			char sndBuf[BUFSIZ + 1], rcvBuf[BUFSIZ + 1];
+			char Send_Buf[BUFSIZ + 1] = { 0, }, Receive_Buf[BUFSIZ + 1] = { 0, };
 			char uri[100], c_type[20];;
 			int len;
 
-			int len_out;
 			int n, i;
 			char *p;
-			char method[10], f_name[20];
 			char phrase[20] = "OK";
 
 			int code = 200;
-			int fd;			// file discriptor
 
 			char file_name[20];
 			char ext[20];
 
+			int fd;
 			struct stat sbuf;
 
 			int log_fd;
@@ -158,14 +156,11 @@ int main(int argc, char *argv[])
 				{
 			0, 0} };
 
-			memset(rcvBuf, 0, sizeof(rcvBuf));
 
-			int num = 1;
-
-			n = read(ns, rcvBuf, BUFSIZ);
+			n = read(ns, Receive_Buf, BUFSIZ);
 
 
-			p = strtok(rcvBuf, " ");
+			p = strtok(Receive_Buf, " ");
 			p = strtok(NULL, " ");
 
 			if (!strcmp(p, "/"))
@@ -199,20 +194,19 @@ int main(int argc, char *argv[])
 
 			// send Header
 			// http 형식을 보내주는것.
-			sprintf(sndBuf, "HTTP/2.0 %d %s\r\n", code, phrase);
-			n = write(ns, sndBuf, strlen(sndBuf));
+			sprintf(Send_Buf, "HTTP/2.0 %d %s\r\n", code, phrase);
+			n = write(ns, Send_Buf, strlen(Send_Buf));
 
-			sprintf(sndBuf, "content-type: %s\r\n\r\n", c_type);
-			n = write(ns, sndBuf, strlen(sndBuf));
+			sprintf(Send_Buf, "content-type: %s\r\n\r\n", c_type);
+			n = write(ns, Send_Buf, strlen(Send_Buf));
 
 
 			int size = 0;
 			if (fd >= 0)
 			{
-				while ((n = read(fd, rcvBuf, BUFSIZ)) > 0)
+				while ((n = read(fd, Receive_Buf, BUFSIZ)) > 0)
 				{
-					write(ns, rcvBuf, n);
-					//size++;
+					write(ns, Receive_Buf, n);
 				}
 			}
 
