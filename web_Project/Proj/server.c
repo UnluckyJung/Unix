@@ -10,7 +10,8 @@
 #include <sys/stat.h>
 #include <stdlib.h>
 #include <unistd.h>
-#define LOG 100
+
+//#define LOG 100
 #define ERROR 200
 
 #define CODE200 200
@@ -49,12 +50,14 @@ int main(int argc, char *argv[])
 		return 0;	// parent return to shell
 
 	
+	
 	(void)signal(SIGCLD, SIG_IGN);	// ignore child death
-	(void)signal(SIGHUP, SIG_IGN);	// ignore terminal hangup
 	//이거 없으면 안됨 , 갑자기 엑박남.
 
+	(void)signal(SIGHUP, SIG_IGN);	// ignore terminal hangup
 
-	/*
+
+	/* 이거 무슨 작동인지 모르겠음.
 	resourceLimit.rlim_max = 0;
 	status = getrlimit(RLIMIT_NOFILE, &resourceLimit);
 	for (i = 0; i < resourceLimit.rlim_max; i++)
@@ -100,13 +103,17 @@ int main(int argc, char *argv[])
 		if (forkcount >= 50)
 			system("killall a.out");
 			*/
+
+		/*
 		if ((pid = fork()) < 0)
 		{
 			web_log(ERROR, "ERROR", "server fork error", 0);
 		}
 		else if (pid == 0)
+		*/
+		switch(fork())
 		{
-
+		case 0:
 			close(s_sock);
 			char sndBuf[BUFSIZ + 1], rcvBuf[BUFSIZ + 1];
 			char uri[100], c_type[20];;
@@ -128,9 +135,7 @@ int main(int argc, char *argv[])
 
 			FILE *log = fopen("testlog.txt", "a");
 			char address_log[256];
-			//sprintf(address_log,"%s is come\n", inet_ntoa(c_addr.sin_addr));
-			//fputs(address_log, log);
-			//fclose(log);
+
 
 
 			struct
@@ -166,9 +171,7 @@ int main(int argc, char *argv[])
 
 			n = read(c_sock, rcvBuf, BUFSIZ);
 
-			sprintf(address_log, "%s %s\n", inet_ntoa(c_addr.sin_addr), rcvBuf);
-			fputs(address_log, log);
-			fclose(log);
+
 			//web_log(LOG, "REQUEST", rcvBuf, n);
 
 
@@ -180,6 +183,12 @@ int main(int argc, char *argv[])
 				sprintf(uri, "%s/index.html", documentRoot);	//경로를 이런식으로 넘겨야 했네..
 			else
 				sprintf(uri, "%s%s", documentRoot, p);
+
+
+			//이 아래부분 저수준 파일 입출력으로 바꿔야함. (속도)
+			sprintf(address_log, "%s %s\n", inet_ntoa(c_addr.sin_addr), uri);
+			fputs(address_log, log);
+			fclose(log);
 
 			strcpy(c_type, "text/plain");
 			for (i = 0; extensions[i].ext != 0; i++)
@@ -203,11 +212,9 @@ int main(int argc, char *argv[])
 			// send Header
 			sprintf(sndBuf, "HTTP/2.0 %d %s\r\n", code, phrase);
 			n = write(c_sock, sndBuf, strlen(sndBuf));
-			//web_log(LOG, "RESPONSE", sndBuf, getpid());
 
 			sprintf(sndBuf, "content-type: %s\r\n\r\n", c_type);
 			n = write(c_sock, sndBuf, strlen(sndBuf));
-			//web_log(LOG, "RESPONSE", sndBuf, getpid());
 
 			if (fd >= 0)
 			{
