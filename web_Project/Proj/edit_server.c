@@ -12,29 +12,17 @@
 #include <unistd.h>
 
 
-#define CODE200 200
-#define CODE404 404
+char path[] = "/home/201414840/html";
 
-#define PHRASE200 "OK"
-#define PHRASE404 "FILE NOT FOUND"
-
-char documentRoot[] = "/home/201414840/html";
-
-int log_fd;
 //한글주석 쓰게 utf-8형식으로 변환함
 int main(int argc, char *argv[])
 {
-	struct sockaddr_in s_addr, c_addr;
-	int s_sock, c_sock;
-	int len, len_out;
-	unsigned short port;
-	int status;
-	struct rlimit resourceLimit;
+	struct sockaddr_in sin, cli;
+	int sd, ns;
+	int len;
 	int i;
 
-	int pid;
-
-	//굳이 필요 없는 부분일듯 
+	//굳이 필요 없는 부분, 일단 놔둠.
 	if (argc != 2)
 	{
 		printf("usage: webServer port_number\n");
@@ -42,29 +30,14 @@ int main(int argc, char *argv[])
 	}
 
 
-	/*
-	if (fork() != 0)	//이부분이 백그라운드에서 돌아가게 한부분.
-		return 0;	// parent return to shell
-	*/
-
-
 	//이 부분들이 없으면 , 작업도중에 엑박남.
-	(void)signal(SIGCLD, SIG_IGN);	// ignore child death
-	(void)signal(SIGHUP, SIG_IGN);	// ignore terminal hangup
+	(void)signal(SIGCLD, SIG_IGN);
+	(void)signal(SIGHUP, SIG_IGN);
 
 
 
-	/* 이거 무슨 작동인지 모르겠음.
-	resourceLimit.rlim_max = 0;
-	status = getrlimit(RLIMIT_NOFILE, &resourceLimit);
-	for (i = 0; i < resourceLimit.rlim_max; i++)
-	{
-		close(i);
-	}
-	*/
 
-
-	if ((s_sock = socket(AF_INET, SOCK_STREAM, 0)) == -1) {
+	if ((sd = socket(AF_INET, SOCK_STREAM, 0)) == -1) {
 		//소켓을 만든다. (서버를 만들것.)
 		// 소켓종류(INET) / 통신방식 / 프로토콜
 		perror("socket");
@@ -73,21 +46,21 @@ int main(int argc, char *argv[])
 
 	//bind를 하기위한 sin 세팅
 	//소켓 주소 구조체를 생성하는 과정.
-	memset(&s_addr, 0, sizeof(s_addr));
-	s_addr.sin_family = AF_INET;
-	s_addr.sin_addr.s_addr = inet_addr("0.0.0.0");
-	s_addr.sin_port = htons(atoi(argv[1]));
+	memset(&sin, 0, sizeof(sin));
+	sin.sin_family = AF_INET;
+	sin.sin_addr.s_addr = inet_addr("0.0.0.0");
+	sin.sin_port = htons(atoi(argv[1]));
 	//만약 서버에 네트워크 카드가 여러개 있다면?
 	//1.1.1.1 이런식으로 지명해주는데, 모두가 다 받는다는 가정은 0.0.0.0으로 하는거다.
 
 
-	if (bind(s_sock, (struct sockaddr *)&s_addr, sizeof(s_addr))) { 	//bind를 함. 소켓을 IP주소와 결합하는것.
+	if (bind(sd, (struct sockaddr *)&sin, sizeof(sin))) { 	//bind를 함. 소켓을 IP주소와 결합하는것.
 		perror("bind");
 		exit(1);
 	}
 
 
-	if (listen(s_sock, 10)) {	//클라이언트 접속 요청을 대기한다.
+	if (listen(sd, 10)) {	//클라이언트 접속 요청을 대기한다.
 		perror("listen");
 		exit(1);
 	}
@@ -96,9 +69,9 @@ int main(int argc, char *argv[])
 
 	while (1)
 	{
-		len = sizeof(c_addr);
+		len = sizeof(cli);
 
-		if ((c_sock = accept(s_sock, (struct sockaddr *)&c_addr, &len)) == -1) {
+		if ((ns = accept(sd, (struct sockaddr *)&cli, &len)) == -1) {
 			//클라이언트와 연결하는 과정 = 클라이언트 접속.
 			//accept를 기다린다.
 			//connect가 될떄까지 기다린다.
@@ -107,34 +80,26 @@ int main(int argc, char *argv[])
 			exit(1);
 		}
 		int optvalue = 1;
-		setsockopt(c_sock, SOL_SOCKET, SO_REUSEADDR, &optvalue, sizeof(optvalue));	//소켓 초기화 도구
+		setsockopt(ns, SOL_SOCKET, SO_REUSEADDR, &optvalue, sizeof(optvalue));	//소켓 초기화 도구
 
 		switch (fork())
 		{
 		case 0:
+
 			//함수 부르는 시간도 아까워서 여기다 다 때려넣음
 
-			close(s_sock);
-			char sndBuf[BUFSIZ + 1], rcvBuf[BUFSIZ + 1];
-			char uri[100], c_type[20];
+			close(sd);
+			char Send_Buf[BUFSIZ + 1] = { 0, }, Receive_Buf[BUFSIZ + 1] = { 0, };
+			char uri[100], content_type[20];
 			int len;
 
-			int len_out;
 			int n, i;
 			char *p;
-			char method[10], f_name[20];
-			char phrase[20] = "OK";
 
-			int code = 200;
-			int fd;			// file discriptor
+			int fd;	//파일 전송할때 필요한 변수.
 
-			char file_name[20];
-			char ext[20];
-
-			struct stat sbuf;
-
-			int log_fd;
-			char address_log[BUFSIZ];
+			int fd_log;	//log 저장할때 저수준 파일입출력 open에 필요한 변수.
+			char address_log[BUFSIZ];	//log 저장할 BUF
 
 
 			struct
@@ -164,68 +129,69 @@ int main(int argc, char *argv[])
 				{
 			0, 0} };
 
-			memset(rcvBuf, 0, sizeof(rcvBuf));
 
-			int num = 1;
-
-			n = read(c_sock, rcvBuf, BUFSIZ);
+			n = read(ns, Receive_Buf, BUFSIZ);
 
 
-			p = strtok(rcvBuf, " ");
+			p = strtok(Receive_Buf, " ");
 			p = strtok(NULL, " ");
 
 			if (!strcmp(p, "/"))
-				sprintf(uri, "%s/index.html", documentRoot);	//경로를 이런식으로 넘겨야 했네..
+				sprintf(uri, "%s/index.html", path);	//경로를 이런식으로 넘겨야 했네..
 			else
-				sprintf(uri, "%s%s", documentRoot, p);
+				sprintf(uri, "%s%s", path, p);
 
 
+			strcpy(content_type, "text/plain");
 
-
-			strcpy(c_type, "text/plain");
 			for (i = 0; extensions[i].ext != 0; i++)	//이 for문 이해못함.
 			{
 				len = strlen(extensions[i].ext);
 				if (!strncmp(uri + strlen(uri) - len, extensions[i].ext, len))
 				{
-					strcpy(c_type, extensions[i].filetype);
+					strcpy(content_type, extensions[i].filetype);
 					break;
 				}
 			}
 
 
-			// 404 오류메시지 띄워주는거 같은데. 나중에 제거해도 상관없을것으로 보임.
-/*
-			if ((fd = open(uri, O_RDONLY)) < 0)
-			{
-				code = CODE404;
-				strcpy(phrase, PHRASE404);
-			}
-*/
-			if ((fd = open(uri, O_RDONLY)) == -1)
+
+			//printf("%s\n", uri);
+			//진짜 로그 다찍으면서 찾았다.
+
+			fd = open(uri, O_RDONLY);
+
+			//찾음 시발 favicon.ico 이 십새기 문제다.
+			//path에 없는걸 존나찾고잇네
+			//우리가 html 폴더안에 더 추가할건 아니니 그냥 이부분은 주석처리함.
+			//근데 아직도 이해안가는게, log.txt파일이 생성된뒤(한번이라도 누가 서버에 접속한뒤)에는 오류가 안뜸.
+			/*
+			if(fd == -1)
 			{
 				perror("Open uri");
 				exit(1);
 			}
+			*/
 
-			p = strtok(NULL, "\r\n ");	// version
 
-			// send Header
+			p = strtok(NULL, "\r\n ");
+
+
+
 			// http 형식을 보내주는것.
-			sprintf(sndBuf, "HTTP/2.0 %d %s\r\n", code, phrase);
-			n = write(c_sock, sndBuf, strlen(sndBuf));
+			sprintf(Send_Buf, "HTTP/2.0 %d %s\r\n", 200, "OK");
+			n = write(ns, Send_Buf, strlen(Send_Buf));
 
-			sprintf(sndBuf, "content-type: %s\r\n\r\n", c_type);
-			n = write(c_sock, sndBuf, strlen(sndBuf));
+			sprintf(Send_Buf, "content-type: %s\r\n\r\n", content_type);
+			n = write(ns, Send_Buf, strlen(Send_Buf));
 
 
 			int size = 0;
 			if (fd >= 0)
 			{
-				while ((n = read(fd, rcvBuf, BUFSIZ)) > 0)
+				while ((n = read(fd, Receive_Buf, BUFSIZ)) > 0)
 				{
-					write(c_sock, rcvBuf, n);
-					//size++;
+					write(ns, Receive_Buf, n);
 				}
 			}
 
@@ -237,25 +203,27 @@ int main(int argc, char *argv[])
 
 
 
-			sprintf(address_log, "%s %s %d \n", inet_ntoa(c_addr.sin_addr), uri, (int)file_info.st_size);
+			sprintf(address_log, "%s %s %d \n", inet_ntoa(cli.sin_addr), uri, (int)file_info.st_size);
 
 			mode_t mode = S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH;	//파일권한 0644
 
-			log_fd = open("log.txt", O_CREAT | O_WRONLY | O_APPEND, mode);
-			if (log_fd == -1) {
+			fd_log = open("log.txt", O_CREAT | O_WRONLY | O_APPEND, mode);
+			if (fd_log == -1) {
 				perror("Open log.txt");
 				exit(1);
 			}
-			write(log_fd, address_log, strlen(address_log));
-			close(log_fd);
+			write(fd_log, address_log, strlen(address_log));
+			close(fd_log);
 
 
-			close(c_sock);
+			close(ns);
 			exit(-1);
 
 		default:
-			close(c_sock);
+			close(ns);
 		}
 
 	}
+
+	return 0;
 }
