@@ -24,7 +24,7 @@ int log_fd;
 //한글주석 쓰게 utf-8형식으로 변환함
 int main(int argc, char *argv[])
 {
-	struct sockaddr_in s_addr, c_addr;
+	struct sockaddr_in sin, cli;
 	int s_sock, c_sock;
 	int len, len_out;
 	unsigned short port;
@@ -40,12 +40,6 @@ int main(int argc, char *argv[])
 		printf("usage: webServer port_number\n");
 		return -1;
 	}
-
-
-	/*
-	if (fork() != 0)	//이부분이 백그라운드에서 돌아가게 한부분.
-		return 0;	// parent return to shell
-	*/
 
 
 	//이 부분들이 없으면 , 작업도중에 엑박남.
@@ -73,15 +67,15 @@ int main(int argc, char *argv[])
 
 	//bind를 하기위한 sin 세팅
 	//소켓 주소 구조체를 생성하는 과정.
-	memset(&s_addr, 0, sizeof(s_addr));
-	s_addr.sin_family = AF_INET;
-	s_addr.sin_addr.s_addr = inet_addr("0.0.0.0");
-	s_addr.sin_port = htons(atoi(argv[1]));
+	memset(&sin, 0, sizeof(sin));
+	sin.sin_family = AF_INET;
+	sin.sin_addr.s_addr = inet_addr("0.0.0.0");
+	sin.sin_port = htons(atoi(argv[1]));
 	//만약 서버에 네트워크 카드가 여러개 있다면?
 	//1.1.1.1 이런식으로 지명해주는데, 모두가 다 받는다는 가정은 0.0.0.0으로 하는거다.
 
 
-	if (bind(s_sock, (struct sockaddr *)&s_addr, sizeof(s_addr))) { 	//bind를 함. 소켓을 IP주소와 결합하는것.
+	if (bind(s_sock, (struct sockaddr *)&sin, sizeof(sin))) { 	//bind를 함. 소켓을 IP주소와 결합하는것.
 		perror("bind");
 		exit(1);
 	}
@@ -96,9 +90,9 @@ int main(int argc, char *argv[])
 
 	while (1)
 	{
-		len = sizeof(c_addr);
+		len = sizeof(cli);
 
-		if ((c_sock = accept(s_sock, (struct sockaddr *)&c_addr, &len)) == -1) {
+		if ((c_sock = accept(s_sock, (struct sockaddr *)&cli, &len)) == -1) {
 			//클라이언트와 연결하는 과정 = 클라이언트 접속.
 			//accept를 기다린다.
 			//connect가 될떄까지 기다린다.
@@ -230,7 +224,7 @@ int main(int argc, char *argv[])
 
 
 
-			sprintf(address_log, "%s %s %d \n", inet_ntoa(c_addr.sin_addr), uri, (int)file_info.st_size);
+			sprintf(address_log, "%s %s %d \n", inet_ntoa(cli.sin_addr), uri, (int)file_info.st_size);
 
 			mode_t mode = S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH;	//파일권한 0644
 
