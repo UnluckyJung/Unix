@@ -20,9 +20,6 @@
 
 char documentRoot[] = "/home/201414840/html";
 
-void do_web(int);
-void web_log(int, char[], char[], int);
-
 int log_fd;
 //한글주석 쓰게 utf-8형식으로 변환함
 int main(int argc, char *argv[])
