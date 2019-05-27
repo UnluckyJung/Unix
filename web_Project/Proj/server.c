@@ -12,8 +12,8 @@
 #include <unistd.h>
 
 //#define LOG 100
-#define ERROR 200
-
+//#define ERROR 200
+//
 #define CODE200 200
 #define CODE404 404
 
@@ -78,14 +78,14 @@ int main(int argc, char *argv[])
 		exit(1);
 	}
 
-	
-	//if (atoi(argv[1]) > 60000)
-	//	web_log(ERROR, "ERROR", "invalid port number", atoi(argv[1]));
-
+	//bind를 하기위한 sin 세팅
+	//소켓 주소 구조체를 생성하는 과정.
 	memset(&s_addr, 0, sizeof(s_addr));
 	s_addr.sin_family = AF_INET;
 	s_addr.sin_addr.s_addr = inet_addr("0.0.0.0");
 	s_addr.sin_port = htons(atoi(argv[1]));
+	//만약 서버에 네트워크 카드가 여러개 있다면?
+	//1.1.1.1 이런식으로 지명해주는데, 모두가 다 받는다는 가정은 0.0.0.0으로 하는거다.
 
 
 	if (bind(s_sock, (struct sockaddr *)&s_addr, sizeof(s_addr))) { 	//bind를 함. 소켓을 IP주소와 결합하는것.
@@ -114,11 +114,13 @@ int main(int argc, char *argv[])
 			exit(1);
 		}
 		int optvalue = 1;
-		setsockopt(c_sock, SOL_SOCKET, SO_REUSEADDR, &optvalue, sizeof(optvalue));//소켓 초기화 도구
+		setsockopt(c_sock, SOL_SOCKET, SO_REUSEADDR, &optvalue, sizeof(optvalue));	//소켓 초기화 도구
 
 		switch (fork())
 		{
 		case 0:
+			//함수 부르는 시간도 아까워서 여기다 다 때려넣음
+
 			close(s_sock);
 			char sndBuf[BUFSIZ + 1], rcvBuf[BUFSIZ + 1];
 			char uri[100], c_type[20];;
@@ -138,12 +140,8 @@ int main(int argc, char *argv[])
 
 			struct stat sbuf;
 
-			FILE *log = fopen("testlog.txt", "a"); //log를 남기기위한 고수준 파일 입출력.
-			char address_log[256];
-
 			int log_fd;
-			char log_buf[BUFSIZ];	//log를 남기기위한 저수준 파일 입출력.
-
+			char address_log[BUFSIZ];
 
 
 			struct
@@ -180,12 +178,9 @@ int main(int argc, char *argv[])
 			n = read(c_sock, rcvBuf, BUFSIZ);
 
 
-
-
 			p = strtok(rcvBuf, " ");
-
-
 			p = strtok(NULL, " ");
+
 			if (!strcmp(p, "/"))
 				sprintf(uri, "%s/index.html", documentRoot);	//경로를 이런식으로 넘겨야 했네..
 			else
@@ -194,9 +189,8 @@ int main(int argc, char *argv[])
 
 
 
-
 			strcpy(c_type, "text/plain");
-			for (i = 0; extensions[i].ext != 0; i++)
+			for (i = 0; extensions[i].ext != 0; i++)	//이 for문 이해못함.
 			{
 				len = strlen(extensions[i].ext);
 				if (!strncmp(uri + strlen(uri) - len, extensions[i].ext, len))
@@ -207,7 +201,7 @@ int main(int argc, char *argv[])
 			}
 
 
-
+			// 404 오류메시지 띄워주는거 같은데. 나중에 제거해도 상관없을것으로 보임.
 			if ((fd = open(uri, O_RDONLY)) < 0)
 			{
 				code = CODE404;
@@ -217,6 +211,7 @@ int main(int argc, char *argv[])
 			p = strtok(NULL, "\r\n ");	// version
 
 			// send Header
+			// http 형식을 보내주는것.
 			sprintf(sndBuf, "HTTP/2.0 %d %s\r\n", code, phrase);
 			n = write(c_sock, sndBuf, strlen(sndBuf));
 
@@ -230,21 +225,23 @@ int main(int argc, char *argv[])
 				while ((n = read(fd, rcvBuf, BUFSIZ)) > 0)
 				{
 					write(c_sock, rcvBuf, n);
+					//size++;
 				}
 			}
 
-			//이 아래부분 저수준 파일 입출력으로 바꿔야함. (고수준 / 속도)
-			sprintf(address_log, "%s %s %d \n", inet_ntoa(c_addr.sin_addr), uri, size);
-			fputs(address_log, log);
-			fclose(log);
+
+			//저수준 파일 입출력을 이용한 log file 생성.
+
+			struct stat file_info;	//파일크기를 측정하기위한 stat 구조체
+			stat(uri, &file_info);
 
 
 
-			//저수준 파일 입출력
+			sprintf(address_log, "%s %s %d \n", inet_ntoa(c_addr.sin_addr), uri, (int)file_info.st_size);
 
 			mode_t mode = S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH;	//파일권한 0644
 
-			log_fd = open("lowlevel.log", O_CREAT | O_WRONLY | O_APPEND, mode);	//
+			log_fd = open("log.txt", O_CREAT | O_WRONLY | O_APPEND, mode);	
 			if (log_fd == -1) {
 				perror("Open log.txt");
 				exit(1);
