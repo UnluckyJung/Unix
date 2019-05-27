@@ -90,7 +90,7 @@ int main(int argc, char *argv[])
 
 			close(sd);
 			char Send_Buf[BUFSIZ + 1] = { 0, }, Receive_Buf[BUFSIZ + 1] = { 0, };
-			char uri[100], content_type[20];;
+			char uri[100], content_type[20];
 			int len;
 
 			int n, i;
@@ -101,6 +101,9 @@ int main(int argc, char *argv[])
 			int fd_log;	//log 저장할때 저수준 파일입출력 open에 필요한 변수.
 			char address_log[BUFSIZ];	//log 저장할 BUF
 
+			//이게문제?
+			//char file_name[20];
+			//char ext[20];
 
 			struct
 			{
@@ -155,13 +158,16 @@ int main(int argc, char *argv[])
 				}
 			}
 
-
+			fd = open(uri, O_RDONLY);
+			/*
 			if ((fd = open(uri, O_RDONLY)) == -1)
 			{
 				perror("Open uri");
 				exit(1);
 			}
-			
+			*/
+			//이게 로그 파일 없을때 Open uri 에러를 뿜는데 이유를 모르겟음. log.txt랑 전혀 연관이 없는데.
+
 			p = strtok(NULL, "\r\n ");	
 
 
