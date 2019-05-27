@@ -27,12 +27,7 @@ int main(int argc, char *argv[])
 	struct sockaddr_in sin, cli;
 	int sd, ns;
 	int len;
-	//unsigned short port;
-	//int status;
-	//struct rlimit resourceLimit;
 	int i;
-
-	int pid;
 
 	//굳이 필요 없는 부분일듯 
 	if (argc != 2)
@@ -43,19 +38,10 @@ int main(int argc, char *argv[])
 
 
 	//이 부분들이 없으면 , 작업도중에 엑박남.
-	(void)signal(SIGCLD, SIG_IGN);	// ignore child death
-	(void)signal(SIGHUP, SIG_IGN);	// ignore terminal hangup
+	(void)signal(SIGCLD, SIG_IGN);	
+	(void)signal(SIGHUP, SIG_IGN);	
 
 
-
-	/* 이거 무슨 작동인지 모르겠음.
-	resourceLimit.rlim_max = 0;
-	status = getrlimit(RLIMIT_NOFILE, &resourceLimit);
-	for (i = 0; i < resourceLimit.rlim_max; i++)
-	{
-		close(i);
-	}
-	*/
 
 
 	if ((sd = socket(AF_INET, SOCK_STREAM, 0)) == -1) {
