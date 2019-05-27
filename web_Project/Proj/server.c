@@ -101,9 +101,6 @@ int main(int argc, char *argv[])
 			int fd_log;	//log 저장할때 저수준 파일입출력 open에 필요한 변수.
 			char address_log[BUFSIZ];	//log 저장할 BUF
 
-			//이게문제?
-			//char file_name[20];
-			//char ext[20];
 
 			struct
 			{
@@ -145,9 +142,8 @@ int main(int argc, char *argv[])
 				sprintf(uri, "%s%s", path, p);
 
 
-
-
 			strcpy(content_type, "text/plain");
+
 			for (i = 0; extensions[i].ext != 0; i++)	//이 for문 이해못함.
 			{
 				len = strlen(extensions[i].ext);
@@ -158,15 +154,25 @@ int main(int argc, char *argv[])
 				}
 			}
 
+			
+			
+			//printf("%s\n", uri);
+			//진짜 로그 다찍으면서 찾았다.
+
 			fd = open(uri, O_RDONLY);
+
+			//찾음 시발 favicon.ico 이 십새기 문제다.
+			//path에 없는걸 존나찾고잇네
+			//우리가 html 폴더안에 더 추가할건 아니니 그냥 이부분은 주석처리함.
+			//근데 아직도 이해안가는게, log.txt파일이 생성된뒤(한번이라도 누가 서버에 접속한뒤)에는 오류가 안뜸.
 			/*
-			if ((fd = open(uri, O_RDONLY)) == -1)
+			if(fd == -1)
 			{
 				perror("Open uri");
 				exit(1);
 			}
 			*/
-			//이게 로그 파일 없을때 Open uri 에러를 뿜는데 이유를 모르겟음. log.txt랑 전혀 연관이 없는데.
+			
 
 			p = strtok(NULL, "\r\n ");	
 
