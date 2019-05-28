@@ -149,24 +149,55 @@ int main(int argc, char *argv[])
 
 
 			char *findnum1;
-			char numarr[256] = { 0, };
-			char numcheck[256] = { 0, };
+			char *findnum2;
+			char numarr[10] = { 0, };
+			char numarr2[10] = { 0, };
+			char numcheck[10] = { 0, };
+			//char numcheck2[256] = { 0, };
+
 
 			if ((findnum1 = strstr(Receive_Buf, "total.from=")) != NULL) {
-				printf("find cgi\n");
-				//printf("%c\n",*(findnum1+sizeof(char)*11));
+				//printf("find cgi\n");
 				sprintf(numarr, "%c", *(findnum1 + 11));
-				//printf("%s\n", numarr);
 
 				for (int i = 12; i <= 20; i++) {
 					sprintf(numcheck, "%c", *(findnum1 + i));
-					//printf("%c\n", numcheck[0]);
 					if (strncmp("&", numcheck, 1) == 0)
 						break;
 					sprintf(numarr, "%s%c", numarr, *(findnum1 + i));
 				}
-				printf("%s\n", numarr);
+				//printf("%s\n", numarr);
+
+				if ((findnum2 = strstr(Receive_Buf, "to=")) != NULL) {
+					sprintf(numarr2, "%c", *(findnum2 + 3));
+					//printf("find to= \n");
+					//printf("%c\n", numarr2[0]);
+
+					
+					for (int i = 4; i <= 10; i++) {
+						sprintf(numcheck, "%c", *(findnum2 + i));
+						//printf("%c\n", numcheck2[0]);
+						if (numcheck[0] < 48 || numcheck[0]>57)
+							break;
+						sprintf(numarr2, "%s%c", numarr2, *(findnum2 + i));
+						//printf("%c\n", numarr2[0]);
+					}
+					//printf("%s\n", numarr2);
+					
+				}
+
+				int num1 = atoi(numarr);
+				int num2 = atoi(numarr2);
+				printf("%d ~ %d \n", num1, num2);
+				//int num1 = (atoi(numarr) - 1) * ((atoi(numarr) - 1) + 1) / 2;
+				//int num2 = atoi(numarr2) * (atoi(numarr2) + 1) / 2;
+				//int result = num2 - num1;
+				//printf("%d ~ %d = %d\n", num1, num2, result);
+
 			}
+
+
+
 
 
 
