@@ -254,7 +254,7 @@ int main(int argc, char *argv[])
 
 					"\r\n"
 
-					"%d\r\n",num1+num2);
+					"%d\r\n", num1 + num2);
 
 				write(ns, Send_Buf, strlen(Send_Buf));
 				exit(1);
