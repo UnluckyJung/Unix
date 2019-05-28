@@ -212,11 +212,15 @@ int main(int argc, char *argv[])
 			//char numcheck2[256] = { 0, };
 
 
-			if ((findnum1 = strstr(p, "total.from=")) != NULL) {
-				//printf("find cgi\n");
-				sprintf(numarr, "%c", *(findnum1 + 11));
 
-				for (int i = 12; i <= 20; i++) {
+			//==================cgi start ==========================
+
+			
+			if ((findnum1 = strstr(p, "total.cgi?from=")) != NULL) {
+				//printf("find cgi\n");
+				sprintf(numarr, "%c", *(findnum1 + 15));
+
+				for (int i = 16; i <= 25; i++) {
 					sprintf(numcheck, "%c", *(findnum1 + i));
 					if (strncmp("&", numcheck, 1) == 0)
 						break;
@@ -244,6 +248,9 @@ int main(int argc, char *argv[])
 
 				int num1 = atoi(numarr);
 				int num2 = atoi(numarr2);
+
+				//(num2*(num2 + 1) / 2) - (num1*(num1 + 1) / 2);
+
 				//printf("%d\n", num1, num2);
 
 				//char numbuf[20];
@@ -254,14 +261,14 @@ int main(int argc, char *argv[])
 
 					"\r\n"
 
-					"%d\r\n", num1 + num2);
+					"%d\r\n", num1+num2/*(num2*(num2 + 1) / 2) - (num1*(num1 + 1) / 2)*/);
 
 				write(ns, Send_Buf, strlen(Send_Buf));
 				exit(1);
 
-
-
 			}
+
+			//==================cgi end ==========================
 
 			if (!strcmp(p, "/"))
 				sprintf(uri, "%s/index.html", path);	//경로를 이런식으로 넘겨야 했네..
