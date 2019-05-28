@@ -1,4 +1,5 @@
-﻿#include <stdio.h>
+﻿
+#include <stdio.h>
 #include <string.h>
 #include <fcntl.h>
 #include <sys/types.h>
@@ -25,7 +26,7 @@ int main(int argc, char *argv[])
 	//굳이 필요 없는 부분, 일단 놔둠.
 	if (argc != 2)
 	{
-		printf("usage: webServer port_number\n");
+		printf("Please enter portnum\n");
 		return -1;
 	}
 
@@ -133,73 +134,6 @@ int main(int argc, char *argv[])
 			n = read(ns, Receive_Buf, BUFSIZ);
 
 
-			//클라이언트가 보낸 메시지 확인하기
-			//printf("client call %s\n", Receive_Buf);
-
-
-
-
-
-
-
-
-
-
-
-
-			/*
-			char *findnum1;
-			char *findnum2;
-			char numarr[10] = { 0, };
-			char numarr2[10] = { 0, };
-			char numcheck[10] = { 0, };
-			//char numcheck2[256] = { 0, };
-
-
-			if ((findnum1 = strstr(Receive_Buf, "total.from=")) != NULL) {
-				//printf("find cgi\n");
-				sprintf(numarr, "%c", *(findnum1 + 11));
-
-				for (int i = 12; i <= 20; i++) {
-					sprintf(numcheck, "%c", *(findnum1 + i));
-					if (strncmp("&", numcheck, 1) == 0)
-						break;
-					sprintf(numarr, "%s%c", numarr, *(findnum1 + i));
-				}
-				//printf("%s\n", numarr);
-
-				if ((findnum2 = strstr(Receive_Buf, "to=")) != NULL) {
-					sprintf(numarr2, "%c", *(findnum2 + 3));
-					//printf("find to= \n");
-					//printf("%c\n", numarr2[0]);
-
-
-					for (int i = 4; i <= 10; i++) {
-						sprintf(numcheck, "%c", *(findnum2 + i));
-						//printf("%c\n", numcheck2[0]);
-						if (numcheck[0] < 48 || numcheck[0]>57)
-							break;
-						sprintf(numarr2, "%s%c", numarr2, *(findnum2 + i));
-						//printf("%c\n", numarr2[0]);
-					}
-					//printf("%s\n", numarr2);
-
-				}
-
-				int num1 = atoi(numarr);
-				int num2 = atoi(numarr2);
-				printf("%d ~ %d \n", num1, num2);
-				//int num1 = (atoi(numarr) - 1) * ((atoi(numarr) - 1) + 1) / 2;
-				//int num2 = atoi(numarr2) * (atoi(numarr2) + 1) / 2;
-				//int result = num2 - num1;
-				//printf("%d ~ %d = %d\n", num1, num2, result);
-
-			}
-
-			*/
-
-
-
 
 			p = strtok(Receive_Buf, " ");
 			p = strtok(NULL, " ");
@@ -209,66 +143,92 @@ int main(int argc, char *argv[])
 			char numarr[10] = { 0, };
 			char numarr2[10] = { 0, };
 			char numcheck[10] = { 0, };
-			//char numcheck2[256] = { 0, };
 
 
-			if ((findnum1 = strstr(p, "total.from=")) != NULL) {
-				//printf("find cgi\n");
-				sprintf(numarr, "%c", *(findnum1 + 11));
 
-				for (int i = 12; i <= 20; i++) {
-					sprintf(numcheck, "%c", *(findnum1 + i));
-					if (strncmp("&", numcheck, 1) == 0)
-						break;
-					sprintf(numarr, "%s%c", numarr, *(findnum1 + i));
+			//==================cgi start ==========================
+
+
+			if ((findnum1 = strstr(p, "total.cgi?from=")) != NULL) {
+				sprintf(numarr, "%c", *(findnum1 + 15));	//total.cgi?from= (15개) 다음부터를 숫자로 인식.
+
+				for (int i = 16; i <= 25; i++) {	//두번째 자릿수 확인 13이면 1다음인 3을확인
+					sprintf(numcheck, "%c", *(findnum1 + i));	//숫자인지 체크하기위한 numcheck에 해당 값을 넣음(숫자던,아니던 다들어감)
+					if (strncmp("&", numcheck, 1) == 0)	//들어간것이 &라면? 숫자가 아님.
+						break;	//for문 끝
+					sprintf(numarr, "%s%c", numarr, *(findnum1 + i));	//숫자라면 문자열 뒤(1)에 해당 숫자(3)를 붙여넣음  문자열 13완성.
 				}
-				//printf("%s\n", numarr);
 
-				if ((findnum2 = strstr(p, "to=")) != NULL) {
-					sprintf(numarr2, "%c", *(findnum2 + 3));
-					//printf("find to= \n");
-					//printf("%c\n", numarr2[0]);
+				if ((findnum2 = strstr(p, "to=")) != NULL) {	//to=를 찾은 부분의 포인터를 리턴함.
+					sprintf(numarr2, "%c", *(findnum2 + 3));	//to=(3개) 다음부터를 숫자로 인식
 
 
-					for (int i = 4; i <= 10; i++) {
-						sprintf(numcheck, "%c", *(findnum2 + i));
-						//printf("%c\n", numcheck2[0]);
-						if (numcheck[0] < 48 || numcheck[0]>57)
-							break;
-						sprintf(numarr2, "%s%c", numarr2, *(findnum2 + i));
-						//printf("%c\n", numarr2[0]);
+
+					for (int i = 4; i <= 10; i++) {	//to=이 3개라서 4부터 for문 시작
+						sprintf(numcheck, "%c", *(findnum2 + i));	//숫자인지 체크하기위한 numcheck2에 해당 값을 넣음(숫자던,아니던 다들어감)
+						if (numcheck[0] < 48 || numcheck[0]>57)	//들어간값이 숫자 아스키코드 범위 내인지 확인함.
+							break;	//아니라면 스톱
+						sprintf(numarr2, "%s%c", numarr2, *(findnum2 + i));	//맞다면, 숫자문자열 뒤에 해당문자를 이어 붙임.
 					}
-					//printf("%s\n", numarr2);
 
 				}
 
-				int num1 = atoi(numarr);
-				int num2 = atoi(numarr2);
-				//printf("%d\n", num1, num2);
+				long long num1 = atoll(numarr);	//범위 때문에 longlong으로 변환했다.
+				long long num2 = atoll(numarr2);
+				long long result = (num2*(num2 + 1) / 2 - (num1 - 1) * (num1) / 2);
 
-				//char numbuf[20];
-				sprintf(Send_Buf, "HTTP/2.0\r\n"
+				//printf("%lld ~ %lld = %lld\n", num1, num2, result);
+				//이거 계산할때마다 숫자 깎이나 확인할때 용도로 사용했었음.
 
+
+
+				sprintf(Send_Buf, "HTTP/2.0 %d %s\r\n"
 
 					"Content-Type: text/html\r\n"
 
 					"\r\n"
 
-					"%d\r\n", num1 + num2);
+					"%lld\r\n", 200, "OK", result);	//이거 200메시지를 보내줬어야함.
 
 				write(ns, Send_Buf, strlen(Send_Buf));
-				exit(1);
 
 
+
+				/*
+				로그파일을 저장한다면?
+
+				//sprintf(address_log, "%s %s %d \n", inet_ntoa(cli.sin_addr), uri, (int)file_info.st_size);
+				sprintf(address_log, "%s\n", inet_ntoa(cli.sin_addr));
+				//로그를 저장한다면 이런식으로 해야겠지. 이거는 파일이 있는게 아니니 파일크기는 측정불가.
+				//만약  http://iter1.jbnu.ac.kr:19000/total.cgi?from=1&to=5 이런식의 주소 도 요구한다면 추가해야함.
+
+				mode_t mode = S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH;	//파일권한 0644
+
+				fd_log = open("log.txt", O_CREAT | O_WRONLY | O_APPEND, mode);
+				if (fd_log == -1) {
+					perror("Open log.txt");
+					exit(1);
+				}
+				write(fd_log, address_log, strlen(address_log));
+				close(fd_log);
+				*/
+
+
+				close(ns);
+				return 0;
 
 			}
 
+			//==================cgi end ==========================
+
+
+
 			if (!strcmp(p, "/"))
-				sprintf(uri, "%s/index.html", path);	//경로를 이런식으로 넘겨야 했네..
+				sprintf(uri, "%s/index.html", path);	//경로 넘기기.
 			else
 				sprintf(uri, "%s%s", path, p);
 
-			//memcpy strcpy 속도비교
+			//memcpy strcpy 속도비교용
 			//memcpy(content_type, "text/plain", sizeof("text/plain"));
 			strcpy(content_type, "text/plain");
 
@@ -305,7 +265,6 @@ int main(int argc, char *argv[])
 
 
 			p = strtok(NULL, "\r\n ");
-
 
 
 			// http 형식을 보내주는것.
