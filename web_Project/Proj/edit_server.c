@@ -133,6 +133,53 @@ int main(int argc, char *argv[])
 			n = read(ns, Receive_Buf, BUFSIZ);
 
 
+			//클라이언트가 보낸 메시지 확인하기
+			//printf("client call %s\n", Receive_Buf);
+
+
+
+
+
+
+
+
+
+
+
+
+
+			char *findnum1;
+			char numarr[256] = { 0, };
+			char numcheck[256] = { 0, };
+
+			if ((findnum1 = strstr(Receive_Buf, "total.from=")) != NULL) {
+				printf("find cgi\n");
+				//printf("%c\n",*(findnum1+sizeof(char)*11));
+				sprintf(numarr, "%c", *(findnum1 + 11));
+				//printf("%s\n", numarr);
+
+				for (int i = 12; i <= 20; i++) {
+					sprintf(numcheck, "%c", *(findnum1 + i));
+					//printf("%c\n", numcheck[0]);
+					if (strncmp("&", numcheck, 1) == 0)
+						break;
+					sprintf(numarr, "%s%c", numarr, *(findnum1 + i));
+				}
+				printf("%s\n", numarr);
+			}
+
+
+
+
+
+
+
+
+
+
+
+
+
 			p = strtok(Receive_Buf, " ");
 			p = strtok(NULL, " ");
 
