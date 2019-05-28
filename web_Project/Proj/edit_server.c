@@ -147,7 +147,7 @@ int main(int argc, char *argv[])
 
 
 
-
+			/*
 			char *findnum1;
 			char *findnum2;
 			char numarr[10] = { 0, };
@@ -173,7 +173,7 @@ int main(int argc, char *argv[])
 					//printf("find to= \n");
 					//printf("%c\n", numarr2[0]);
 
-					
+
 					for (int i = 4; i <= 10; i++) {
 						sprintf(numcheck, "%c", *(findnum2 + i));
 						//printf("%c\n", numcheck2[0]);
@@ -183,7 +183,7 @@ int main(int argc, char *argv[])
 						//printf("%c\n", numarr2[0]);
 					}
 					//printf("%s\n", numarr2);
-					
+
 				}
 
 				int num1 = atoi(numarr);
@@ -196,23 +196,72 @@ int main(int argc, char *argv[])
 
 			}
 
-
-
-
-
-
-
-
-
-
-
-
+			*/
 
 
 
 
 			p = strtok(Receive_Buf, " ");
 			p = strtok(NULL, " ");
+
+			char *findnum1;
+			char *findnum2;
+			char numarr[10] = { 0, };
+			char numarr2[10] = { 0, };
+			char numcheck[10] = { 0, };
+			//char numcheck2[256] = { 0, };
+
+
+			if ((findnum1 = strstr(p, "total.from=")) != NULL) {
+				//printf("find cgi\n");
+				sprintf(numarr, "%c", *(findnum1 + 11));
+
+				for (int i = 12; i <= 20; i++) {
+					sprintf(numcheck, "%c", *(findnum1 + i));
+					if (strncmp("&", numcheck, 1) == 0)
+						break;
+					sprintf(numarr, "%s%c", numarr, *(findnum1 + i));
+				}
+				//printf("%s\n", numarr);
+
+				if ((findnum2 = strstr(p, "to=")) != NULL) {
+					sprintf(numarr2, "%c", *(findnum2 + 3));
+					//printf("find to= \n");
+					//printf("%c\n", numarr2[0]);
+
+
+					for (int i = 4; i <= 10; i++) {
+						sprintf(numcheck, "%c", *(findnum2 + i));
+						//printf("%c\n", numcheck2[0]);
+						if (numcheck[0] < 48 || numcheck[0]>57)
+							break;
+						sprintf(numarr2, "%s%c", numarr2, *(findnum2 + i));
+						//printf("%c\n", numarr2[0]);
+					}
+					//printf("%s\n", numarr2);
+
+				}
+
+				int num1 = atoi(numarr);
+				int num2 = atoi(numarr2);
+				//printf("%d\n", num1, num2);
+
+				//char numbuf[20];
+				sprintf(Send_Buf, "HTTP/2.0\r\n"
+
+
+					"Content-Type: text/html\r\n"
+
+					"\r\n"
+
+					"%d\r\n",num1+num2);
+
+				write(ns, Send_Buf, strlen(Send_Buf));
+				exit(1);
+
+
+
+			}
 
 			if (!strcmp(p, "/"))
 				sprintf(uri, "%s/index.html", path);	//경로를 이런식으로 넘겨야 했네..
