@@ -258,13 +258,56 @@ int main(int argc, char *argv[])
 			//path에 없는걸 존나찾고잇네
 			//우리가 html 폴더안에 더 추가할건 아니니 그냥 이부분은 주석처리함.
 			//근데 아직도 이해안가는게, log.txt파일이 생성된뒤(한번이라도 누가 서버에 접속한뒤)에는 오류가 안뜸.
-			/*
+			
+
+
+
 			if(fd == -1)
 			{
-				perror("Open uri");
+	
+
+				sprintf(Send_Buf, "HTTP/2.0 %d %s\r\n"
+
+					"Content-Type: text/html\r\n"
+
+					"\r\n"
+
+					"%s\r\n", 200, "OK", "Not found");	//이거 200메시지를 보내줬어야함.
+
+				write(ns, Send_Buf, strlen(Send_Buf));
+
+
+
+
+				//============로그 찍기 구현.================
+
+				sprintf(uri, "%s%s", uri, "/Not found");
+
+				struct stat file_info;	//파일크기를 측정하기위한 stat 구조체
+				stat(uri, &file_info);	//당연히 없는파일이고 크기는 없겠지만... 교수님이 이런식으로 해서 다 찍으라고 했대.
+
+				sprintf(address_log, "%s %s %d \n", inet_ntoa(cli.sin_addr), uri, (int)file_info.st_size);
+				//sprintf(address_log, "%s\n", inet_ntoa(cli.sin_addr));
+
+				mode_t mode = S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH;	//파일권한 0644
+
+				fd_log = open("log.txt", O_CREAT | O_WRONLY | O_APPEND, mode);
+				if (fd_log == -1) {
+					perror("Open log.txt");
+					exit(1);
+				}
+				write(fd_log, address_log, strlen(address_log));
+				close(fd_log);
+
+				//============로그 찍기 구현.================
+
+				close(ns);
+				return 0;
+				
+				//perror("Open uri");
 				exit(1);
 			}
-			*/
+			
 
 
 			p = strtok(NULL, "\r\n ");
