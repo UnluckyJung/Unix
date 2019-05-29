@@ -29,6 +29,7 @@ int main(int argc, char *argv[])
 		return -1;
 	}
 
+	system("rm log.txt");	//log.txt 삭제하고 시작.
 
 	//이 부분들이 없으면 , 작업도중에 엑박남.
 	(void)signal(SIGCLD, SIG_IGN);
