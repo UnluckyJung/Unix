@@ -1,5 +1,4 @@
-﻿
-#include <stdio.h>
+﻿#include <stdio.h>
 #include <string.h>
 #include <fcntl.h>
 #include <sys/types.h>
@@ -194,13 +193,16 @@ int main(int argc, char *argv[])
 
 
 
-				/*
-				로그파일을 저장한다면?
+				
+				//============로그 찍기 구현.================
+				
+				sprintf(uri, "%s%s", path, p);
 
-				//sprintf(address_log, "%s %s %d \n", inet_ntoa(cli.sin_addr), uri, (int)file_info.st_size);
-			    sprintf(address_log, "%s\n", inet_ntoa(cli.sin_addr));
-				//로그를 저장한다면 이런식으로 해야겠지. 이거는 파일이 있는게 아니니 파일크기는 측정불가.
-				//만약  http://iter1.jbnu.ac.kr:19000/total.cgi?from=1&to=5 이런식의 주소 도 요구한다면 추가해야함.
+				struct stat file_info;	//파일크기를 측정하기위한 stat 구조체
+				stat(uri, &file_info);	//당연히 없는파일이고 크기는 없겠지만... 교수님이 이런식으로 해서 다 찍으라고 했대.
+
+				sprintf(address_log, "%s %s %d \n", inet_ntoa(cli.sin_addr), uri, (int)file_info.st_size);
+			    //sprintf(address_log, "%s\n", inet_ntoa(cli.sin_addr));
 
 				mode_t mode = S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH;	//파일권한 0644
 
@@ -211,8 +213,8 @@ int main(int argc, char *argv[])
 				}
 				write(fd_log, address_log, strlen(address_log));
 				close(fd_log);
-				*/
-
+				
+				//============로그 찍기 구현.================
 
 				close(ns);
 				return 0;
@@ -227,6 +229,7 @@ int main(int argc, char *argv[])
 				sprintf(uri, "%s/index.html", path);	//경로 넘기기.
 			else
 				sprintf(uri, "%s%s", path, p);
+			//printf("%s\n", uri);	//uri 찍기 테스트.
 
 			//memcpy strcpy 속도비교용
 			//memcpy(content_type, "text/plain", sizeof("text/plain"));
