@@ -131,7 +131,7 @@ int main(int argc, char *argv[])
 			0, 0} };
 
 
-			n = read(ns, Receive_Buf, BUFSIZ);
+			n = read(ns, Receive_Buf, BUFSIZ);	//클라리언트가 무엇을 요청하는지 받아서 Receive_Buf에 넣는다.
 
 
 
@@ -258,7 +258,7 @@ int main(int argc, char *argv[])
 			//printf("%s\n", uri);
 
 
-			fd = open(uri, O_RDONLY);
+			fd = open(uri, O_RDONLY);	//배열을 이용할꺼면, uri로 가서 open하는것이 아닌, 원하는것이 해당 배열 목록에 있는지를 확인하고 그것을 보내줘야한다.
 
 			//찾음 시발 favicon.ico 이 십새기 문제다.
 			//path에 없는걸 존나찾고잇네
@@ -268,7 +268,7 @@ int main(int argc, char *argv[])
 
 
 
-			if(fd == -1)
+			if(fd == -1)	//이부분 조건도 바꿔야함. 요청하는것이 배열 목록중에 있는지를 확인하고 없는경우
 			{
 				char NOTFOUND[20] = "Not found";
 
@@ -325,13 +325,28 @@ int main(int argc, char *argv[])
 
 
 			int size = 0;
-			if (fd >= 0)
+			if (fd >= 0)	//fd가 있는경우에 돌아가는 작업이다. 이것도 요청하는게 배열 목록중에 있는경우, 돌아가는것으로 바꿔야한다.
 			{
-				while ((n = read(fd, Receive_Buf, BUFSIZ)) > 0)
+				while ((n = read(fd, Receive_Buf, BUFSIZ)) > 0)	//fd에서 BUFSIZ만큼 계속 읽어서 Receive_BUF에 넣은다음에
 				{
-					write(ns, Receive_Buf, n);
-				}
+					write(ns, Receive_Buf, n);	//그것을 클라이언트에게 전송해주는데 이것도 바꿔야함. (여기서 n은 실제로 읽어온 byte의 수)
+				}/
 			}
+
+
+
+
+
+
+
+			//============즉, 예를들어 char arr[50][66000] //byte 최대큰 파일이 65kb정도 되더라.
+			//여기다가 모든 파일 각각 다 넣어놓고.
+			//어느것을 요청시 해당배열 ex) arr[1][66000]을 ns에다가 보내버리는 식으로 진행
+			//물론 Content_type도 맞춰야한다. 이부분이 제일 고생할것으로 예상되어짐.
+
+
+
+
 
 
 			//저수준 파일 입출력을 이용한 log file 생성.
