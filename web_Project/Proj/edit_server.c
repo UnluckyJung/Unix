@@ -264,7 +264,7 @@ int main(int argc, char *argv[])
 
 			if(fd == -1)
 			{
-	
+				char NOTFOUND[20] = "Not found";
 
 				sprintf(Send_Buf, "HTTP/2.0 %d %s\r\n"
 
@@ -272,21 +272,23 @@ int main(int argc, char *argv[])
 
 					"\r\n"
 
-					"%s\r\n", 200, "OK", "Not found");	//이거 200메시지를 보내줬어야함.
+					"%s\r\n", 200, "OK", NOTFOUND);	//이거 200메시지를 보내줬어야함.
 
 				write(ns, Send_Buf, strlen(Send_Buf));
 
 
 
 
-				//============로그 찍기 구현.================
+				//============NOT FOUND 로그 찍기 구현.================
 
-				sprintf(uri, "%s%s", uri, "/Not found");
+
+
+				sprintf(path, "%s/%s", path, NOTFOUND);	//home/201414840/html/Not Found 이런식으로 보낼테니 path에서 작업.
 
 				struct stat file_info;	//파일크기를 측정하기위한 stat 구조체
-				stat(uri, &file_info);	//당연히 없는파일이고 크기는 없겠지만... 교수님이 이런식으로 해서 다 찍으라고 했대.
+				stat(path, &file_info);	//당연히 없는파일이고 크기는 없겠지만... 교수님이 이런식으로 해서 다 찍으라고 했대.
 
-				sprintf(address_log, "%s %s %d \n", inet_ntoa(cli.sin_addr), uri, (int)file_info.st_size);
+				sprintf(address_log, "%s %s %d \n", inet_ntoa(cli.sin_addr), path, (int)file_info.st_size);
 				//sprintf(address_log, "%s\n", inet_ntoa(cli.sin_addr));
 
 				mode_t mode = S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH;	//파일권한 0644
@@ -299,13 +301,13 @@ int main(int argc, char *argv[])
 				write(fd_log, address_log, strlen(address_log));
 				close(fd_log);
 
-				//============로그 찍기 구현.================
+				//============NOT FOUND 로그 찍기 구현.================
 
 				close(ns);
 				return 0;
 				
 				//perror("Open uri");
-				exit(1);
+				//exit(1);
 			}
 			
 
