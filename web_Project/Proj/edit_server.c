@@ -179,6 +179,8 @@ int main(int argc, char *argv[])
 				//printf("%lld ~ %lld = %lld\n", num1, num2, result);
 				//이거 계산할때마다 숫자 깎이나 확인할때 용도로 사용했었음.
 
+				char result_char[50] = { 0, };
+				sprintf(result_char,"%lld", result);
 
 
 				sprintf(Send_Buf, "HTTP/2.0 %d %s\r\n"
@@ -187,7 +189,7 @@ int main(int argc, char *argv[])
 
 					"\r\n"
 
-					"%lld\r\n", 200, "OK", result);	//이거 200메시지를 보내줬어야함.
+					"%s\r\n", 200, "OK", result_char);	//이거 200메시지를 보내줬어야함.
 
 				write(ns, Send_Buf, strlen(Send_Buf));
 
@@ -196,13 +198,16 @@ int main(int argc, char *argv[])
 				
 				//============로그 찍기 구현.================
 				
+
 				sprintf(uri, "%s%s", path, p);
 
-				struct stat file_info;	//파일크기를 측정하기위한 stat 구조체
-				stat(uri, &file_info);	//당연히 없는파일이고 크기는 없겠지만... 교수님이 이런식으로 해서 다 찍으라고 했대.
+				//struct stat file_info;	//파일크기를 측정하기위한 stat 구조체
+				//stat(uri, &file_info);	//당연히 없는파일이고 크기는 없겠지만... 교수님이 이런식으로 해서 다 찍으라고 했대.
 
-				sprintf(address_log, "%s %s %d \n", inet_ntoa(cli.sin_addr), uri, (int)file_info.st_size);
-			    //sprintf(address_log, "%s\n", inet_ntoa(cli.sin_addr));
+				//sprintf(address_log, "%s %s %d \n", inet_ntoa(cli.sin_addr), uri, (int)file_info.st_size);
+				sprintf(address_log, "%s %s %d \n", inet_ntoa(cli.sin_addr), uri, (int)strlen(result_char));
+
+
 
 				mode_t mode = S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH;	//파일권한 0644
 
@@ -250,7 +255,7 @@ int main(int argc, char *argv[])
 
 
 			//printf("%s\n", uri);
-			//진짜 로그 다찍으면서 찾았다.
+
 
 			fd = open(uri, O_RDONLY);
 
@@ -285,11 +290,8 @@ int main(int argc, char *argv[])
 
 				sprintf(path, "%s/%s", path, NOTFOUND);	//home/201414840/html/Not Found 이런식으로 보낼테니 path에서 작업.
 
-				struct stat file_info;	//파일크기를 측정하기위한 stat 구조체
-				stat(path, &file_info);	//당연히 없는파일이고 크기는 없겠지만... 교수님이 이런식으로 해서 다 찍으라고 했대.
 
-				sprintf(address_log, "%s %s %d \n", inet_ntoa(cli.sin_addr), path, (int)file_info.st_size);
-				//sprintf(address_log, "%s\n", inet_ntoa(cli.sin_addr));
+				sprintf(address_log, "%s %s %d \n", inet_ntoa(cli.sin_addr), path, (int)strlen(NOTFOUND));
 
 				mode_t mode = S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH;	//파일권한 0644
 
@@ -305,9 +307,7 @@ int main(int argc, char *argv[])
 
 				close(ns);
 				return 0;
-				
-				//perror("Open uri");
-				//exit(1);
+
 			}
 			
 
