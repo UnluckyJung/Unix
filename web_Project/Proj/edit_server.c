@@ -200,12 +200,8 @@ int main(int argc, char *argv[])
 				//============로그 찍기 구현.================
 				
 
-				sprintf(uri, "%s%s", path, p);
+				sprintf(uri, "%s%s", path, p);	//uri에 요청받는 모든 경로를 넣음.
 
-				//struct stat file_info;	//파일크기를 측정하기위한 stat 구조체
-				//stat(uri, &file_info);	//당연히 없는파일이고 크기는 없겠지만... 교수님이 이런식으로 해서 다 찍으라고 했대.
-
-				//sprintf(address_log, "%s %s %d \n", inet_ntoa(cli.sin_addr), uri, (int)file_info.st_size);
 				sprintf(address_log, "%s %s %d \n", inet_ntoa(cli.sin_addr), uri, (int)strlen(result_char));
 
 
@@ -234,7 +230,7 @@ int main(int argc, char *argv[])
 			if (!strcmp(p, "/"))
 				sprintf(uri, "%s/index.html", path);	//경로 넘기기.
 			else
-				sprintf(uri, "%s%s", path, p);
+				sprintf(uri, "%s%s", path, p);	//uri에 요청받는 모든 경로를 넣음.
 			//printf("%s\n", uri);	//uri 찍기 테스트.
 
 			//memcpy strcpy 속도비교용
@@ -260,10 +256,7 @@ int main(int argc, char *argv[])
 
 			fd = open(uri, O_RDONLY);	//배열을 이용할꺼면, uri로 가서 open하는것이 아닌, 원하는것이 해당 배열 목록에 있는지를 확인하고 그것을 보내줘야한다.
 
-			//찾음 시발 favicon.ico 이 십새기 문제다.
-			//path에 없는걸 존나찾고잇네
-			//우리가 html 폴더안에 더 추가할건 아니니 그냥 이부분은 주석처리함.
-			//근데 아직도 이해안가는게, log.txt파일이 생성된뒤(한번이라도 누가 서버에 접속한뒤)에는 오류가 안뜸.
+
 			
 
 
@@ -330,7 +323,8 @@ int main(int argc, char *argv[])
 				while ((n = read(fd, Receive_Buf, BUFSIZ)) > 0)	//fd에서 BUFSIZ만큼 계속 읽어서 Receive_BUF에 넣은다음에
 				{
 					write(ns, Receive_Buf, n);	//그것을 클라이언트에게 전송해주는데 이것도 바꿔야함. (여기서 n은 실제로 읽어온 byte의 수)
-				}/
+					//printf("%s", Receive_Buf);	//보내는 파일 배열 확인용.
+				}
 			}
 
 
