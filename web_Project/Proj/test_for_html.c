@@ -35,7 +35,7 @@ int main(int argc, char *argv[])
 	struct stat banner1_info;	//파일크기를 측정하기위한 stat 구조체
 
 	stat(banner1_path, &banner1_info);
-	sprintf(banner1_path, "%s %d \n", banner1_path, (int)banner1_info.st_size);	//banner1_path에다가 경로 + banner1 파일크기로 배열에 넣음.
+	sprintf(banner1_path, "%s %d", banner1_path, (int)banner1_info.st_size);	//banner1_path에다가 경로 + banner1 파일크기로 배열에 넣음.
 
 
 	//======for banner1.html===============	
@@ -58,7 +58,7 @@ int main(int argc, char *argv[])
 	struct stat icontact_info;	//파일크기를 측정하기위한 stat 구조체
 
 	stat(icontact_path, &icontact_info);
-	sprintf(icontact_path, "%s %d \n", icontact_path, (int)icontact_info.st_size);	//icontact_path에다가 경로 + icontact 파일크기로 배열에 넣음.
+	sprintf(icontact_path, "%s %d", icontact_path, (int)icontact_info.st_size);	//icontact_path에다가 경로 + icontact 파일크기로 배열에 넣음.
 
 
 	//======for icontact.html===============
@@ -83,7 +83,7 @@ int main(int argc, char *argv[])
 	struct stat bac_04_info;	//파일크기를 측정하기위한 stat 구조체
 
 	stat(bac_04_path, &bac_04_info);
-	sprintf(bac_04_path, "%s %d \n", bac_04_path, (int)bac_04_info.st_size);	//bac_04_path에다가 경로 + bac_04 파일크기로 배열에 넣음.
+	sprintf(bac_04_path, "%s %d", bac_04_path, (int)bac_04_info.st_size);	//bac_04_path에다가 경로 + bac_04 파일크기로 배열에 넣음.
 
 
 	//======for bac_04.html===============
@@ -463,8 +463,8 @@ int main(int argc, char *argv[])
 
 
 
-			if(fd == -1)	//이부분 조건도 바꿔야함. 요청하는것이 배열 목록중에 있는지를 확인하고 없는경우
-			{
+			//if(fd == -1)	//이부분 조건도 바꿔야함. 요청하는것이 배열 목록중에 있는지를 확인하고 없는경우
+			else{
 				char NOTFOUND[20] = "Not found";
 
 				sprintf(Send_Buf, "HTTP/2.0 %d %s\r\n"
