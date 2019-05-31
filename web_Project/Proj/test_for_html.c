@@ -67,6 +67,31 @@ int main(int argc, char *argv[])
 
 
 
+
+
+
+	//======for bac_04.jpg===============
+
+	char bac_04_Buf[70000] = { 0 };
+	char bac_04_path[256] = "/home/201414840/html/images/bac_04.jpg";
+	int bac_04_fd;
+	int bac_04_size;
+
+	bac_04_fd = open("/home/201414840/html/images/bac_04.jpg", O_RDONLY);
+	bac_04_size = read(bac_04_fd, bac_04_Buf, 70000);	//bac_04_Buf에다가 bac_04.html의 data를 넣고, bac_04_size에다가 bac_04.jpg의 총 크기를 넣음
+
+	struct stat bac_04_info;	//파일크기를 측정하기위한 stat 구조체
+
+	stat(bac_04_path, &bac_04_info);
+	sprintf(bac_04_path, "%s %d \n", bac_04_path, (int)bac_04_info.st_size);	//bac_04_path에다가 경로 + bac_04 파일크기로 배열에 넣음.
+
+
+	//======for bac_04.html===============
+
+
+
+
+
 	//굳이 필요 없는 부분, 일단 놔둠.
 	if (argc != 2)
 	{
@@ -265,6 +290,44 @@ int main(int argc, char *argv[])
 			//======for icontact.html===============
 
 
+
+			//======for bac_04.jpg===============
+
+			char *bac_04p;
+			if ((bac_04p = strstr(p, "bac_04.jpg")) != NULL) {	//클라이언트에게 받은 요청중 bac_04_test.html이 있는지 확인
+
+
+				sprintf(content_type, "%s", "image/jpeg");	//html파일의 타입이 text/html이니 저장.
+
+
+				sprintf(Send_Buf, "HTTP/2.0 %d %s\r\n", 200, "OK");	//클라이언트에게 HTTP  형식을 보내겠다고 알리기
+				n = write(ns, Send_Buf, strlen(Send_Buf));
+
+				sprintf(Send_Buf, "content-type: %s\r\n\r\n", content_type);	//클라이언트에게 bac_04이 jpeg타입인걸 보내기
+				n = write(ns, Send_Buf, strlen(Send_Buf));
+
+				write(ns, bac_04_Buf, bac_04_size);	//bac_04_Buf에 담긴 데이터 클라이언트에게 전송하기
+
+
+				//bac_04 로그 찍기
+				sprintf(address_log, "%s %s\n", inet_ntoa(cli.sin_addr), bac_04_path);
+
+				mode_t mode = S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH;	//파일권한 0644
+
+				fd_log = open("log.txt", O_CREAT | O_WRONLY | O_APPEND, mode);
+				if (fd_log == -1) {
+					perror("Open log.txt");
+					exit(1);
+				}
+				write(fd_log, address_log, strlen(address_log));
+				close(fd_log);
+
+
+				close(ns);
+				return 0;
+			}
+
+			//======for bac_04.jpg===============
 
 
 
