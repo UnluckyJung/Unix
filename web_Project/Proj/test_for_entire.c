@@ -24,13 +24,13 @@ int main(int argc, char *argv[])
 
 	//======for banner1.jpg===============
 
-	char banner1_Buf[150000] = { 0 };
+	char banner1_Buf[13000] = { 0 };
 	char banner1_path[256] = "/home/201414840/html/banner1.jpg";
 	int banner1_fd;
 	int banner1_size;
 
 	banner1_fd = open("/home/201414840/html/banner1.jpg", O_RDONLY);
-	banner1_size = read(banner1_fd, banner1_Buf, 150000);	//banner1_Buf에다가 banner1.html의 data를 넣고, banner1_size에다가 banner1.html의 총 크기를 넣음
+	banner1_size = read(banner1_fd, banner1_Buf, 13000);	//banner1_Buf에다가 banner1.html의 data를 넣고, banner1_size에다가 banner1.html의 총 크기를 넣음
 
 	struct stat banner1_info;	//파일크기를 측정하기위한 stat 구조체
 
@@ -44,13 +44,13 @@ int main(int argc, char *argv[])
 	
 	//======for banner2.jpg===============
 
-	char banner2_Buf[150000] = { 0 };
+	char banner2_Buf[9000] = { 0 };
 	char banner2_path[256] = "/home/201414840/html/banner2.jpg";
 	int banner2_fd;
 	int banner2_size;
 
 	banner2_fd = open("/home/201414840/html/banner2.jpg", O_RDONLY);
-	banner2_size = read(banner2_fd, banner2_Buf, 150000);	//banner2_Buf에다가 banner2.html의 data를 넣고, banner2_size에다가 banner2.html의 총 크기를 넣음
+	banner2_size = read(banner2_fd, banner2_Buf, 9000);	//banner2_Buf에다가 banner2.html의 data를 넣고, banner2_size에다가 banner2.html의 총 크기를 넣음
 
 	struct stat banner2_info;	//파일크기를 측정하기위한 stat 구조체
 
@@ -66,13 +66,13 @@ int main(int argc, char *argv[])
 
 	//======for banner3.jpg===============
 
-	char banner3_Buf[150000] = { 0 };
+	char banner3_Buf[18000] = { 0 };
 	char banner3_path[256] = "/home/201414840/html/banner3.jpg";
 	int banner3_fd;
 	int banner3_size;
 
 	banner3_fd = open("/home/201414840/html/banner3.jpg", O_RDONLY);
-	banner3_size = read(banner3_fd, banner3_Buf, 150000);	//banner3_Buf에다가 banner3.html의 data를 넣고, banner3_size에다가 banner3.html의 총 크기를 넣음
+	banner3_size = read(banner3_fd, banner3_Buf, 18000);	//banner3_Buf에다가 banner3.html의 data를 넣고, banner3_size에다가 banner3.html의 총 크기를 넣음
 
 	struct stat banner3_info;	//파일크기를 측정하기위한 stat 구조체
 
@@ -85,13 +85,13 @@ int main(int argc, char *argv[])
 
 	//======for bullet1.jpg===============
 
-	char bullet1_Buf[150000] = { 0 };
+	char bullet1_Buf[1000] = { 0 };
 	char bullet1_path[256] = "/home/201414840/html/bullet1.jpg";
 	int bullet1_fd;
 	int bullet1_size;
 
 	bullet1_fd = open("/home/201414840/html/bullet1.jpg", O_RDONLY);
-	bullet1_size = read(bullet1_fd, bullet1_Buf, 150000);	//bullet1_Buf에다가 bullet1.html의 data를 넣고, bullet1_size에다가 bullet1.html의 총 크기를 넣음
+	bullet1_size = read(bullet1_fd, bullet1_Buf, 1000);	//bullet1_Buf에다가 bullet1.html의 data를 넣고, bullet1_size에다가 bullet1.html의 총 크기를 넣음
 
 	struct stat bullet1_info;	//파일크기를 측정하기위한 stat 구조체
 
@@ -104,13 +104,13 @@ int main(int argc, char *argv[])
 
 	//======for bullet2.jpg===============
 
-	char bullet2_Buf[150000] = { 0 };
+	char bullet2_Buf[1000] = { 0 };
 	char bullet2_path[256] = "/home/201414840/html/bullet2.jpg";
 	int bullet2_fd;
 	int bullet2_size;
 
 	bullet2_fd = open("/home/201414840/html/bullet2.jpg", O_RDONLY);
-	bullet2_size = read(bullet2_fd, bullet2_Buf, 150000);	//bullet2_Buf에다가 bullet2.html의 data를 넣고, bullet2_size에다가 bullet2.html의 총 크기를 넣음
+	bullet2_size = read(bullet2_fd, bullet2_Buf, 1000);	//bullet2_Buf에다가 bullet2.html의 data를 넣고, bullet2_size에다가 bullet2.html의 총 크기를 넣음
 
 	struct stat bullet2_info;	//파일크기를 측정하기위한 stat 구조체
 
@@ -122,13 +122,13 @@ int main(int argc, char *argv[])
 
 	//======for bullet3.jpg===============
 
-	char bullet3_Buf[150000] = { 0 };
+	char bullet3_Buf[1000] = { 0 };
 	char bullet3_path[256] = "/home/201414840/html/bullet3.jpg";
 	int bullet3_fd;
 	int bullet3_size;
 
 	bullet3_fd = open("/home/201414840/html/bullet3.jpg", O_RDONLY);
-	bullet3_size = read(bullet3_fd, bullet3_Buf, 150000);	//bullet3_Buf에다가 bullet3.html의 data를 넣고, bullet3_size에다가 bullet3.html의 총 크기를 넣음
+	bullet3_size = read(bullet3_fd, bullet3_Buf, 1000);	//bullet3_Buf에다가 bullet3.html의 data를 넣고, bullet3_size에다가 bullet3.html의 총 크기를 넣음
 
 	struct stat bullet3_info;	//파일크기를 측정하기위한 stat 구조체
 
@@ -147,13 +147,13 @@ int main(int argc, char *argv[])
 
 	//======for contact.htm===============
 
-	char contact_Buf[15000] = { 0 };
+	char contact_Buf[5000] = { 0 };
 	char contact_path[256] = "/home/201414840/html/contact.htm";
 	int contact_fd;
 	int contact_size;
 
 	contact_fd = open("/home/201414840/html/contact.htm", O_RDONLY);
-	contact_size = read(contact_fd, contact_Buf, 15000);	//contact_Buf에다가 contact.html의 data를 넣고, contact_size에다가 contact.html의 총 크기를 넣음
+	contact_size = read(contact_fd, contact_Buf, 5000);	//contact_Buf에다가 contact.html의 data를 넣고, contact_size에다가 contact.html의 총 크기를 넣음
 
 	struct stat contact_info;	//파일크기를 측정하기위한 stat 구조체
 
@@ -169,13 +169,13 @@ int main(int argc, char *argv[])
 
 	//======for home.htm===============
 
-	char home_Buf[15000] = { 0 };
+	char home_Buf[5000] = { 0 };
 	char home_path[256] = "/home/201414840/html/home.htm";
 	int home_fd;
 	int home_size;
 
 	home_fd = open("/home/201414840/html/home.htm", O_RDONLY);
-	home_size = read(home_fd, home_Buf, 15000);	//home_Buf에다가 home.html의 data를 넣고, home_size에다가 home.html의 총 크기를 넣음
+	home_size = read(home_fd, home_Buf, 5000);	//home_Buf에다가 home.html의 data를 넣고, home_size에다가 home.html의 총 크기를 넣음
 
 	struct stat home_info;	//파일크기를 측정하기위한 stat 구조체
 
@@ -189,13 +189,13 @@ int main(int argc, char *argv[])
 
 	//======for icontact.htm===============
 
-	char icontact_Buf[15000] = { 0 };
+	char icontact_Buf[3000] = { 0 };
 	char icontact_path[256] = "/home/201414840/html/icontact.htm";
 	int icontact_fd;
 	int icontact_size;
 
 	icontact_fd = open("/home/201414840/html/icontact.htm", O_RDONLY);
-	icontact_size = read(icontact_fd, icontact_Buf, 15000);	//icontact_Buf에다가 icontact.html의 data를 넣고, icontact_size에다가 icontact.html의 총 크기를 넣음
+	icontact_size = read(icontact_fd, icontact_Buf, 3000);	//icontact_Buf에다가 icontact.html의 data를 넣고, icontact_size에다가 icontact.html의 총 크기를 넣음
 
 	struct stat icontact_info;	//파일크기를 측정하기위한 stat 구조체
 
@@ -208,13 +208,13 @@ int main(int argc, char *argv[])
 
 	//======for ilinks.htm===============
 
-	char ilinks_Buf[15000] = { 0 };
+	char ilinks_Buf[4000] = { 0 };
 	char ilinks_path[256] = "/home/201414840/html/ilinks.htm";
 	int ilinks_fd;
 	int ilinks_size;
 
 	ilinks_fd = open("/home/201414840/html/ilinks.htm", O_RDONLY);
-	ilinks_size = read(ilinks_fd, ilinks_Buf, 15000);	//ilinks_Buf에다가 ilinks.html의 data를 넣고, ilinks_size에다가 ilinks.html의 총 크기를 넣음
+	ilinks_size = read(ilinks_fd, ilinks_Buf, 4000);	//ilinks_Buf에다가 ilinks.html의 data를 넣고, ilinks_size에다가 ilinks.html의 총 크기를 넣음
 
 	struct stat ilinks_info;	//파일크기를 측정하기위한 stat 구조체
 
@@ -227,13 +227,13 @@ int main(int argc, char *argv[])
 
 	//======for index.html===============
 
-	char index_Buf[15000] = { 0 };
+	char index_Buf[5000] = { 0 };
 	char index_path[256] = "/home/201414840/html/index.html";
 	int index_fd;
 	int index_size;
 
 	index_fd = open("/home/201414840/html/index.html", O_RDONLY);
-	index_size = read(index_fd, index_Buf, 15000);	//index_Buf에다가 index.html의 data를 넣고, index_size에다가 index.html의 총 크기를 넣음
+	index_size = read(index_fd, index_Buf, 5000);	//index_Buf에다가 index.html의 data를 넣고, index_size에다가 index.html의 총 크기를 넣음
 
 	struct stat index_info;	//파일크기를 측정하기위한 stat 구조체
 
@@ -246,13 +246,13 @@ int main(int argc, char *argv[])
 
 	//======for ishop.htm===============
 
-	char ishop_Buf[15000] = { 0 };
+	char ishop_Buf[7000] = { 0 };
 	char ishop_path[256] = "/home/201414840/html/ishop.htm";
 	int ishop_fd;
 	int ishop_size;
 
 	ishop_fd = open("/home/201414840/html/ishop.htm", O_RDONLY);
-	ishop_size = read(ishop_fd, ishop_Buf, 15000);	//ishop_Buf에다가 ishop.html의 data를 넣고, ishop_size에다가 ishop.html의 총 크기를 넣음
+	ishop_size = read(ishop_fd, ishop_Buf, 7000);	//ishop_Buf에다가 ishop.html의 data를 넣고, ishop_size에다가 ishop.html의 총 크기를 넣음
 
 	struct stat ishop_info;	//파일크기를 측정하기위한 stat 구조체
 
@@ -265,13 +265,13 @@ int main(int argc, char *argv[])
 
 	//======for links.htm===============
 
-	char links_Buf[15000] = { 0 };
+	char links_Buf[5000] = { 0 };
 	char links_path[256] = "/home/201414840/html/links.htm";
 	int links_fd;
 	int links_size;
 
 	links_fd = open("/home/201414840/html/links.htm", O_RDONLY);
-	links_size = read(links_fd, links_Buf, 15000);	//links_Buf에다가 links.html의 data를 넣고, links_size에다가 links.html의 총 크기를 넣음
+	links_size = read(links_fd, links_Buf, 5000);	//links_Buf에다가 links.html의 data를 넣고, links_size에다가 links.html의 총 크기를 넣음
 
 	struct stat links_info;	//파일크기를 측정하기위한 stat 구조체
 
@@ -284,13 +284,13 @@ int main(int argc, char *argv[])
 
 	//======for main.htm===============
 
-	char main_Buf[15000] = { 0 };
+	char main_Buf[10000] = { 0 };
 	char main_path[256] = "/home/201414840/html/main.htm";
 	int main_fd;
 	int main_size;
 
 	main_fd = open("/home/201414840/html/main.htm", O_RDONLY);
-	main_size = read(main_fd, main_Buf, 15000);	//main_Buf에다가 main.html의 data를 넣고, main_size에다가 main.html의 총 크기를 넣음
+	main_size = read(main_fd, main_Buf, 10000);	//main_Buf에다가 main.html의 data를 넣고, main_size에다가 main.html의 총 크기를 넣음
 
 	struct stat main_info;	//파일크기를 측정하기위한 stat 구조체
 
@@ -303,13 +303,13 @@ int main(int argc, char *argv[])
 
 	//======for shop.htm===============
 
-	char shop_Buf[15000] = { 0 };
+	char shop_Buf[5000] = { 0 };
 	char shop_path[256] = "/home/201414840/html/shop.htm";
 	int shop_fd;
 	int shop_size;
 
 	shop_fd = open("/home/201414840/html/shop.htm", O_RDONLY);
-	shop_size = read(shop_fd, shop_Buf, 15000);	//shop_Buf에다가 shop.html의 data를 넣고, shop_size에다가 shop.html의 총 크기를 넣음
+	shop_size = read(shop_fd, shop_Buf, 5000);	//shop_Buf에다가 shop.html의 data를 넣고, shop_size에다가 shop.html의 총 크기를 넣음
 
 	struct stat shop_info;	//파일크기를 측정하기위한 stat 구조체
 
@@ -327,13 +327,13 @@ int main(int argc, char *argv[])
 
 	//======for 05_01.gif===============
 
-	char i05_01_Buf[150000] = { 0 };
+	char i05_01_Buf[17000] = { 0 };
 	char i05_01_path[256] = "/home/201414840/html/images/05_01.gif";
 	int i05_01_fd;
 	int i05_01_size;
 
 	i05_01_fd = open("/home/201414840/html/images/05_01.gif", O_RDONLY);
-	i05_01_size = read(i05_01_fd, i05_01_Buf, 150000);	//05_01_Buf에다가 05_01.html의 data를 넣고, 05_01_size에다가 05_01.gif의 총 크기를 넣음
+	i05_01_size = read(i05_01_fd, i05_01_Buf, 17000);	//05_01_Buf에다가 05_01.html의 data를 넣고, 05_01_size에다가 05_01.gif의 총 크기를 넣음
 
 	struct stat i05_01_info;	//파일크기를 측정하기위한 stat 구조체
 
@@ -365,13 +365,13 @@ int main(int argc, char *argv[])
 
 	//======for 05_03.gif===============
 
-	char i05_03_Buf[150000] = { 0 };
+	char i05_03_Buf[25000] = { 0 };
 	char i05_03_path[256] = "/home/201414840/html/images/05_03.gif";
 	int i05_03_fd;
 	int i05_03_size;
 
 	i05_03_fd = open("/home/201414840/html/images/05_03.gif", O_RDONLY);
-	i05_03_size = read(i05_03_fd, i05_03_Buf, 150000);	//i05_03_Buf에다가 i05_03.html의 data를 넣고, i05_03_size에다가 05_03.gif의 총 크기를 넣음
+	i05_03_size = read(i05_03_fd, i05_03_Buf, 25000);	//i05_03_Buf에다가 i05_03.html의 data를 넣고, i05_03_size에다가 05_03.gif의 총 크기를 넣음
 
 	struct stat i05_03_info;	//파일크기를 측정하기위한 stat 구조체
 
@@ -384,13 +384,13 @@ int main(int argc, char *argv[])
 
 	//======for 05_04.gif===============
 
-	char i05_04_Buf[150000] = { 0 };
+	char i05_04_Buf[8200] = { 0 };
 	char i05_04_path[256] = "/home/201414840/html/images/05_04.gif";
 	int i05_04_fd;
 	int i05_04_size;
 
 	i05_04_fd = open("/home/201414840/html/images/05_04.gif", O_RDONLY);
-	i05_04_size = read(i05_04_fd, i05_04_Buf, 150000);	//i05_04_Buf에다가 i05_04.html의 data를 넣고, i05_04_size에다가 05_04.gif의 총 크기를 넣음
+	i05_04_size = read(i05_04_fd, i05_04_Buf, 8200);	//i05_04_Buf에다가 i05_04.html의 data를 넣고, i05_04_size에다가 05_04.gif의 총 크기를 넣음
 
 	struct stat i05_04_info;	//파일크기를 측정하기위한 stat 구조체
 
@@ -404,13 +404,13 @@ int main(int argc, char *argv[])
 	//======for 05_04-05_07_over.gif===============
 
 	//char i05_04-05_07_over_Buf[150000] = { 0 };	04-05같이 변수쓰면안됨.
-	char i05_04_05_07_over_Buf[150000] = { 0 };
+	char i05_04_05_07_over_Buf[8000] = { 0 };
 	char i05_04_05_07_over_path[256] = "/home/201414840/html/images/05_04-05_07_over.gif";
 	int i05_04_05_07_over_fd;
 	int i05_04_05_07_over_size;
 
 	i05_04_05_07_over_fd = open("/home/201414840/html/images/05_04-05_07_over.gif", O_RDONLY);
-	i05_04_05_07_over_size = read(i05_04_05_07_over_fd, i05_04_05_07_over_Buf, 150000);	//i05_04-05_07_over_Buf에다가 i05_04-05_07_over.html의 data를 넣고, i05_04-05_07_over_size에다가 05_04-05_07_over.gif의 총 크기를 넣음
+	i05_04_05_07_over_size = read(i05_04_05_07_over_fd, i05_04_05_07_over_Buf, 8000);	//i05_04-05_07_over_Buf에다가 i05_04-05_07_over.html의 data를 넣고, i05_04-05_07_over_size에다가 05_04-05_07_over.gif의 총 크기를 넣음
 
 	struct stat i05_04_05_07_over_info;	//파일크기를 측정하기위한 stat 구조체
 
@@ -423,13 +423,13 @@ int main(int argc, char *argv[])
 
 	//======for 05_04-over.gif===============
 
-	char i05_04_over_Buf[150000] = { 0 };
+	char i05_04_over_Buf[8000] = { 0 };
 	char i05_04_over_path[256] = "/home/201414840/html/images/05_04-over.gif";
 	int i05_04_over_fd;
 	int i05_04_over_size;
 
 	i05_04_over_fd = open("/home/201414840/html/images/05_04-over.gif", O_RDONLY);
-	i05_04_over_size = read(i05_04_over_fd, i05_04_over_Buf, 150000);	//i05_04-over_Buf에다가 i05_04-over.html의 data를 넣고, i05_04-over_size에다가 05_04-over.gif의 총 크기를 넣음
+	i05_04_over_size = read(i05_04_over_fd, i05_04_over_Buf, 8000);	//i05_04-over_Buf에다가 i05_04-over.html의 data를 넣고, i05_04-over_size에다가 05_04-over.gif의 총 크기를 넣음
 
 	struct stat i05_04_over_info;	//파일크기를 측정하기위한 stat 구조체
 
@@ -441,13 +441,13 @@ int main(int argc, char *argv[])
 
 	//======for 05_05.gif===============
 
-	char i05_05_Buf[150000] = { 0 };
+	char i05_05_Buf[14000] = { 0 };
 	char i05_05_path[256] = "/home/201414840/html/images/05_05.gif";
 	int i05_05_fd;
 	int i05_05_size;
 
 	i05_05_fd = open("/home/201414840/html/images/05_05.gif", O_RDONLY);
-	i05_05_size = read(i05_05_fd, i05_05_Buf, 150000);	//i05_05_Buf에다가 i05_05.html의 data를 넣고, i05_05_size에다가 05_05.gif의 총 크기를 넣음
+	i05_05_size = read(i05_05_fd, i05_05_Buf, 14000);	//i05_05_Buf에다가 i05_05.html의 data를 넣고, i05_05_size에다가 05_05.gif의 총 크기를 넣음
 
 	struct stat i05_05_info;	//파일크기를 측정하기위한 stat 구조체
 
@@ -459,13 +459,13 @@ int main(int argc, char *argv[])
 
 	//======for 05_06.gif===============
 
-	char i05_06_Buf[150000] = { 0 };
+	char i05_06_Buf[9000] = { 0 };
 	char i05_06_path[256] = "/home/201414840/html/images/05_06.gif";
 	int i05_06_fd;
 	int i05_06_size;
 
 	i05_06_fd = open("/home/201414840/html/images/05_06.gif", O_RDONLY);
-	i05_06_size = read(i05_06_fd, i05_06_Buf, 150000);	//i05_06_Buf에다가 i05_06.html의 data를 넣고, i05_06_size에다가 05_06.gif의 총 크기를 넣음
+	i05_06_size = read(i05_06_fd, i05_06_Buf, 9000);	//i05_06_Buf에다가 i05_06.html의 data를 넣고, i05_06_size에다가 05_06.gif의 총 크기를 넣음
 
 	struct stat i05_06_info;	//파일크기를 측정하기위한 stat 구조체
 
@@ -478,13 +478,13 @@ int main(int argc, char *argv[])
 
 	//======for 05_06-over.gif===============
 
-	char i05_06_over_Buf[150000] = { 0 };
+	char i05_06_over_Buf[8300] = { 0 };
 	char i05_06_over_path[256] = "/home/201414840/html/images/05_06-over.gif";
 	int i05_06_over_fd;
 	int i05_06_over_size;
 
 	i05_06_over_fd = open("/home/201414840/html/images/05_06-over.gif", O_RDONLY);
-	i05_06_over_size = read(i05_06_over_fd, i05_06_over_Buf, 150000);	//i05_06-over_Buf에다가 i05_06-over.html의 data를 넣고, i05_06-over_size에다가 05_06.gif의 총 크기를 넣음
+	i05_06_over_size = read(i05_06_over_fd, i05_06_over_Buf, 8300);	//i05_06-over_Buf에다가 i05_06-over.html의 data를 넣고, i05_06-over_size에다가 05_06.gif의 총 크기를 넣음
 
 	struct stat i05_06_over_info;	//파일크기를 측정하기위한 stat 구조체
 
@@ -497,13 +497,13 @@ int main(int argc, char *argv[])
 
 	//======for 05_07.gif===============
 
-	char i05_07_Buf[150000] = { 0 };
+	char i05_07_Buf[8400] = { 0 };
 	char i05_07_path[256] = "/home/201414840/html/images/05_07.gif";
 	int i05_07_fd;
 	int i05_07_size;
 
 	i05_07_fd = open("/home/201414840/html/images/05_07.gif", O_RDONLY);
-	i05_07_size = read(i05_07_fd, i05_07_Buf, 150000);	//i05_07_Buf에다가 i05_07.html의 data를 넣고, i05_07_size에다가 05_07.gif의 총 크기를 넣음
+	i05_07_size = read(i05_07_fd, i05_07_Buf, 8400);	//i05_07_Buf에다가 i05_07.html의 data를 넣고, i05_07_size에다가 05_07.gif의 총 크기를 넣음
 
 	struct stat i05_07_info;	//파일크기를 측정하기위한 stat 구조체
 
@@ -516,13 +516,13 @@ int main(int argc, char *argv[])
 
 	//======for 05_07-over.gif===============
 
-	char i05_07_over_Buf[150000] = { 0 };
+	char i05_07_over_Buf[8300] = { 0 };
 	char i05_07_over_path[256] = "/home/201414840/html/images/05_07-over.gif";
 	int i05_07_over_fd;
 	int i05_07_over_size;
 
 	i05_07_over_fd = open("/home/201414840/html/images/05_07-over.gif", O_RDONLY);
-	i05_07_over_size = read(i05_07_over_fd, i05_07_over_Buf, 150000);	//i05_07_over_Buf에다가 i05_07_over.html의 data를 넣고, i05_07_over_size에다가 05_07.gif의 총 크기를 넣음
+	i05_07_over_size = read(i05_07_over_fd, i05_07_over_Buf, 8300);	//i05_07_over_Buf에다가 i05_07_over.html의 data를 넣고, i05_07_over_size에다가 05_07.gif의 총 크기를 넣음
 
 	struct stat i05_07_over_info;	//파일크기를 측정하기위한 stat 구조체
 
@@ -535,13 +535,13 @@ int main(int argc, char *argv[])
 
 	//======for 05_08.gif===============
 
-	char i05_08_Buf[150000] = { 0 };
+	char i05_08_Buf[9300] = { 0 };
 	char i05_08_path[256] = "/home/201414840/html/images/05_08.gif";
 	int i05_08_fd;
 	int i05_08_size;
 
 	i05_08_fd = open("/home/201414840/html/images/05_08.gif", O_RDONLY);
-	i05_08_size = read(i05_08_fd, i05_08_Buf, 150000);	//i05_08_Buf에다가 i05_08.html의 data를 넣고, i05_08_size에다가 05_08.gif의 총 크기를 넣음
+	i05_08_size = read(i05_08_fd, i05_08_Buf, 9300);	//i05_08_Buf에다가 i05_08.html의 data를 넣고, i05_08_size에다가 05_08.gif의 총 크기를 넣음
 
 	struct stat i05_08_info;	//파일크기를 측정하기위한 stat 구조체
 
@@ -554,13 +554,13 @@ int main(int argc, char *argv[])
 
 	//======for 05_08_over.gif===============
 
-	char i05_08_over_Buf[150000] = { 0 };
+	char i05_08_over_Buf[9200] = { 0 };
 	char i05_08_over_path[256] = "/home/201414840/html/images/05_08-over.gif";
 	int i05_08_over_fd;
 	int i05_08_over_size;
 
 	i05_08_over_fd = open("/home/201414840/html/images/05_08-over.gif", O_RDONLY);
-	i05_08_over_size = read(i05_08_over_fd, i05_08_over_Buf, 150000);	//i05_08_over_Buf에다가 i05_08_over.html의 data를 넣고, i05_08_over_size에다가 05_08.gif의 총 크기를 넣음
+	i05_08_over_size = read(i05_08_over_fd, i05_08_over_Buf, 9200);	//i05_08_over_Buf에다가 i05_08_over.html의 data를 넣고, i05_08_over_size에다가 05_08.gif의 총 크기를 넣음
 
 	struct stat i05_08_over_info;	//파일크기를 측정하기위한 stat 구조체
 
@@ -572,13 +572,13 @@ int main(int argc, char *argv[])
 
 	//======for 05_09.gif===============
 
-	char i05_09_Buf[150000] = { 0 };
+	char i05_09_Buf[117000] = { 0 };
 	char i05_09_path[256] = "/home/201414840/html/images/05_09.gif";
 	int i05_09_fd;
 	int i05_09_size;
 
 	i05_09_fd = open("/home/201414840/html/images/05_09.gif", O_RDONLY);
-	i05_09_size = read(i05_09_fd, i05_09_Buf, 150000);	//i05_09_Buf에다가 i05_09.html의 data를 넣고, i05_09_size에다가 05_09.gif의 총 크기를 넣음
+	i05_09_size = read(i05_09_fd, i05_09_Buf, 117000);	//i05_09_Buf에다가 i05_09.html의 data를 넣고, i05_09_size에다가 05_09.gif의 총 크기를 넣음
 
 	struct stat i05_09_info;	//파일크기를 측정하기위한 stat 구조체
 
@@ -591,13 +591,13 @@ int main(int argc, char *argv[])
 
 	//======for 05_10.gif===============
 
-	char i05_10_Buf[150000] = { 0 };
+	char i05_10_Buf[1400] = { 0 };
 	char i05_10_path[256] = "/home/201414840/html/images/05_10.gif";
 	int i05_10_fd;
 	int i05_10_size;
 
 	i05_10_fd = open("/home/201414840/html/images/05_10.gif", O_RDONLY);
-	i05_10_size = read(i05_10_fd, i05_10_Buf, 150000);	//i05_10_Buf에다가 i05_10.html의 data를 넣고, i05_10_size에다가 05_10.gif의 총 크기를 넣음
+	i05_10_size = read(i05_10_fd, i05_10_Buf, 1400);	//i05_10_Buf에다가 i05_10.html의 data를 넣고, i05_10_size에다가 05_10.gif의 총 크기를 넣음
 
 	struct stat i05_10_info;	//파일크기를 측정하기위한 stat 구조체
 
@@ -612,13 +612,13 @@ int main(int argc, char *argv[])
 
 	//======for bac_04.jpg===============
 
-	char bac_04_Buf[150000] = { 0 };
+	char bac_04_Buf[63000] = { 0 };
 	char bac_04_path[256] = "/home/201414840/html/images/bac_04.jpg";
 	int bac_04_fd;
 	int bac_04_size;
 
 	bac_04_fd = open("/home/201414840/html/images/bac_04.jpg", O_RDONLY);
-	bac_04_size = read(bac_04_fd, bac_04_Buf, 150000);	//bac_04_Buf에다가 bac_04.html의 data를 넣고, bac_04_size에다가 bac_04.jpg의 총 크기를 넣음
+	bac_04_size = read(bac_04_fd, bac_04_Buf, 63000);	//bac_04_Buf에다가 bac_04.html의 data를 넣고, bac_04_size에다가 bac_04.jpg의 총 크기를 넣음
 
 	struct stat bac_04_info;	//파일크기를 측정하기위한 stat 구조체
 
