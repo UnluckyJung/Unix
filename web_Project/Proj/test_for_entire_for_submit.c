@@ -20,7 +20,7 @@ int main(int argc, char *argv[])
 
 	char path[256];
 	getcwd(path, 255);
-	sprintf(path, "%s/%s", path, "example");
+	sprintf(path, "%s/%s", "example");
 
 	struct sockaddr_in sin, cli;
 	int sd, ns;
@@ -30,13 +30,12 @@ int main(int argc, char *argv[])
 	//======for banner1.jpg===============
 
 	char banner1_Buf[13000] = { 0 };
-	//char banner1_path[256] = "/home/201414840/html/banner1.jpg";
-	char banner1_path[256] = strcat(path, "/banner1.jpg");
-
+	char banner1_path[256];
+	sprintf(banner1_path, "%s%s","banner1.jpg");
 	int banner1_fd;
 	int banner1_size;
 
-	banner1_fd = open(banner1_path, O_RDONLY);
+	banner1_fd = open("/home/201414840/html/banner1.jpg", O_RDONLY);
 	banner1_size = read(banner1_fd, banner1_Buf, 13000);	//banner1_Buf에다가 banner1.html의 data를 넣고, banner1_size에다가 banner1.html의 총 크기를 넣음
 
 	struct stat banner1_info;	//파일크기를 측정하기위한 stat 구조체
@@ -52,11 +51,11 @@ int main(int argc, char *argv[])
 	//======for banner2.jpg===============
 
 	char banner2_Buf[9000] = { 0 };
-	char banner2_path[256] = strcat(path, "/banner2.jpg");
+	char banner2_path[256] = "/home/201414840/html/banner2.jpg";
 	int banner2_fd;
 	int banner2_size;
 
-	banner2_fd = open(banner2_path, O_RDONLY);
+	banner2_fd = open("/home/201414840/html/banner2.jpg", O_RDONLY);
 	banner2_size = read(banner2_fd, banner2_Buf, 9000);	//banner2_Buf에다가 banner2.html의 data를 넣고, banner2_size에다가 banner2.html의 총 크기를 넣음
 
 	struct stat banner2_info;	//파일크기를 측정하기위한 stat 구조체
