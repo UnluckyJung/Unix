@@ -31,6 +31,28 @@ int main(int argc, char *argv[])
 	int len;
 	int i;
 
+
+	char *findnum1;
+	char *findnum2;
+	char numarr[10] = { 0, };
+	char numarr2[10] = { 0, };
+	char numcheck[10] = { 0, };
+	int size = 0;
+
+	int n;
+	char *p;
+
+	int fd;	//파일 전송할때 필요한 변수.
+
+	int fd_log;	//log 저장할때 저수준 파일입출력 open에 필요한 변수.
+	char address_log[BUFSIZ];	//log 저장할 BUF
+
+	long long num1;
+	long long num2;
+	long long result;
+
+
+
 	//굳이 필요 없는 부분, 일단 놔둠.
 	if (argc != 2)
 	{
@@ -38,9 +60,10 @@ int main(int argc, char *argv[])
 		return -1;
 	}
 
-	system("rm log.txt");	//log.txt 삭제하고 시작.
+	if (access("./log.txt", 0) == 0)
+		system("rm log.txt");	//log.txt 삭제하고 시작.
 
-	//이 부분들이 없으면 , 작업도중에 엑박남.
+		//이 부분들이 없으면 , 작업도중에 엑박남.
 	(void)signal(SIGCLD, SIG_IGN);
 	(void)signal(SIGHUP, SIG_IGN);
 
@@ -53,6 +76,9 @@ int main(int argc, char *argv[])
 		perror("socket");
 		exit(1);
 	}
+
+	int optvalue = 1;
+	setsockopt(ns, SOL_SOCKET, SO_REUSEADDR, &optvalue, sizeof(optvalue));	//소켓 초기화 도구
 
 	//bind를 하기위한 sin 세팅
 	//소켓 주소 구조체를 생성하는 과정.
@@ -89,8 +115,7 @@ int main(int argc, char *argv[])
 			perror("accept");
 			exit(1);
 		}
-		int optvalue = 1;
-		setsockopt(ns, SOL_SOCKET, SO_REUSEADDR, &optvalue, sizeof(optvalue));	//소켓 초기화 도구
+
 
 		switch (fork())
 		{
@@ -101,15 +126,7 @@ int main(int argc, char *argv[])
 			close(sd);
 			char Send_Buf[BUFSIZ + 1] = { 0, }, Receive_Buf[BUFSIZ + 1] = { 0, };
 			char uri[100], content_type[20] = { 0, };
-			int len;
 
-			int n, i;
-			char *p;
-
-			int fd;	//파일 전송할때 필요한 변수.
-
-			int fd_log;	//log 저장할때 저수준 파일입출력 open에 필요한 변수.
-			char address_log[BUFSIZ];	//log 저장할 BUF
 
 
 			struct
@@ -122,16 +139,6 @@ int main(int argc, char *argv[])
 				"gif", "image/gif"},
 				{
 				"jpg", "image/jpeg"},
-				{
-				"jpeg", "image/jpeg"},
-				{
-				"png", "image/png"},
-				{
-				"zip", "image/zip"},
-				{
-				"gz", "image/gz"},	//여기서 이제 필요없는 이런거 삭제할 예정.
-				{
-				"tar", "image/tar"},
 				{
 				"htm", "text/html"},
 				{
@@ -147,11 +154,6 @@ int main(int argc, char *argv[])
 			p = strtok(Receive_Buf, " ");
 			p = strtok(NULL, " ");
 
-			char *findnum1;
-			char *findnum2;
-			char numarr[10] = { 0, };
-			char numarr2[10] = { 0, };
-			char numcheck[10] = { 0, };
 
 
 
@@ -182,9 +184,9 @@ int main(int argc, char *argv[])
 
 				}
 
-				long long num1 = atoll(numarr);	//범위 때문에 longlong으로 변환했다.
-				long long num2 = atoll(numarr2);
-				long long result = (num2*(num2 + 1) / 2 - (num1 - 1) * (num1) / 2);
+				num1 = atoll(numarr);	//범위 때문에 longlong으로 변환했다.
+				num2 = atoll(numarr2);
+				result = (num2*(num2 + 1) / 2 - (num1 - 1) * (num1) / 2);
 
 				//printf("%lld ~ %lld = %lld\n", num1, num2, result);
 				//이거 계산할때마다 숫자 깎이나 확인할때 용도로 사용했었음.
@@ -242,17 +244,15 @@ int main(int argc, char *argv[])
 				sprintf(uri, "%s%s", path, p);	//uri에 요청받는 모든 경로를 넣음.
 
 			//memcpy strcpy 속도비교용
-			//memcpy(content_type, "text/plain", sizeof("text/plain"));
-			strcpy(content_type, "text/plain");
+			memcpy(content_type, "text/plain", sizeof("text/plain"));
+			//strcpy(content_type, "text/plain");
 
-			for (i = 0; extensions[i].ext != 0; i++)	//이 for문 이해못함.
+			for (i = 0; extensions[i].ext != 0; i++)	
 			{
 				len = strlen(extensions[i].ext);
 				if (!strncmp(uri + strlen(uri) - len, extensions[i].ext, len))
 				{
 					strcpy(content_type, extensions[i].filetype);
-					//memset(content_type, 0, sizeof(content_type));
-					//memcpy(content_type, extensions[i].filetype, sizeof(extensions[i].filetype));
 					break;
 				}
 			}
@@ -325,26 +325,15 @@ int main(int argc, char *argv[])
 			n = write(ns, Send_Buf, strlen(Send_Buf));
 
 
-			int size = 0;
 			if (fd >= 0)	//fd가 있는경우에 돌아가는 작업이다. 이것도 요청하는게 배열 목록중에 있는경우, 돌아가는것으로 바꿔야한다.
 			{
 				while ((n = read(fd, Receive_Buf, BUFSIZ)) > 0)	//fd에서 BUFSIZ만큼 계속 읽어서 Receive_BUF에 넣은다음에
 				{
 					write(ns, Receive_Buf, n);	//그것을 클라이언트에게 전송해주는데 이것도 바꿔야함. (여기서 n은 실제로 읽어온 byte의 수)
-					//printf("%s", Receive_Buf);	//보내는 파일 배열 확인용.
 				}
 			}
 
 
-
-
-
-
-
-			//============즉, 예를들어 char arr[50][66000] //byte 최대큰 파일이 65kb정도 되더라.
-			//여기다가 모든 파일 각각 다 넣어놓고.
-			//어느것을 요청시 해당배열 ex) arr[1][66000]을 ns에다가 보내버리는 식으로 진행
-			//물론 Content_type도 맞춰야한다. 이부분이 제일 고생할것으로 예상되어짐.
 
 
 
