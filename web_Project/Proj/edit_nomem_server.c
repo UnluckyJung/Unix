@@ -77,8 +77,11 @@ int main(int argc, char *argv[])
 		exit(1);
 	}
 
+	/*
 	int optvalue = 1;
 	setsockopt(ns, SOL_SOCKET, SO_REUSEADDR, &optvalue, sizeof(optvalue));	//소켓 초기화 도구
+	*/
+
 
 	//bind를 하기위한 sin 세팅
 	//소켓 주소 구조체를 생성하는 과정.
@@ -244,7 +247,7 @@ int main(int argc, char *argv[])
 				sprintf(uri, "%s%s", path, p);	//uri에 요청받는 모든 경로를 넣음.
 
 			//memcpy strcpy 속도비교용
-			memcpy(content_type, "text/plain", sizeof("text/plain"));
+			memcpy(content_type, "text/plain", 11));
 			//strcpy(content_type, "text/plain");
 
 			for (i = 0; extensions[i].ext != 0; i++)	
