@@ -137,6 +137,11 @@ int main(int argc, char *argv[])
 
 			p = strtok(Receive_Buf, " ");
 			p = strtok(NULL, " ");
+			//계속해서 이어가서 탐색을 하기위해 NULL을 보냄.
+			// 첫 아규먼트가 널이면 현재 저장되어 있는 남은 문자열을 데이터로 사용하기 때문!
+			//만약 널이 아니면 새로운 검색이 시작된다 생각해 내부 데이터를 초기화하기 때문이다. 즉 문자열의 주소값이 들어오면 거기서부터 분리를 시도한다.
+			//또는 strtok()의 사용 후, 원본 문자열의 데이터를 보장할 수 없다.
+
 
 			char *findnum1;
 			char *findnum2;
@@ -306,7 +311,7 @@ int main(int argc, char *argv[])
 			
 
 
-			p = strtok(NULL, "\r\n ");
+			p = strtok(NULL, "\r\n ");	//해당문자열에서 계속 탐색을 이어나가기 위해서.
 
 
 			// http 형식을 보내주는것.
