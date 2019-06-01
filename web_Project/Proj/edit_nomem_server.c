@@ -247,7 +247,7 @@ int main(int argc, char *argv[])
 				sprintf(uri, "%s%s", path, p);	//uri에 요청받는 모든 경로를 넣음.
 
 			//memcpy strcpy 속도비교용
-			memcpy(content_type, "text/plain", 11));
+			memcpy(content_type, "text/plain", 11);
 			//strcpy(content_type, "text/plain");
 
 			for (i = 0; extensions[i].ext != 0; i++)	
