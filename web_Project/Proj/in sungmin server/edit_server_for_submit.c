@@ -22,7 +22,7 @@ int main(int argc, char *argv[])
 
 	char path[256];
 	getcwd(path, 255);
-	sprintf(path, "%s/%s", "example");
+	sprintf(path, "%s/%s", path, "example");
 
 	struct sockaddr_in sin, cli;
 	int sd, ns;

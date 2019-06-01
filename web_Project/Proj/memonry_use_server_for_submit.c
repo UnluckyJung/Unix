@@ -20,7 +20,7 @@ int main(int argc, char *argv[])
 
 	char path[256];
 	getcwd(path, 255);
-	sprintf(path, "%s/%s", "example");
+	sprintf(path, "%s/%s", path, "example");
 
 	struct sockaddr_in sin, cli;
 	int sd, ns;
@@ -30,12 +30,12 @@ int main(int argc, char *argv[])
 	//======for banner1.jpg===============
 
 	char banner1_Buf[13000] = { 0 };
-	char banner1_path[256];
-	sprintf(banner1_path, "%s%s","banner1.jpg");
+	char banner1_path[256] = { 0, };
+	sprintf(banner1_path, "%s%s", path, "/banner1.jpg");
 	int banner1_fd;
 	int banner1_size;
 
-	banner1_fd = open("/home/201414840/html/banner1.jpg", O_RDONLY);
+	banner1_fd = open(banner1_path, O_RDONLY);
 	banner1_size = read(banner1_fd, banner1_Buf, 13000);	//banner1_Buf에다가 banner1.html의 data를 넣고, banner1_size에다가 banner1.html의 총 크기를 넣음
 
 	struct stat banner1_info;	//파일크기를 측정하기위한 stat 구조체
@@ -47,15 +47,17 @@ int main(int argc, char *argv[])
 	//======for banner1.jpg===============	
 
 
-	
+
 	//======for banner2.jpg===============
 
 	char banner2_Buf[9000] = { 0 };
-	char banner2_path[256] = "/home/201414840/html/banner2.jpg";
+	char banner2_path[256] = { 0, };
+	sprintf(banner2_path, "%s%s", path, "/banner2.jpg");
+
 	int banner2_fd;
 	int banner2_size;
 
-	banner2_fd = open("/home/201414840/html/banner2.jpg", O_RDONLY);
+	banner2_fd = open(banner2_path, O_RDONLY);
 	banner2_size = read(banner2_fd, banner2_Buf, 9000);	//banner2_Buf에다가 banner2.html의 data를 넣고, banner2_size에다가 banner2.html의 총 크기를 넣음
 
 	struct stat banner2_info;	//파일크기를 측정하기위한 stat 구조체
@@ -73,11 +75,12 @@ int main(int argc, char *argv[])
 	//======for banner3.jpg===============
 
 	char banner3_Buf[18000] = { 0 };
-	char banner3_path[256] = "/home/201414840/html/banner3.jpg";
+	char banner3_path[256] = { 0, };
+	sprintf(banner3_path, "%s%s", path, "/banner3.jpg");
 	int banner3_fd;
 	int banner3_size;
 
-	banner3_fd = open("/home/201414840/html/banner3.jpg", O_RDONLY);
+	banner3_fd = open(banner3_path, O_RDONLY);
 	banner3_size = read(banner3_fd, banner3_Buf, 18000);	//banner3_Buf에다가 banner3.html의 data를 넣고, banner3_size에다가 banner3.html의 총 크기를 넣음
 
 	struct stat banner3_info;	//파일크기를 측정하기위한 stat 구조체
@@ -92,11 +95,12 @@ int main(int argc, char *argv[])
 	//======for bullet1.jpg===============
 
 	char bullet1_Buf[1000] = { 0 };
-	char bullet1_path[256] = "/home/201414840/html/bullet1.jpg";
+	char bullet1_path[256] = { 0, };
+	sprintf(bullet1_path, "%s%s", path, "/bullet1.jpg");
 	int bullet1_fd;
 	int bullet1_size;
 
-	bullet1_fd = open("/home/201414840/html/bullet1.jpg", O_RDONLY);
+	bullet1_fd = open(bullet1_path, O_RDONLY);
 	bullet1_size = read(bullet1_fd, bullet1_Buf, 1000);	//bullet1_Buf에다가 bullet1.html의 data를 넣고, bullet1_size에다가 bullet1.html의 총 크기를 넣음
 
 	struct stat bullet1_info;	//파일크기를 측정하기위한 stat 구조체
@@ -106,16 +110,17 @@ int main(int argc, char *argv[])
 
 
 	//======for bullet1.jpg===============	
-	
+
 
 	//======for bullet2.jpg===============
 
 	char bullet2_Buf[1000] = { 0 };
-	char bullet2_path[256] = "/home/201414840/html/bullet2.jpg";
+	char bullet2_path[256] = { 0, };
+	sprintf(bullet2_path, "%s%s", path, "/bullet2.jpg");
 	int bullet2_fd;
 	int bullet2_size;
 
-	bullet2_fd = open("/home/201414840/html/bullet2.jpg", O_RDONLY);
+	bullet2_fd = open(bullet2_path, O_RDONLY);
 	bullet2_size = read(bullet2_fd, bullet2_Buf, 1000);	//bullet2_Buf에다가 bullet2.html의 data를 넣고, bullet2_size에다가 bullet2.html의 총 크기를 넣음
 
 	struct stat bullet2_info;	//파일크기를 측정하기위한 stat 구조체
@@ -129,11 +134,12 @@ int main(int argc, char *argv[])
 	//======for bullet3.jpg===============
 
 	char bullet3_Buf[1000] = { 0 };
-	char bullet3_path[256] = "/home/201414840/html/bullet3.jpg";
+	char bullet3_path[256] = { 0, };
+	sprintf(bullet3_path, "%s%s", path, "/bullet3.jpg");
 	int bullet3_fd;
 	int bullet3_size;
 
-	bullet3_fd = open("/home/201414840/html/bullet3.jpg", O_RDONLY);
+	bullet3_fd = open(bullet3_path, O_RDONLY);
 	bullet3_size = read(bullet3_fd, bullet3_Buf, 1000);	//bullet3_Buf에다가 bullet3.html의 data를 넣고, bullet3_size에다가 bullet3.html의 총 크기를 넣음
 
 	struct stat bullet3_info;	//파일크기를 측정하기위한 stat 구조체
@@ -154,11 +160,12 @@ int main(int argc, char *argv[])
 	//======for contact.htm===============
 
 	char contact_Buf[5000] = { 0 };
-	char contact_path[256] = "/home/201414840/html/contact.htm";
+	char contact_path[256] = { 0, };
+	sprintf(contact_path, "%s%s", path, "/contact.htm");
 	int contact_fd;
 	int contact_size;
 
-	contact_fd = open("/home/201414840/html/contact.htm", O_RDONLY);
+	contact_fd = open(contact_path, O_RDONLY);
 	contact_size = read(contact_fd, contact_Buf, 5000);	//contact_Buf에다가 contact.html의 data를 넣고, contact_size에다가 contact.html의 총 크기를 넣음
 
 	struct stat contact_info;	//파일크기를 측정하기위한 stat 구조체
@@ -176,11 +183,12 @@ int main(int argc, char *argv[])
 	//======for home.htm===============
 
 	char home_Buf[5000] = { 0 };
-	char home_path[256] = "/home/201414840/html/home.htm";
+	char home_path[256] = { 0, };
+	sprintf(home_path, "%s%s", path, "/home.htm");
 	int home_fd;
 	int home_size;
 
-	home_fd = open("/home/201414840/html/home.htm", O_RDONLY);
+	home_fd = open(home_path, O_RDONLY);
 	home_size = read(home_fd, home_Buf, 5000);	//home_Buf에다가 home.html의 data를 넣고, home_size에다가 home.html의 총 크기를 넣음
 
 	struct stat home_info;	//파일크기를 측정하기위한 stat 구조체
@@ -196,11 +204,12 @@ int main(int argc, char *argv[])
 	//======for icontact.htm===============
 
 	char icontact_Buf[3000] = { 0 };
-	char icontact_path[256] = "/home/201414840/html/icontact.htm";
+	char icontact_path[256] = { 0, };
+	sprintf(icontact_path, "%s%s", path, "/icontact.htm");
 	int icontact_fd;
 	int icontact_size;
 
-	icontact_fd = open("/home/201414840/html/icontact.htm", O_RDONLY);
+	icontact_fd = open(icontact_path, O_RDONLY);
 	icontact_size = read(icontact_fd, icontact_Buf, 3000);	//icontact_Buf에다가 icontact.html의 data를 넣고, icontact_size에다가 icontact.html의 총 크기를 넣음
 
 	struct stat icontact_info;	//파일크기를 측정하기위한 stat 구조체
@@ -215,11 +224,12 @@ int main(int argc, char *argv[])
 	//======for ilinks.htm===============
 
 	char ilinks_Buf[4000] = { 0 };
-	char ilinks_path[256] = "/home/201414840/html/ilinks.htm";
+	char ilinks_path[256] = { 0, };
+	sprintf(ilinks_path, "%s%s", path, "/ilinks.htm");
 	int ilinks_fd;
 	int ilinks_size;
 
-	ilinks_fd = open("/home/201414840/html/ilinks.htm", O_RDONLY);
+	ilinks_fd = open(ilinks_path, O_RDONLY);
 	ilinks_size = read(ilinks_fd, ilinks_Buf, 4000);	//ilinks_Buf에다가 ilinks.html의 data를 넣고, ilinks_size에다가 ilinks.html의 총 크기를 넣음
 
 	struct stat ilinks_info;	//파일크기를 측정하기위한 stat 구조체
@@ -234,11 +244,12 @@ int main(int argc, char *argv[])
 	//======for index.html===============
 
 	char index_Buf[5000] = { 0 };
-	char index_path[256] = "/home/201414840/html/index.html";
+	char index_path[256] = { 0, };
+	sprintf(index_path, "%s%s", path, "/index.html");
 	int index_fd;
 	int index_size;
 
-	index_fd = open("/home/201414840/html/index.html", O_RDONLY);
+	index_fd = open(index_path, O_RDONLY);
 	index_size = read(index_fd, index_Buf, 5000);	//index_Buf에다가 index.html의 data를 넣고, index_size에다가 index.html의 총 크기를 넣음
 
 	struct stat index_info;	//파일크기를 측정하기위한 stat 구조체
@@ -253,11 +264,12 @@ int main(int argc, char *argv[])
 	//======for ishop.htm===============
 
 	char ishop_Buf[7000] = { 0 };
-	char ishop_path[256] = "/home/201414840/html/ishop.htm";
+	char ishop_path[256] = { 0, };
+	sprintf(ishop_path, "%s%s", path, "/ishop.htm");
 	int ishop_fd;
 	int ishop_size;
 
-	ishop_fd = open("/home/201414840/html/ishop.htm", O_RDONLY);
+	ishop_fd = open(ishop_path, O_RDONLY);
 	ishop_size = read(ishop_fd, ishop_Buf, 7000);	//ishop_Buf에다가 ishop.html의 data를 넣고, ishop_size에다가 ishop.html의 총 크기를 넣음
 
 	struct stat ishop_info;	//파일크기를 측정하기위한 stat 구조체
@@ -272,11 +284,12 @@ int main(int argc, char *argv[])
 	//======for links.htm===============
 
 	char links_Buf[5000] = { 0 };
-	char links_path[256] = "/home/201414840/html/links.htm";
+	char links_path[256] = { 0, };
+	sprintf(links_path, "%s%s", path, "/links.htm");
 	int links_fd;
 	int links_size;
 
-	links_fd = open("/home/201414840/html/links.htm", O_RDONLY);
+	links_fd = open(links_path, O_RDONLY);
 	links_size = read(links_fd, links_Buf, 5000);	//links_Buf에다가 links.html의 data를 넣고, links_size에다가 links.html의 총 크기를 넣음
 
 	struct stat links_info;	//파일크기를 측정하기위한 stat 구조체
@@ -291,11 +304,12 @@ int main(int argc, char *argv[])
 	//======for main.htm===============
 
 	char main_Buf[10000] = { 0 };
-	char main_path[256] = "/home/201414840/html/main.htm";
+	char main_path[256] = { 0, };
+	sprintf(main_path, "%s%s", path, "/main.htm");
 	int main_fd;
 	int main_size;
 
-	main_fd = open("/home/201414840/html/main.htm", O_RDONLY);
+	main_fd = open(main_path, O_RDONLY);
 	main_size = read(main_fd, main_Buf, 10000);	//main_Buf에다가 main.html의 data를 넣고, main_size에다가 main.html의 총 크기를 넣음
 
 	struct stat main_info;	//파일크기를 측정하기위한 stat 구조체
@@ -310,11 +324,12 @@ int main(int argc, char *argv[])
 	//======for shop.htm===============
 
 	char shop_Buf[5000] = { 0 };
-	char shop_path[256] = "/home/201414840/html/shop.htm";
+	char shop_path[256] = { 0, };
+	sprintf(shop_path, "%s%s", path, "/shop.htm");
 	int shop_fd;
 	int shop_size;
 
-	shop_fd = open("/home/201414840/html/shop.htm", O_RDONLY);
+	shop_fd = open(shop_path, O_RDONLY);
 	shop_size = read(shop_fd, shop_Buf, 5000);	//shop_Buf에다가 shop.html의 data를 넣고, shop_size에다가 shop.html의 총 크기를 넣음
 
 	struct stat shop_info;	//파일크기를 측정하기위한 stat 구조체
@@ -785,8 +800,8 @@ int main(int argc, char *argv[])
 
 			//======default(index)================
 
-			
-			if (!strcmp(p, "/")){	//클라이언트에게 받은 요청중 index_test.html이 있는지 확인
+
+			if (!strcmp(p, "/")) {	//클라이언트에게 받은 요청중 index_test.html이 있는지 확인
 
 
 				sprintf(content_type, "%s", "text/html");	//html파일의 타입이 text/html이니 저장.
@@ -818,7 +833,7 @@ int main(int argc, char *argv[])
 				close(ns);
 				return 0;
 			}
-			
+
 			//======for index.htm===============
 
 
@@ -901,10 +916,10 @@ int main(int argc, char *argv[])
 			}
 
 			//======for banner2.jpg===============
-			
-			
-			
-			
+
+
+
+
 			//======for banner3.jpg===============
 
 			//char *banner3p;
@@ -1073,34 +1088,34 @@ int main(int argc, char *argv[])
 			else if ((strstr(p, "icontact.htm")) != NULL) {	//클라이언트에게 받은 요청중 icontact_test.html이 있는지 확인
 
 
-			sprintf(content_type, "%s", "text/html");	//html파일의 타입이 text/html이니 저장.
+				sprintf(content_type, "%s", "text/html");	//html파일의 타입이 text/html이니 저장.
 
 
-			sprintf(Send_Buf, "HTTP/2.0 %d %s\r\n", 200, "OK");	//클라이언트에게 HTTP  형식을 보내겠다고 알리기
-			n = write(ns, Send_Buf, strlen(Send_Buf));
+				sprintf(Send_Buf, "HTTP/2.0 %d %s\r\n", 200, "OK");	//클라이언트에게 HTTP  형식을 보내겠다고 알리기
+				n = write(ns, Send_Buf, strlen(Send_Buf));
 
-			sprintf(Send_Buf, "content-type: %s\r\n\r\n", content_type);	//클라이언트에게 icontact이 html타입인걸 보내기
-			n = write(ns, Send_Buf, strlen(Send_Buf));
+				sprintf(Send_Buf, "content-type: %s\r\n\r\n", content_type);	//클라이언트에게 icontact이 html타입인걸 보내기
+				n = write(ns, Send_Buf, strlen(Send_Buf));
 
-			write(ns, icontact_Buf, icontact_size);	//icontact_Buf에 담긴 데이터 클라이언트에게 전송하기
-
-
-			//icontact 로그 찍기
-			sprintf(address_log, "%s %s\n", inet_ntoa(cli.sin_addr), icontact_path);
-
-			mode_t mode = S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH;	//파일권한 0644
-
-			fd_log = open("log.txt", O_CREAT | O_WRONLY | O_APPEND, mode);
-			if (fd_log == -1) {
-				perror("Open log.txt");
-				exit(1);
-			}
-			write(fd_log, address_log, strlen(address_log));
-			close(fd_log);
+				write(ns, icontact_Buf, icontact_size);	//icontact_Buf에 담긴 데이터 클라이언트에게 전송하기
 
 
-			close(ns);
-			return 0;
+				//icontact 로그 찍기
+				sprintf(address_log, "%s %s\n", inet_ntoa(cli.sin_addr), icontact_path);
+
+				mode_t mode = S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH;	//파일권한 0644
+
+				fd_log = open("log.txt", O_CREAT | O_WRONLY | O_APPEND, mode);
+				if (fd_log == -1) {
+					perror("Open log.txt");
+					exit(1);
+				}
+				write(fd_log, address_log, strlen(address_log));
+				close(fd_log);
+
+
+				close(ns);
+				return 0;
 			}
 
 			//======for icontact.htm===============
@@ -1191,34 +1206,34 @@ int main(int argc, char *argv[])
 			else if ((strstr(p, "ilinks.htm")) != NULL) {	//클라이언트에게 받은 요청중 ilinks_test.html이 있는지 확인
 
 
-			sprintf(content_type, "%s", "text/html");	//html파일의 타입이 text/html이니 저장.
+				sprintf(content_type, "%s", "text/html");	//html파일의 타입이 text/html이니 저장.
 
 
-			sprintf(Send_Buf, "HTTP/2.0 %d %s\r\n", 200, "OK");	//클라이언트에게 HTTP  형식을 보내겠다고 알리기
-			n = write(ns, Send_Buf, strlen(Send_Buf));
+				sprintf(Send_Buf, "HTTP/2.0 %d %s\r\n", 200, "OK");	//클라이언트에게 HTTP  형식을 보내겠다고 알리기
+				n = write(ns, Send_Buf, strlen(Send_Buf));
 
-			sprintf(Send_Buf, "content-type: %s\r\n\r\n", content_type);	//클라이언트에게 ilinks이 html타입인걸 보내기
-			n = write(ns, Send_Buf, strlen(Send_Buf));
+				sprintf(Send_Buf, "content-type: %s\r\n\r\n", content_type);	//클라이언트에게 ilinks이 html타입인걸 보내기
+				n = write(ns, Send_Buf, strlen(Send_Buf));
 
-			write(ns, ilinks_Buf, ilinks_size);	//ilinks_Buf에 담긴 데이터 클라이언트에게 전송하기
-
-
-			//ilinks 로그 찍기
-			sprintf(address_log, "%s %s\n", inet_ntoa(cli.sin_addr), ilinks_path);
-
-			mode_t mode = S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH;	//파일권한 0644
-
-			fd_log = open("log.txt", O_CREAT | O_WRONLY | O_APPEND, mode);
-			if (fd_log == -1) {
-				perror("Open log.txt");
-				exit(1);
-			}
-			write(fd_log, address_log, strlen(address_log));
-			close(fd_log);
+				write(ns, ilinks_Buf, ilinks_size);	//ilinks_Buf에 담긴 데이터 클라이언트에게 전송하기
 
 
-			close(ns);
-			return 0;
+				//ilinks 로그 찍기
+				sprintf(address_log, "%s %s\n", inet_ntoa(cli.sin_addr), ilinks_path);
+
+				mode_t mode = S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH;	//파일권한 0644
+
+				fd_log = open("log.txt", O_CREAT | O_WRONLY | O_APPEND, mode);
+				if (fd_log == -1) {
+					perror("Open log.txt");
+					exit(1);
+				}
+				write(fd_log, address_log, strlen(address_log));
+				close(fd_log);
+
+
+				close(ns);
+				return 0;
 			}
 
 			//======for ilinks.htm===============
@@ -1230,34 +1245,34 @@ int main(int argc, char *argv[])
 			else if ((strstr(p, "ishop.htm")) != NULL) {	//클라이언트에게 받은 요청중 ishop_test.html이 있는지 확인
 
 
-			sprintf(content_type, "%s", "text/html");	//html파일의 타입이 text/html이니 저장.
+				sprintf(content_type, "%s", "text/html");	//html파일의 타입이 text/html이니 저장.
 
 
-			sprintf(Send_Buf, "HTTP/2.0 %d %s\r\n", 200, "OK");	//클라이언트에게 HTTP  형식을 보내겠다고 알리기
-			n = write(ns, Send_Buf, strlen(Send_Buf));
+				sprintf(Send_Buf, "HTTP/2.0 %d %s\r\n", 200, "OK");	//클라이언트에게 HTTP  형식을 보내겠다고 알리기
+				n = write(ns, Send_Buf, strlen(Send_Buf));
 
-			sprintf(Send_Buf, "content-type: %s\r\n\r\n", content_type);	//클라이언트에게 ishop이 html타입인걸 보내기
-			n = write(ns, Send_Buf, strlen(Send_Buf));
+				sprintf(Send_Buf, "content-type: %s\r\n\r\n", content_type);	//클라이언트에게 ishop이 html타입인걸 보내기
+				n = write(ns, Send_Buf, strlen(Send_Buf));
 
-			write(ns, ishop_Buf, ishop_size);	//ishop_Buf에 담긴 데이터 클라이언트에게 전송하기
-
-
-			//ishop 로그 찍기
-			sprintf(address_log, "%s %s\n", inet_ntoa(cli.sin_addr), ishop_path);
-
-			mode_t mode = S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH;	//파일권한 0644
-
-			fd_log = open("log.txt", O_CREAT | O_WRONLY | O_APPEND, mode);
-			if (fd_log == -1) {
-				perror("Open log.txt");
-				exit(1);
-			}
-			write(fd_log, address_log, strlen(address_log));
-			close(fd_log);
+				write(ns, ishop_Buf, ishop_size);	//ishop_Buf에 담긴 데이터 클라이언트에게 전송하기
 
 
-			close(ns);
-			return 0;
+				//ishop 로그 찍기
+				sprintf(address_log, "%s %s\n", inet_ntoa(cli.sin_addr), ishop_path);
+
+				mode_t mode = S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH;	//파일권한 0644
+
+				fd_log = open("log.txt", O_CREAT | O_WRONLY | O_APPEND, mode);
+				if (fd_log == -1) {
+					perror("Open log.txt");
+					exit(1);
+				}
+				write(fd_log, address_log, strlen(address_log));
+				close(fd_log);
+
+
+				close(ns);
+				return 0;
 			}
 
 			//======for ishop.htm===============
@@ -1268,34 +1283,34 @@ int main(int argc, char *argv[])
 			else if ((strstr(p, "shop.htm")) != NULL) {	//클라이언트에게 받은 요청중 shop_test.html이 있는지 확인
 
 
-			sprintf(content_type, "%s", "text/html");	//html파일의 타입이 text/html이니 저장.
+				sprintf(content_type, "%s", "text/html");	//html파일의 타입이 text/html이니 저장.
 
 
-			sprintf(Send_Buf, "HTTP/2.0 %d %s\r\n", 200, "OK");	//클라이언트에게 HTTP  형식을 보내겠다고 알리기
-			n = write(ns, Send_Buf, strlen(Send_Buf));
+				sprintf(Send_Buf, "HTTP/2.0 %d %s\r\n", 200, "OK");	//클라이언트에게 HTTP  형식을 보내겠다고 알리기
+				n = write(ns, Send_Buf, strlen(Send_Buf));
 
-			sprintf(Send_Buf, "content-type: %s\r\n\r\n", content_type);	//클라이언트에게 shop이 html타입인걸 보내기
-			n = write(ns, Send_Buf, strlen(Send_Buf));
+				sprintf(Send_Buf, "content-type: %s\r\n\r\n", content_type);	//클라이언트에게 shop이 html타입인걸 보내기
+				n = write(ns, Send_Buf, strlen(Send_Buf));
 
-			write(ns, shop_Buf, shop_size);	//shop_Buf에 담긴 데이터 클라이언트에게 전송하기
-
-
-			//shop 로그 찍기
-			sprintf(address_log, "%s %s\n", inet_ntoa(cli.sin_addr), shop_path);
-
-			mode_t mode = S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH;	//파일권한 0644
-
-			fd_log = open("log.txt", O_CREAT | O_WRONLY | O_APPEND, mode);
-			if (fd_log == -1) {
-				perror("Open log.txt");
-				exit(1);
-			}
-			write(fd_log, address_log, strlen(address_log));
-			close(fd_log);
+				write(ns, shop_Buf, shop_size);	//shop_Buf에 담긴 데이터 클라이언트에게 전송하기
 
 
-			close(ns);
-			return 0;
+				//shop 로그 찍기
+				sprintf(address_log, "%s %s\n", inet_ntoa(cli.sin_addr), shop_path);
+
+				mode_t mode = S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH;	//파일권한 0644
+
+				fd_log = open("log.txt", O_CREAT | O_WRONLY | O_APPEND, mode);
+				if (fd_log == -1) {
+					perror("Open log.txt");
+					exit(1);
+				}
+				write(fd_log, address_log, strlen(address_log));
+				close(fd_log);
+
+
+				close(ns);
+				return 0;
 			}
 
 			//======for shop.htm===============
@@ -1306,34 +1321,34 @@ int main(int argc, char *argv[])
 			else if ((strstr(p, "links.htm")) != NULL) {	//클라이언트에게 받은 요청중 links_test.html이 있는지 확인
 
 
-			sprintf(content_type, "%s", "text/html");	//html파일의 타입이 text/html이니 저장.
+				sprintf(content_type, "%s", "text/html");	//html파일의 타입이 text/html이니 저장.
 
 
-			sprintf(Send_Buf, "HTTP/2.0 %d %s\r\n", 200, "OK");	//클라이언트에게 HTTP  형식을 보내겠다고 알리기
-			n = write(ns, Send_Buf, strlen(Send_Buf));
+				sprintf(Send_Buf, "HTTP/2.0 %d %s\r\n", 200, "OK");	//클라이언트에게 HTTP  형식을 보내겠다고 알리기
+				n = write(ns, Send_Buf, strlen(Send_Buf));
 
-			sprintf(Send_Buf, "content-type: %s\r\n\r\n", content_type);	//클라이언트에게 links이 html타입인걸 보내기
-			n = write(ns, Send_Buf, strlen(Send_Buf));
+				sprintf(Send_Buf, "content-type: %s\r\n\r\n", content_type);	//클라이언트에게 links이 html타입인걸 보내기
+				n = write(ns, Send_Buf, strlen(Send_Buf));
 
-			write(ns, links_Buf, links_size);	//links_Buf에 담긴 데이터 클라이언트에게 전송하기
-
-
-			//links 로그 찍기
-			sprintf(address_log, "%s %s\n", inet_ntoa(cli.sin_addr), links_path);
-
-			mode_t mode = S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH;	//파일권한 0644
-
-			fd_log = open("log.txt", O_CREAT | O_WRONLY | O_APPEND, mode);
-			if (fd_log == -1) {
-				perror("Open log.txt");
-				exit(1);
-			}
-			write(fd_log, address_log, strlen(address_log));
-			close(fd_log);
+				write(ns, links_Buf, links_size);	//links_Buf에 담긴 데이터 클라이언트에게 전송하기
 
 
-			close(ns);
-			return 0;
+				//links 로그 찍기
+				sprintf(address_log, "%s %s\n", inet_ntoa(cli.sin_addr), links_path);
+
+				mode_t mode = S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH;	//파일권한 0644
+
+				fd_log = open("log.txt", O_CREAT | O_WRONLY | O_APPEND, mode);
+				if (fd_log == -1) {
+					perror("Open log.txt");
+					exit(1);
+				}
+				write(fd_log, address_log, strlen(address_log));
+				close(fd_log);
+
+
+				close(ns);
+				return 0;
 			}
 
 			//======for links.htm===============
@@ -1344,34 +1359,34 @@ int main(int argc, char *argv[])
 			else if ((strstr(p, "main.htm")) != NULL) {	//클라이언트에게 받은 요청중 main_test.html이 있는지 확인
 
 
-			sprintf(content_type, "%s", "text/html");	//html파일의 타입이 text/html이니 저장.
+				sprintf(content_type, "%s", "text/html");	//html파일의 타입이 text/html이니 저장.
 
 
-			sprintf(Send_Buf, "HTTP/2.0 %d %s\r\n", 200, "OK");	//클라이언트에게 HTTP  형식을 보내겠다고 알리기
-			n = write(ns, Send_Buf, strlen(Send_Buf));
+				sprintf(Send_Buf, "HTTP/2.0 %d %s\r\n", 200, "OK");	//클라이언트에게 HTTP  형식을 보내겠다고 알리기
+				n = write(ns, Send_Buf, strlen(Send_Buf));
 
-			sprintf(Send_Buf, "content-type: %s\r\n\r\n", content_type);	//클라이언트에게 main이 html타입인걸 보내기
-			n = write(ns, Send_Buf, strlen(Send_Buf));
+				sprintf(Send_Buf, "content-type: %s\r\n\r\n", content_type);	//클라이언트에게 main이 html타입인걸 보내기
+				n = write(ns, Send_Buf, strlen(Send_Buf));
 
-			write(ns, main_Buf, main_size);	//main_Buf에 담긴 데이터 클라이언트에게 전송하기
-
-
-			//main 로그 찍기
-			sprintf(address_log, "%s %s\n", inet_ntoa(cli.sin_addr), main_path);
-
-			mode_t mode = S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH;	//파일권한 0644
-
-			fd_log = open("log.txt", O_CREAT | O_WRONLY | O_APPEND, mode);
-			if (fd_log == -1) {
-				perror("Open log.txt");
-				exit(1);
-			}
-			write(fd_log, address_log, strlen(address_log));
-			close(fd_log);
+				write(ns, main_Buf, main_size);	//main_Buf에 담긴 데이터 클라이언트에게 전송하기
 
 
-			close(ns);
-			return 0;
+				//main 로그 찍기
+				sprintf(address_log, "%s %s\n", inet_ntoa(cli.sin_addr), main_path);
+
+				mode_t mode = S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH;	//파일권한 0644
+
+				fd_log = open("log.txt", O_CREAT | O_WRONLY | O_APPEND, mode);
+				if (fd_log == -1) {
+					perror("Open log.txt");
+					exit(1);
+				}
+				write(fd_log, address_log, strlen(address_log));
+				close(fd_log);
+
+
+				close(ns);
+				return 0;
 			}
 
 			//======for main.htm===============
@@ -1389,34 +1404,34 @@ int main(int argc, char *argv[])
 			else if ((strstr(p, "05_01.gif")) != NULL) {	//클라이언트에게 받은 요청중 i05_01.gif이 있는지 확인
 
 
-			sprintf(content_type, "%s", "image/gif");	//gif파일의 타입이 imgae/gif이니 저장.
+				sprintf(content_type, "%s", "image/gif");	//gif파일의 타입이 imgae/gif이니 저장.
 
 
-			sprintf(Send_Buf, "HTTP/2.0 %d %s\r\n", 200, "OK");	//클라이언트에게 HTTP  형식을 보내겠다고 알리기
-			n = write(ns, Send_Buf, strlen(Send_Buf));
+				sprintf(Send_Buf, "HTTP/2.0 %d %s\r\n", 200, "OK");	//클라이언트에게 HTTP  형식을 보내겠다고 알리기
+				n = write(ns, Send_Buf, strlen(Send_Buf));
 
-			sprintf(Send_Buf, "content-type: %s\r\n\r\n", content_type);	//클라이언트에게 i05_01이 jpeg타입인걸 보내기
-			n = write(ns, Send_Buf, strlen(Send_Buf));
+				sprintf(Send_Buf, "content-type: %s\r\n\r\n", content_type);	//클라이언트에게 i05_01이 jpeg타입인걸 보내기
+				n = write(ns, Send_Buf, strlen(Send_Buf));
 
-			write(ns, i05_01_Buf, i05_01_size);	//i05_01_Buf에 담긴 데이터 클라이언트에게 전송하기
-
-
-			//i05_01 로그 찍기
-			sprintf(address_log, "%s %s\n", inet_ntoa(cli.sin_addr), i05_01_path);
-
-			mode_t mode = S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH;	//파일권한 0644
-
-			fd_log = open("log.txt", O_CREAT | O_WRONLY | O_APPEND, mode);
-			if (fd_log == -1) {
-				perror("Open log.txt");
-				exit(1);
-			}
-			write(fd_log, address_log, strlen(address_log));
-			close(fd_log);
+				write(ns, i05_01_Buf, i05_01_size);	//i05_01_Buf에 담긴 데이터 클라이언트에게 전송하기
 
 
-			close(ns);
-			return 0;
+				//i05_01 로그 찍기
+				sprintf(address_log, "%s %s\n", inet_ntoa(cli.sin_addr), i05_01_path);
+
+				mode_t mode = S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH;	//파일권한 0644
+
+				fd_log = open("log.txt", O_CREAT | O_WRONLY | O_APPEND, mode);
+				if (fd_log == -1) {
+					perror("Open log.txt");
+					exit(1);
+				}
+				write(fd_log, address_log, strlen(address_log));
+				close(fd_log);
+
+
+				close(ns);
+				return 0;
 			}
 
 			//======for 05_01.gif===============
@@ -1428,34 +1443,34 @@ int main(int argc, char *argv[])
 			else if ((strstr(p, "05_02.gif")) != NULL) {	//클라이언트에게 받은 요청중 i05_02.gif이 있는지 확인
 
 
-			sprintf(content_type, "%s", "image/gif");	//gif파일의 타입이 imgae/gif이니 저장.
+				sprintf(content_type, "%s", "image/gif");	//gif파일의 타입이 imgae/gif이니 저장.
 
 
-			sprintf(Send_Buf, "HTTP/2.0 %d %s\r\n", 200, "OK");	//클라이언트에게 HTTP  형식을 보내겠다고 알리기
-			n = write(ns, Send_Buf, strlen(Send_Buf));
+				sprintf(Send_Buf, "HTTP/2.0 %d %s\r\n", 200, "OK");	//클라이언트에게 HTTP  형식을 보내겠다고 알리기
+				n = write(ns, Send_Buf, strlen(Send_Buf));
 
-			sprintf(Send_Buf, "content-type: %s\r\n\r\n", content_type);	//클라이언트에게 i05_02이 jpeg타입인걸 보내기
-			n = write(ns, Send_Buf, strlen(Send_Buf));
+				sprintf(Send_Buf, "content-type: %s\r\n\r\n", content_type);	//클라이언트에게 i05_02이 jpeg타입인걸 보내기
+				n = write(ns, Send_Buf, strlen(Send_Buf));
 
-			write(ns, i05_02_Buf, i05_02_size);	//i05_02_Buf에 담긴 데이터 클라이언트에게 전송하기
-
-
-			//i05_02 로그 찍기
-			sprintf(address_log, "%s %s\n", inet_ntoa(cli.sin_addr), i05_02_path);
-
-			mode_t mode = S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH;	//파일권한 0644
-
-			fd_log = open("log.txt", O_CREAT | O_WRONLY | O_APPEND, mode);
-			if (fd_log == -1) {
-				perror("Open log.txt");
-				exit(1);
-			}
-			write(fd_log, address_log, strlen(address_log));
-			close(fd_log);
+				write(ns, i05_02_Buf, i05_02_size);	//i05_02_Buf에 담긴 데이터 클라이언트에게 전송하기
 
 
-			close(ns);
-			return 0;
+				//i05_02 로그 찍기
+				sprintf(address_log, "%s %s\n", inet_ntoa(cli.sin_addr), i05_02_path);
+
+				mode_t mode = S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH;	//파일권한 0644
+
+				fd_log = open("log.txt", O_CREAT | O_WRONLY | O_APPEND, mode);
+				if (fd_log == -1) {
+					perror("Open log.txt");
+					exit(1);
+				}
+				write(fd_log, address_log, strlen(address_log));
+				close(fd_log);
+
+
+				close(ns);
+				return 0;
 			}
 
 			//======for 05_02.gif===============
@@ -1467,34 +1482,34 @@ int main(int argc, char *argv[])
 			else if ((strstr(p, "05_03.gif")) != NULL) {	//클라이언트에게 받은 요청중 i05_03.gif이 있는지 확인
 
 
-			sprintf(content_type, "%s", "image/gif");	//gif파일의 타입이 imgae/gif이니 저장.
+				sprintf(content_type, "%s", "image/gif");	//gif파일의 타입이 imgae/gif이니 저장.
 
 
-			sprintf(Send_Buf, "HTTP/2.0 %d %s\r\n", 200, "OK");	//클라이언트에게 HTTP  형식을 보내겠다고 알리기
-			n = write(ns, Send_Buf, strlen(Send_Buf));
+				sprintf(Send_Buf, "HTTP/2.0 %d %s\r\n", 200, "OK");	//클라이언트에게 HTTP  형식을 보내겠다고 알리기
+				n = write(ns, Send_Buf, strlen(Send_Buf));
 
-			sprintf(Send_Buf, "content-type: %s\r\n\r\n", content_type);	//클라이언트에게 i05_03이 jpeg타입인걸 보내기
-			n = write(ns, Send_Buf, strlen(Send_Buf));
+				sprintf(Send_Buf, "content-type: %s\r\n\r\n", content_type);	//클라이언트에게 i05_03이 jpeg타입인걸 보내기
+				n = write(ns, Send_Buf, strlen(Send_Buf));
 
-			write(ns, i05_03_Buf, i05_03_size);	//i05_03_Buf에 담긴 데이터 클라이언트에게 전송하기
-
-
-			//i05_03 로그 찍기
-			sprintf(address_log, "%s %s\n", inet_ntoa(cli.sin_addr), i05_03_path);
-
-			mode_t mode = S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH;	//파일권한 0644
-
-			fd_log = open("log.txt", O_CREAT | O_WRONLY | O_APPEND, mode);
-			if (fd_log == -1) {
-				perror("Open log.txt");
-				exit(1);
-			}
-			write(fd_log, address_log, strlen(address_log));
-			close(fd_log);
+				write(ns, i05_03_Buf, i05_03_size);	//i05_03_Buf에 담긴 데이터 클라이언트에게 전송하기
 
 
-			close(ns);
-			return 0;
+				//i05_03 로그 찍기
+				sprintf(address_log, "%s %s\n", inet_ntoa(cli.sin_addr), i05_03_path);
+
+				mode_t mode = S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH;	//파일권한 0644
+
+				fd_log = open("log.txt", O_CREAT | O_WRONLY | O_APPEND, mode);
+				if (fd_log == -1) {
+					perror("Open log.txt");
+					exit(1);
+				}
+				write(fd_log, address_log, strlen(address_log));
+				close(fd_log);
+
+
+				close(ns);
+				return 0;
 			}
 
 			//======for 05_03.gif===============
@@ -1505,34 +1520,34 @@ int main(int argc, char *argv[])
 			else if ((strstr(p, "05_04-05_07_over.gif")) != NULL) {	//클라이언트에게 받은 요청중 i05_04-05_07_over.gif이 있는지 확인
 
 
-			sprintf(content_type, "%s", "image/gif");	//gif파일의 타입이 imgae/gif이니 저장.
+				sprintf(content_type, "%s", "image/gif");	//gif파일의 타입이 imgae/gif이니 저장.
 
 
-			sprintf(Send_Buf, "HTTP/2.0 %d %s\r\n", 200, "OK");	//클라이언트에게 HTTP  형식을 보내겠다고 알리기
-			n = write(ns, Send_Buf, strlen(Send_Buf));
+				sprintf(Send_Buf, "HTTP/2.0 %d %s\r\n", 200, "OK");	//클라이언트에게 HTTP  형식을 보내겠다고 알리기
+				n = write(ns, Send_Buf, strlen(Send_Buf));
 
-			sprintf(Send_Buf, "content-type: %s\r\n\r\n", content_type);	//클라이언트에게 i05_04-05_07_over이 jpeg타입인걸 보내기
-			n = write(ns, Send_Buf, strlen(Send_Buf));
+				sprintf(Send_Buf, "content-type: %s\r\n\r\n", content_type);	//클라이언트에게 i05_04-05_07_over이 jpeg타입인걸 보내기
+				n = write(ns, Send_Buf, strlen(Send_Buf));
 
-			write(ns, i05_04_05_07_over_Buf, i05_04_05_07_over_size);	//i05_04-05_07_over_Buf에 담긴 데이터 클라이언트에게 전송하기
-
-
-			//i05_04-05_07_over 로그 찍기
-			sprintf(address_log, "%s %s\n", inet_ntoa(cli.sin_addr), i05_04_05_07_over_path);
-
-			mode_t mode = S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH;	//파일권한 0644
-
-			fd_log = open("log.txt", O_CREAT | O_WRONLY | O_APPEND, mode);
-			if (fd_log == -1) {
-				perror("Open log.txt");
-				exit(1);
-			}
-			write(fd_log, address_log, strlen(address_log));
-			close(fd_log);
+				write(ns, i05_04_05_07_over_Buf, i05_04_05_07_over_size);	//i05_04-05_07_over_Buf에 담긴 데이터 클라이언트에게 전송하기
 
 
-			close(ns);
-			return 0;
+				//i05_04-05_07_over 로그 찍기
+				sprintf(address_log, "%s %s\n", inet_ntoa(cli.sin_addr), i05_04_05_07_over_path);
+
+				mode_t mode = S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH;	//파일권한 0644
+
+				fd_log = open("log.txt", O_CREAT | O_WRONLY | O_APPEND, mode);
+				if (fd_log == -1) {
+					perror("Open log.txt");
+					exit(1);
+				}
+				write(fd_log, address_log, strlen(address_log));
+				close(fd_log);
+
+
+				close(ns);
+				return 0;
 			}
 
 			//======for 05_04-05_07_over.gif===============
@@ -1543,34 +1558,34 @@ int main(int argc, char *argv[])
 			else if ((strstr(p, "05_04-over.gif")) != NULL) {	//클라이언트에게 받은 요청중 i05_04-over.gif이 있는지 확인
 
 
-			sprintf(content_type, "%s", "image/gif");	//gif파일의 타입이 imgae/gif이니 저장.
+				sprintf(content_type, "%s", "image/gif");	//gif파일의 타입이 imgae/gif이니 저장.
 
 
-			sprintf(Send_Buf, "HTTP/2.0 %d %s\r\n", 200, "OK");	//클라이언트에게 HTTP  형식을 보내겠다고 알리기
-			n = write(ns, Send_Buf, strlen(Send_Buf));
+				sprintf(Send_Buf, "HTTP/2.0 %d %s\r\n", 200, "OK");	//클라이언트에게 HTTP  형식을 보내겠다고 알리기
+				n = write(ns, Send_Buf, strlen(Send_Buf));
 
-			sprintf(Send_Buf, "content-type: %s\r\n\r\n", content_type);	//클라이언트에게 i05_04-over이 jpeg타입인걸 보내기
-			n = write(ns, Send_Buf, strlen(Send_Buf));
+				sprintf(Send_Buf, "content-type: %s\r\n\r\n", content_type);	//클라이언트에게 i05_04-over이 jpeg타입인걸 보내기
+				n = write(ns, Send_Buf, strlen(Send_Buf));
 
-			write(ns, i05_04_over_Buf, i05_04_over_size);	//i05_04_over_Buf에 담긴 데이터 클라이언트에게 전송하기
-
-
-			//i05_04_over 로그 찍기
-			sprintf(address_log, "%s %s\n", inet_ntoa(cli.sin_addr), i05_04_over_path);
-
-			mode_t mode = S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH;	//파일권한 0644
-
-			fd_log = open("log.txt", O_CREAT | O_WRONLY | O_APPEND, mode);
-			if (fd_log == -1) {
-				perror("Open log.txt");
-				exit(1);
-			}
-			write(fd_log, address_log, strlen(address_log));
-			close(fd_log);
+				write(ns, i05_04_over_Buf, i05_04_over_size);	//i05_04_over_Buf에 담긴 데이터 클라이언트에게 전송하기
 
 
-			close(ns);
-			return 0;
+				//i05_04_over 로그 찍기
+				sprintf(address_log, "%s %s\n", inet_ntoa(cli.sin_addr), i05_04_over_path);
+
+				mode_t mode = S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH;	//파일권한 0644
+
+				fd_log = open("log.txt", O_CREAT | O_WRONLY | O_APPEND, mode);
+				if (fd_log == -1) {
+					perror("Open log.txt");
+					exit(1);
+				}
+				write(fd_log, address_log, strlen(address_log));
+				close(fd_log);
+
+
+				close(ns);
+				return 0;
 			}
 
 			//======for 05_04-over.gif===============
@@ -1582,34 +1597,34 @@ int main(int argc, char *argv[])
 			else if ((strstr(p, "05_04.gif")) != NULL) {	//클라이언트에게 받은 요청중 i05_04.gif이 있는지 확인
 
 
-			sprintf(content_type, "%s", "image/gif");	//gif파일의 타입이 imgae/gif이니 저장.
+				sprintf(content_type, "%s", "image/gif");	//gif파일의 타입이 imgae/gif이니 저장.
 
 
-			sprintf(Send_Buf, "HTTP/2.0 %d %s\r\n", 200, "OK");	//클라이언트에게 HTTP  형식을 보내겠다고 알리기
-			n = write(ns, Send_Buf, strlen(Send_Buf));
+				sprintf(Send_Buf, "HTTP/2.0 %d %s\r\n", 200, "OK");	//클라이언트에게 HTTP  형식을 보내겠다고 알리기
+				n = write(ns, Send_Buf, strlen(Send_Buf));
 
-			sprintf(Send_Buf, "content-type: %s\r\n\r\n", content_type);	//클라이언트에게 i05_04이 jpeg타입인걸 보내기
-			n = write(ns, Send_Buf, strlen(Send_Buf));
+				sprintf(Send_Buf, "content-type: %s\r\n\r\n", content_type);	//클라이언트에게 i05_04이 jpeg타입인걸 보내기
+				n = write(ns, Send_Buf, strlen(Send_Buf));
 
-			write(ns, i05_04_Buf, i05_04_size);	//i05_04_Buf에 담긴 데이터 클라이언트에게 전송하기
-
-
-			//i05_04 로그 찍기
-			sprintf(address_log, "%s %s\n", inet_ntoa(cli.sin_addr), i05_04_path);
-
-			mode_t mode = S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH;	//파일권한 0644
-
-			fd_log = open("log.txt", O_CREAT | O_WRONLY | O_APPEND, mode);
-			if (fd_log == -1) {
-				perror("Open log.txt");
-				exit(1);
-			}
-			write(fd_log, address_log, strlen(address_log));
-			close(fd_log);
+				write(ns, i05_04_Buf, i05_04_size);	//i05_04_Buf에 담긴 데이터 클라이언트에게 전송하기
 
 
-			close(ns);
-			return 0;
+				//i05_04 로그 찍기
+				sprintf(address_log, "%s %s\n", inet_ntoa(cli.sin_addr), i05_04_path);
+
+				mode_t mode = S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH;	//파일권한 0644
+
+				fd_log = open("log.txt", O_CREAT | O_WRONLY | O_APPEND, mode);
+				if (fd_log == -1) {
+					perror("Open log.txt");
+					exit(1);
+				}
+				write(fd_log, address_log, strlen(address_log));
+				close(fd_log);
+
+
+				close(ns);
+				return 0;
 			}
 
 			//======for 05_04.gif===============
@@ -1620,34 +1635,34 @@ int main(int argc, char *argv[])
 			else if ((strstr(p, "05_05.gif")) != NULL) {	//클라이언트에게 받은 요청중 i05_05.gif이 있는지 확인
 
 
-			sprintf(content_type, "%s", "image/gif");	//gif파일의 타입이 imgae/gif이니 저장.
+				sprintf(content_type, "%s", "image/gif");	//gif파일의 타입이 imgae/gif이니 저장.
 
 
-			sprintf(Send_Buf, "HTTP/2.0 %d %s\r\n", 200, "OK");	//클라이언트에게 HTTP  형식을 보내겠다고 알리기
-			n = write(ns, Send_Buf, strlen(Send_Buf));
+				sprintf(Send_Buf, "HTTP/2.0 %d %s\r\n", 200, "OK");	//클라이언트에게 HTTP  형식을 보내겠다고 알리기
+				n = write(ns, Send_Buf, strlen(Send_Buf));
 
-			sprintf(Send_Buf, "content-type: %s\r\n\r\n", content_type);	//클라이언트에게 i05_05이 jpeg타입인걸 보내기
-			n = write(ns, Send_Buf, strlen(Send_Buf));
+				sprintf(Send_Buf, "content-type: %s\r\n\r\n", content_type);	//클라이언트에게 i05_05이 jpeg타입인걸 보내기
+				n = write(ns, Send_Buf, strlen(Send_Buf));
 
-			write(ns, i05_05_Buf, i05_05_size);	//i05_05_Buf에 담긴 데이터 클라이언트에게 전송하기
-
-
-			//i05_05 로그 찍기
-			sprintf(address_log, "%s %s\n", inet_ntoa(cli.sin_addr), i05_05_path);
-
-			mode_t mode = S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH;	//파일권한 0644
-
-			fd_log = open("log.txt", O_CREAT | O_WRONLY | O_APPEND, mode);
-			if (fd_log == -1) {
-				perror("Open log.txt");
-				exit(1);
-			}
-			write(fd_log, address_log, strlen(address_log));
-			close(fd_log);
+				write(ns, i05_05_Buf, i05_05_size);	//i05_05_Buf에 담긴 데이터 클라이언트에게 전송하기
 
 
-			close(ns);
-			return 0;
+				//i05_05 로그 찍기
+				sprintf(address_log, "%s %s\n", inet_ntoa(cli.sin_addr), i05_05_path);
+
+				mode_t mode = S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH;	//파일권한 0644
+
+				fd_log = open("log.txt", O_CREAT | O_WRONLY | O_APPEND, mode);
+				if (fd_log == -1) {
+					perror("Open log.txt");
+					exit(1);
+				}
+				write(fd_log, address_log, strlen(address_log));
+				close(fd_log);
+
+
+				close(ns);
+				return 0;
 			}
 
 			//======for 05_05.gif===============
@@ -1658,34 +1673,34 @@ int main(int argc, char *argv[])
 			else if ((strstr(p, "05_06-over.gif")) != NULL) {	//클라이언트에게 받은 요청중 i05_06-over.gif이 있는지 확인
 
 
-			sprintf(content_type, "%s", "image/gif");	//gif파일의 타입이 imgae/gif이니 저장.
+				sprintf(content_type, "%s", "image/gif");	//gif파일의 타입이 imgae/gif이니 저장.
 
 
-			sprintf(Send_Buf, "HTTP/2.0 %d %s\r\n", 200, "OK");	//클라이언트에게 HTTP  형식을 보내겠다고 알리기
-			n = write(ns, Send_Buf, strlen(Send_Buf));
+				sprintf(Send_Buf, "HTTP/2.0 %d %s\r\n", 200, "OK");	//클라이언트에게 HTTP  형식을 보내겠다고 알리기
+				n = write(ns, Send_Buf, strlen(Send_Buf));
 
-			sprintf(Send_Buf, "content-type: %s\r\n\r\n", content_type);	//클라이언트에게 i05_06-over이 jpeg타입인걸 보내기
-			n = write(ns, Send_Buf, strlen(Send_Buf));
+				sprintf(Send_Buf, "content-type: %s\r\n\r\n", content_type);	//클라이언트에게 i05_06-over이 jpeg타입인걸 보내기
+				n = write(ns, Send_Buf, strlen(Send_Buf));
 
-			write(ns, i05_06_over_Buf, i05_06_over_size);	//i05_06-over_Buf에 담긴 데이터 클라이언트에게 전송하기
-
-
-			//i05_06-over 로그 찍기
-			sprintf(address_log, "%s %s\n", inet_ntoa(cli.sin_addr), i05_06_over_path);
-
-			mode_t mode = S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH;	//파일권한 0644
-
-			fd_log = open("log.txt", O_CREAT | O_WRONLY | O_APPEND, mode);
-			if (fd_log == -1) {
-				perror("Open log.txt");
-				exit(1);
-			}
-			write(fd_log, address_log, strlen(address_log));
-			close(fd_log);
+				write(ns, i05_06_over_Buf, i05_06_over_size);	//i05_06-over_Buf에 담긴 데이터 클라이언트에게 전송하기
 
 
-			close(ns);
-			return 0;
+				//i05_06-over 로그 찍기
+				sprintf(address_log, "%s %s\n", inet_ntoa(cli.sin_addr), i05_06_over_path);
+
+				mode_t mode = S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH;	//파일권한 0644
+
+				fd_log = open("log.txt", O_CREAT | O_WRONLY | O_APPEND, mode);
+				if (fd_log == -1) {
+					perror("Open log.txt");
+					exit(1);
+				}
+				write(fd_log, address_log, strlen(address_log));
+				close(fd_log);
+
+
+				close(ns);
+				return 0;
 			}
 
 			//======for 05_06-over.gif===============
@@ -1696,34 +1711,34 @@ int main(int argc, char *argv[])
 			else if ((strstr(p, "05_06.gif")) != NULL) {	//클라이언트에게 받은 요청중 i05_06.gif이 있는지 확인
 
 
-			sprintf(content_type, "%s", "image/gif");	//gif파일의 타입이 imgae/gif이니 저장.
+				sprintf(content_type, "%s", "image/gif");	//gif파일의 타입이 imgae/gif이니 저장.
 
 
-			sprintf(Send_Buf, "HTTP/2.0 %d %s\r\n", 200, "OK");	//클라이언트에게 HTTP  형식을 보내겠다고 알리기
-			n = write(ns, Send_Buf, strlen(Send_Buf));
+				sprintf(Send_Buf, "HTTP/2.0 %d %s\r\n", 200, "OK");	//클라이언트에게 HTTP  형식을 보내겠다고 알리기
+				n = write(ns, Send_Buf, strlen(Send_Buf));
 
-			sprintf(Send_Buf, "content-type: %s\r\n\r\n", content_type);	//클라이언트에게 i05_06이 jpeg타입인걸 보내기
-			n = write(ns, Send_Buf, strlen(Send_Buf));
+				sprintf(Send_Buf, "content-type: %s\r\n\r\n", content_type);	//클라이언트에게 i05_06이 jpeg타입인걸 보내기
+				n = write(ns, Send_Buf, strlen(Send_Buf));
 
-			write(ns, i05_06_Buf, i05_06_size);	//i05_06_Buf에 담긴 데이터 클라이언트에게 전송하기
-
-
-			//i05_06 로그 찍기
-			sprintf(address_log, "%s %s\n", inet_ntoa(cli.sin_addr), i05_06_path);
-
-			mode_t mode = S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH;	//파일권한 0644
-
-			fd_log = open("log.txt", O_CREAT | O_WRONLY | O_APPEND, mode);
-			if (fd_log == -1) {
-				perror("Open log.txt");
-				exit(1);
-			}
-			write(fd_log, address_log, strlen(address_log));
-			close(fd_log);
+				write(ns, i05_06_Buf, i05_06_size);	//i05_06_Buf에 담긴 데이터 클라이언트에게 전송하기
 
 
-			close(ns);
-			return 0;
+				//i05_06 로그 찍기
+				sprintf(address_log, "%s %s\n", inet_ntoa(cli.sin_addr), i05_06_path);
+
+				mode_t mode = S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH;	//파일권한 0644
+
+				fd_log = open("log.txt", O_CREAT | O_WRONLY | O_APPEND, mode);
+				if (fd_log == -1) {
+					perror("Open log.txt");
+					exit(1);
+				}
+				write(fd_log, address_log, strlen(address_log));
+				close(fd_log);
+
+
+				close(ns);
+				return 0;
 			}
 
 			//======for 05_06.gif===============
@@ -1734,34 +1749,34 @@ int main(int argc, char *argv[])
 			else if ((strstr(p, "05_07-over.gif")) != NULL) {	//클라이언트에게 받은 요청중 i05_07-over.gif이 있는지 확인
 
 
-			sprintf(content_type, "%s", "image/gif");	//gif파일의 타입이 imgae/gif이니 저장.
+				sprintf(content_type, "%s", "image/gif");	//gif파일의 타입이 imgae/gif이니 저장.
 
 
-			sprintf(Send_Buf, "HTTP/2.0 %d %s\r\n", 200, "OK");	//클라이언트에게 HTTP  형식을 보내겠다고 알리기
-			n = write(ns, Send_Buf, strlen(Send_Buf));
+				sprintf(Send_Buf, "HTTP/2.0 %d %s\r\n", 200, "OK");	//클라이언트에게 HTTP  형식을 보내겠다고 알리기
+				n = write(ns, Send_Buf, strlen(Send_Buf));
 
-			sprintf(Send_Buf, "content-type: %s\r\n\r\n", content_type);	//클라이언트에게 i05_07-over이 jpeg타입인걸 보내기
-			n = write(ns, Send_Buf, strlen(Send_Buf));
+				sprintf(Send_Buf, "content-type: %s\r\n\r\n", content_type);	//클라이언트에게 i05_07-over이 jpeg타입인걸 보내기
+				n = write(ns, Send_Buf, strlen(Send_Buf));
 
-			write(ns, i05_07_over_Buf, i05_07_over_size);	//i05_07-over_Buf에 담긴 데이터 클라이언트에게 전송하기
-
-
-			//i05_07-over 로그 찍기
-			sprintf(address_log, "%s %s\n", inet_ntoa(cli.sin_addr), i05_07_over_path);
-
-			mode_t mode = S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH;	//파일권한 0644
-
-			fd_log = open("log.txt", O_CREAT | O_WRONLY | O_APPEND, mode);
-			if (fd_log == -1) {
-				perror("Open log.txt");
-				exit(1);
-			}
-			write(fd_log, address_log, strlen(address_log));
-			close(fd_log);
+				write(ns, i05_07_over_Buf, i05_07_over_size);	//i05_07-over_Buf에 담긴 데이터 클라이언트에게 전송하기
 
 
-			close(ns);
-			return 0;
+				//i05_07-over 로그 찍기
+				sprintf(address_log, "%s %s\n", inet_ntoa(cli.sin_addr), i05_07_over_path);
+
+				mode_t mode = S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH;	//파일권한 0644
+
+				fd_log = open("log.txt", O_CREAT | O_WRONLY | O_APPEND, mode);
+				if (fd_log == -1) {
+					perror("Open log.txt");
+					exit(1);
+				}
+				write(fd_log, address_log, strlen(address_log));
+				close(fd_log);
+
+
+				close(ns);
+				return 0;
 			}
 
 			//======for 05_07-over.gif===============
@@ -1772,34 +1787,34 @@ int main(int argc, char *argv[])
 			else if ((strstr(p, "05_07.gif")) != NULL) {	//클라이언트에게 받은 요청중 i05_07.gif이 있는지 확인
 
 
-			sprintf(content_type, "%s", "image/gif");	//gif파일의 타입이 imgae/gif이니 저장.
+				sprintf(content_type, "%s", "image/gif");	//gif파일의 타입이 imgae/gif이니 저장.
 
 
-			sprintf(Send_Buf, "HTTP/2.0 %d %s\r\n", 200, "OK");	//클라이언트에게 HTTP  형식을 보내겠다고 알리기
-			n = write(ns, Send_Buf, strlen(Send_Buf));
+				sprintf(Send_Buf, "HTTP/2.0 %d %s\r\n", 200, "OK");	//클라이언트에게 HTTP  형식을 보내겠다고 알리기
+				n = write(ns, Send_Buf, strlen(Send_Buf));
 
-			sprintf(Send_Buf, "content-type: %s\r\n\r\n", content_type);	//클라이언트에게 i05_07이 jpeg타입인걸 보내기
-			n = write(ns, Send_Buf, strlen(Send_Buf));
+				sprintf(Send_Buf, "content-type: %s\r\n\r\n", content_type);	//클라이언트에게 i05_07이 jpeg타입인걸 보내기
+				n = write(ns, Send_Buf, strlen(Send_Buf));
 
-			write(ns, i05_07_Buf, i05_07_size);	//i05_07_Buf에 담긴 데이터 클라이언트에게 전송하기
-
-
-			//i05_07 로그 찍기
-			sprintf(address_log, "%s %s\n", inet_ntoa(cli.sin_addr), i05_07_path);
-
-			mode_t mode = S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH;	//파일권한 0644
-
-			fd_log = open("log.txt", O_CREAT | O_WRONLY | O_APPEND, mode);
-			if (fd_log == -1) {
-				perror("Open log.txt");
-				exit(1);
-			}
-			write(fd_log, address_log, strlen(address_log));
-			close(fd_log);
+				write(ns, i05_07_Buf, i05_07_size);	//i05_07_Buf에 담긴 데이터 클라이언트에게 전송하기
 
 
-			close(ns);
-			return 0;
+				//i05_07 로그 찍기
+				sprintf(address_log, "%s %s\n", inet_ntoa(cli.sin_addr), i05_07_path);
+
+				mode_t mode = S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH;	//파일권한 0644
+
+				fd_log = open("log.txt", O_CREAT | O_WRONLY | O_APPEND, mode);
+				if (fd_log == -1) {
+					perror("Open log.txt");
+					exit(1);
+				}
+				write(fd_log, address_log, strlen(address_log));
+				close(fd_log);
+
+
+				close(ns);
+				return 0;
 			}
 
 			//======for 05_07.gif===============
@@ -1810,34 +1825,34 @@ int main(int argc, char *argv[])
 			else if ((strstr(p, "05_08-over.gif")) != NULL) {	//클라이언트에게 받은 요청중 i05_08-over.gif이 있는지 확인
 
 
-			sprintf(content_type, "%s", "image/gif");	//gif파일의 타입이 imgae/gif이니 저장.
+				sprintf(content_type, "%s", "image/gif");	//gif파일의 타입이 imgae/gif이니 저장.
 
 
-			sprintf(Send_Buf, "HTTP/2.0 %d %s\r\n", 200, "OK");	//클라이언트에게 HTTP  형식을 보내겠다고 알리기
-			n = write(ns, Send_Buf, strlen(Send_Buf));
+				sprintf(Send_Buf, "HTTP/2.0 %d %s\r\n", 200, "OK");	//클라이언트에게 HTTP  형식을 보내겠다고 알리기
+				n = write(ns, Send_Buf, strlen(Send_Buf));
 
-			sprintf(Send_Buf, "content-type: %s\r\n\r\n", content_type);	//클라이언트에게 i05_08-over이 jpeg타입인걸 보내기
-			n = write(ns, Send_Buf, strlen(Send_Buf));
+				sprintf(Send_Buf, "content-type: %s\r\n\r\n", content_type);	//클라이언트에게 i05_08-over이 jpeg타입인걸 보내기
+				n = write(ns, Send_Buf, strlen(Send_Buf));
 
-			write(ns, i05_08_over_Buf, i05_08_over_size);	//i05_08_over_Buf에 담긴 데이터 클라이언트에게 전송하기
-
-
-			//i05_08_over 로그 찍기
-			sprintf(address_log, "%s %s\n", inet_ntoa(cli.sin_addr), i05_08_over_path);
-
-			mode_t mode = S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH;	//파일권한 0644
-
-			fd_log = open("log.txt", O_CREAT | O_WRONLY | O_APPEND, mode);
-			if (fd_log == -1) {
-				perror("Open log.txt");
-				exit(1);
-			}
-			write(fd_log, address_log, strlen(address_log));
-			close(fd_log);
+				write(ns, i05_08_over_Buf, i05_08_over_size);	//i05_08_over_Buf에 담긴 데이터 클라이언트에게 전송하기
 
 
-			close(ns);
-			return 0;
+				//i05_08_over 로그 찍기
+				sprintf(address_log, "%s %s\n", inet_ntoa(cli.sin_addr), i05_08_over_path);
+
+				mode_t mode = S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH;	//파일권한 0644
+
+				fd_log = open("log.txt", O_CREAT | O_WRONLY | O_APPEND, mode);
+				if (fd_log == -1) {
+					perror("Open log.txt");
+					exit(1);
+				}
+				write(fd_log, address_log, strlen(address_log));
+				close(fd_log);
+
+
+				close(ns);
+				return 0;
 			}
 
 			//======for 05_08-over.gif===============
@@ -1848,34 +1863,34 @@ int main(int argc, char *argv[])
 			else if ((strstr(p, "05_08.gif")) != NULL) {	//클라이언트에게 받은 요청중 i05_08.gif이 있는지 확인
 
 
-			sprintf(content_type, "%s", "image/gif");	//gif파일의 타입이 imgae/gif이니 저장.
+				sprintf(content_type, "%s", "image/gif");	//gif파일의 타입이 imgae/gif이니 저장.
 
 
-			sprintf(Send_Buf, "HTTP/2.0 %d %s\r\n", 200, "OK");	//클라이언트에게 HTTP  형식을 보내겠다고 알리기
-			n = write(ns, Send_Buf, strlen(Send_Buf));
+				sprintf(Send_Buf, "HTTP/2.0 %d %s\r\n", 200, "OK");	//클라이언트에게 HTTP  형식을 보내겠다고 알리기
+				n = write(ns, Send_Buf, strlen(Send_Buf));
 
-			sprintf(Send_Buf, "content-type: %s\r\n\r\n", content_type);	//클라이언트에게 i05_08이 jpeg타입인걸 보내기
-			n = write(ns, Send_Buf, strlen(Send_Buf));
+				sprintf(Send_Buf, "content-type: %s\r\n\r\n", content_type);	//클라이언트에게 i05_08이 jpeg타입인걸 보내기
+				n = write(ns, Send_Buf, strlen(Send_Buf));
 
-			write(ns, i05_08_Buf, i05_08_size);	//i05_08_Buf에 담긴 데이터 클라이언트에게 전송하기
-
-
-			//i05_08 로그 찍기
-			sprintf(address_log, "%s %s\n", inet_ntoa(cli.sin_addr), i05_08_path);
-
-			mode_t mode = S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH;	//파일권한 0644
-
-			fd_log = open("log.txt", O_CREAT | O_WRONLY | O_APPEND, mode);
-			if (fd_log == -1) {
-				perror("Open log.txt");
-				exit(1);
-			}
-			write(fd_log, address_log, strlen(address_log));
-			close(fd_log);
+				write(ns, i05_08_Buf, i05_08_size);	//i05_08_Buf에 담긴 데이터 클라이언트에게 전송하기
 
 
-			close(ns);
-			return 0;
+				//i05_08 로그 찍기
+				sprintf(address_log, "%s %s\n", inet_ntoa(cli.sin_addr), i05_08_path);
+
+				mode_t mode = S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH;	//파일권한 0644
+
+				fd_log = open("log.txt", O_CREAT | O_WRONLY | O_APPEND, mode);
+				if (fd_log == -1) {
+					perror("Open log.txt");
+					exit(1);
+				}
+				write(fd_log, address_log, strlen(address_log));
+				close(fd_log);
+
+
+				close(ns);
+				return 0;
 			}
 
 			//======for 05_08.gif===============
@@ -1886,34 +1901,34 @@ int main(int argc, char *argv[])
 			else if ((strstr(p, "05_09.gif")) != NULL) {	//클라이언트에게 받은 요청중 i05_09.gif이 있는지 확인
 
 
-			sprintf(content_type, "%s", "image/gif");	//gif파일의 타입이 imgae/gif이니 저장.
+				sprintf(content_type, "%s", "image/gif");	//gif파일의 타입이 imgae/gif이니 저장.
 
 
-			sprintf(Send_Buf, "HTTP/2.0 %d %s\r\n", 200, "OK");	//클라이언트에게 HTTP  형식을 보내겠다고 알리기
-			n = write(ns, Send_Buf, strlen(Send_Buf));
+				sprintf(Send_Buf, "HTTP/2.0 %d %s\r\n", 200, "OK");	//클라이언트에게 HTTP  형식을 보내겠다고 알리기
+				n = write(ns, Send_Buf, strlen(Send_Buf));
 
-			sprintf(Send_Buf, "content-type: %s\r\n\r\n", content_type);	//클라이언트에게 i05_09이 jpeg타입인걸 보내기
-			n = write(ns, Send_Buf, strlen(Send_Buf));
+				sprintf(Send_Buf, "content-type: %s\r\n\r\n", content_type);	//클라이언트에게 i05_09이 jpeg타입인걸 보내기
+				n = write(ns, Send_Buf, strlen(Send_Buf));
 
-			write(ns, i05_09_Buf, i05_09_size);	//i05_09_Buf에 담긴 데이터 클라이언트에게 전송하기
-
-
-			//i05_09 로그 찍기
-			sprintf(address_log, "%s %s\n", inet_ntoa(cli.sin_addr), i05_09_path);
-
-			mode_t mode = S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH;	//파일권한 0644
-
-			fd_log = open("log.txt", O_CREAT | O_WRONLY | O_APPEND, mode);
-			if (fd_log == -1) {
-				perror("Open log.txt");
-				exit(1);
-			}
-			write(fd_log, address_log, strlen(address_log));
-			close(fd_log);
+				write(ns, i05_09_Buf, i05_09_size);	//i05_09_Buf에 담긴 데이터 클라이언트에게 전송하기
 
 
-			close(ns);
-			return 0;
+				//i05_09 로그 찍기
+				sprintf(address_log, "%s %s\n", inet_ntoa(cli.sin_addr), i05_09_path);
+
+				mode_t mode = S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH;	//파일권한 0644
+
+				fd_log = open("log.txt", O_CREAT | O_WRONLY | O_APPEND, mode);
+				if (fd_log == -1) {
+					perror("Open log.txt");
+					exit(1);
+				}
+				write(fd_log, address_log, strlen(address_log));
+				close(fd_log);
+
+
+				close(ns);
+				return 0;
 			}
 
 			//======for 05_09.gif===============
@@ -1924,34 +1939,34 @@ int main(int argc, char *argv[])
 			else if ((strstr(p, "05_10.gif")) != NULL) {	//클라이언트에게 받은 요청중 i05_10.gif이 있는지 확인
 
 
-			sprintf(content_type, "%s", "image/gif");	//gif파일의 타입이 imgae/gif이니 저장.
+				sprintf(content_type, "%s", "image/gif");	//gif파일의 타입이 imgae/gif이니 저장.
 
 
-			sprintf(Send_Buf, "HTTP/2.0 %d %s\r\n", 200, "OK");	//클라이언트에게 HTTP  형식을 보내겠다고 알리기
-			n = write(ns, Send_Buf, strlen(Send_Buf));
+				sprintf(Send_Buf, "HTTP/2.0 %d %s\r\n", 200, "OK");	//클라이언트에게 HTTP  형식을 보내겠다고 알리기
+				n = write(ns, Send_Buf, strlen(Send_Buf));
 
-			sprintf(Send_Buf, "content-type: %s\r\n\r\n", content_type);	//클라이언트에게 i05_10이 jpeg타입인걸 보내기
-			n = write(ns, Send_Buf, strlen(Send_Buf));
+				sprintf(Send_Buf, "content-type: %s\r\n\r\n", content_type);	//클라이언트에게 i05_10이 jpeg타입인걸 보내기
+				n = write(ns, Send_Buf, strlen(Send_Buf));
 
-			write(ns, i05_10_Buf, i05_10_size);	//i05_10_Buf에 담긴 데이터 클라이언트에게 전송하기
-
-
-			//i05_10 로그 찍기
-			sprintf(address_log, "%s %s\n", inet_ntoa(cli.sin_addr), i05_10_path);
-
-			mode_t mode = S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH;	//파일권한 0644
-
-			fd_log = open("log.txt", O_CREAT | O_WRONLY | O_APPEND, mode);
-			if (fd_log == -1) {
-				perror("Open log.txt");
-				exit(1);
-			}
-			write(fd_log, address_log, strlen(address_log));
-			close(fd_log);
+				write(ns, i05_10_Buf, i05_10_size);	//i05_10_Buf에 담긴 데이터 클라이언트에게 전송하기
 
 
-			close(ns);
-			return 0;
+				//i05_10 로그 찍기
+				sprintf(address_log, "%s %s\n", inet_ntoa(cli.sin_addr), i05_10_path);
+
+				mode_t mode = S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH;	//파일권한 0644
+
+				fd_log = open("log.txt", O_CREAT | O_WRONLY | O_APPEND, mode);
+				if (fd_log == -1) {
+					perror("Open log.txt");
+					exit(1);
+				}
+				write(fd_log, address_log, strlen(address_log));
+				close(fd_log);
+
+
+				close(ns);
+				return 0;
 			}
 
 			//======for 05_10.gif===============
@@ -2055,7 +2070,7 @@ int main(int argc, char *argv[])
 				//이거 계산할때마다 숫자 깎이나 확인할때 용도로 사용했었음.
 
 				char result_char[50] = { 0, };
-				sprintf(result_char,"%lld", result);
+				sprintf(result_char, "%lld", result);
 
 
 				sprintf(Send_Buf, "HTTP/2.0 %d %s\r\n"
@@ -2070,9 +2085,9 @@ int main(int argc, char *argv[])
 
 
 
-				
+
 				//============로그 찍기 구현.================
-				
+
 
 				sprintf(uri, "%s%s", path, p);	//uri에 요청받는 모든 경로를 넣음.
 
@@ -2089,7 +2104,7 @@ int main(int argc, char *argv[])
 				}
 				write(fd_log, address_log, strlen(address_log));
 				close(fd_log);
-				
+
 				//============로그 찍기 구현.================
 
 				close(ns);
@@ -2104,7 +2119,7 @@ int main(int argc, char *argv[])
 
 
 			//if(fd == -1)	//이부분 조건도 바꿔야함. 요청하는것이 배열 목록중에 있는지를 확인하고 없는경우
-			else{
+			else {
 				char NOTFOUND[20] = "Not found";
 
 				sprintf(Send_Buf, "HTTP/2.0 %d %s\r\n"
@@ -2145,7 +2160,7 @@ int main(int argc, char *argv[])
 				return 0;
 
 			}
-			
+
 
 		default:
 			close(ns);
