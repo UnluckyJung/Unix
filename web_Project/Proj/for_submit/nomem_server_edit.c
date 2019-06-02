@@ -45,7 +45,7 @@ int main(int argc, char *argv[])
 	char address_log[BUFSIZ];	//log 저장할 BUF
 
 	long long num1;	//cgi에서 샤용될 숫자를 저장할 공간.
-	long long num2;	
+	long long num2;
 	long long result;
 
 
@@ -148,7 +148,90 @@ int main(int argc, char *argv[])
 
 
 			p = strtok(Receive_Buf, " ");	//빈공간을 기준으로, 받은 요청을 잘라서 포인터에 넣는다.
-			p = strtok(NULL, " ");	
+			p = strtok(NULL, " ");
+
+
+			if (!strcmp(p, "/"))	//만약 /가 없는경우, 즉 요청받는 파일이 없는경우?
+				sprintf(uri, "%s/index.html", path);	//index.html을 uri에 넣는다.
+			else
+				sprintf(uri, "%s%s", path, p);	//uri에 요청받는 모든 경로를 넣음.
+
+			//memcpy strcpy 속도비교용
+			memcpy(content_type, "text/plain", 11);
+			//strcpy(content_type, "text/plain");
+
+			for (i = 0; extensions[i].ext != 0; i++)		//요청받는것이 어느 파일타입인지 확인하기 위한 for문.
+			{
+				len = strlen(extensions[i].ext);
+				if (!strncmp(uri + strlen(uri) - len, extensions[i].ext, len))
+				{
+					strcpy(content_type, extensions[i].filetype);
+					break;
+				}
+			}
+
+
+			fd = open(uri, O_RDONLY);	//요청받는것의 위치의 파일을 연다.
+
+
+
+
+
+			if (fd >= 0) {	//경로의 파일이 존재하는경우?
+
+				//==========cgi도 아니고, NOT FOUND도 아닌경우=================
+				p = strtok(NULL, "\r\n ");
+
+
+				// http 형식을 보내주는것.
+				//sprintf(Send_Buf, "HTTP/2.0 %d %s\r\n", 200, "OK");
+				n = write(ns, HTTP_send_buf, strlen(HTTP_send_buf));	//앞에 선언했언 HTTP를 보냄.
+
+				sprintf(Send_Buf, "content-type: %s\r\n\r\n", content_type);	//content_type을 명시해서 보내줌.
+				n = write(ns, Send_Buf, strlen(Send_Buf));
+
+				{
+					while ((n = read(fd, Receive_Buf, BUFSIZ)) > 0)	//fd에서 BUFSIZ만큼 계속 읽어서 Receive_BUF에 넣은다음에
+					{
+						write(ns, Receive_Buf, n);	//그것을 클라이언트에게 전송해준다.
+					}
+				}
+
+
+
+				//저수준 파일 입출력을 이용한 log file 생성.
+
+				struct stat file_info;	//파일크기를 측정하기위한 stat 구조체
+				stat(uri, &file_info);
+
+
+				//memcpy strcat 속도 측정
+				//memcpy(address_log, inet_ntoa(cli.sin_addr), sizeof(inet_ntoa(cli.sin_addr)));
+				//strcpy(address_log, inet_ntoa(cli.sin_addr));
+				//strcat(address_log, " ");
+				//strcat(address_log, uri);
+				//sprintf(address_log, "%s %d\n", address_log, (int)file_info.st_size);
+
+				//위에꺼하니 더느려짐
+
+				sprintf(address_log, "%s %s %d \n", inet_ntoa(cli.sin_addr), uri, (int)file_info.st_size);
+				//접속 IP, 요청 경로, NOTFOUND의 파일 크기를 addrss_log에 넣음.
+
+				mode_t mode = S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH;	//파일권한 0644
+
+				fd_log = open("log.txt", O_CREAT | O_WRONLY | O_APPEND, mode);	//log.txt파일을 연다.
+				if (fd_log == -1) {
+					perror("Open log.txt");
+					exit(1);
+				}
+				write(fd_log, address_log, strlen(address_log));	//로그를 기록한다.
+				close(fd_log);
+
+
+				close(ns);
+				return 0;
+			}
+
 
 
 
@@ -195,7 +278,7 @@ int main(int argc, char *argv[])
 
 					"\r\n"
 
-					"%s\r\n", 200, "OK", result_char);	
+					"%s\r\n", 200, "OK", result_char);
 
 				write(ns, Send_Buf, strlen(Send_Buf));
 
@@ -231,27 +314,11 @@ int main(int argc, char *argv[])
 
 
 
-			if (!strcmp(p, "/"))	//만약 /가 없는경우, 즉 요청받는 파일이 없는경우?
-				sprintf(uri, "%s/index.html", path);	//index.html을 uri에 넣는다.
-			else
-				sprintf(uri, "%s%s", path, p);	//uri에 요청받는 모든 경로를 넣음.
-
-			//memcpy strcpy 속도비교용
-			memcpy(content_type, "text/plain", 11);
-			//strcpy(content_type, "text/plain");
-
-			for (i = 0; extensions[i].ext != 0; i++)		//요청받는것이 어느 파일타입인지 확인하기 위한 for문.
-			{
-				len = strlen(extensions[i].ext);
-				if (!strncmp(uri + strlen(uri) - len, extensions[i].ext, len))
-				{
-					strcpy(content_type, extensions[i].filetype);
-					break;
-				}
-			}
 
 
-			fd = open(uri, O_RDONLY);	//요청받는것의 위치의 파일을 연다.
+
+
+
 
 
 			if (fd == -1)	//만약 없다면?
@@ -264,7 +331,7 @@ int main(int argc, char *argv[])
 
 					"\r\n"
 
-					"%s\r\n", 200, "OK", NOTFOUND);	
+					"%s\r\n", 200, "OK", NOTFOUND);
 
 				write(ns, Send_Buf, strlen(Send_Buf));
 
@@ -299,64 +366,8 @@ int main(int argc, char *argv[])
 			}
 
 
-			//==========cgi도 아니고, NOT FOUND도 아닌경우=================
-			p = strtok(NULL, "\r\n ");
 
 
-			// http 형식을 보내주는것.
-			//sprintf(Send_Buf, "HTTP/2.0 %d %s\r\n", 200, "OK");
-			n = write(ns, HTTP_send_buf, strlen(HTTP_send_buf));	//앞에 선언했언 HTTP를 보냄.
-
-			sprintf(Send_Buf, "content-type: %s\r\n\r\n", content_type);	//content_type을 명시해서 보내줌.
-			n = write(ns, Send_Buf, strlen(Send_Buf));
-
-
-			if (fd >= 0)	//경로의 파일이 존재하는경우?
-			{
-				while ((n = read(fd, Receive_Buf, BUFSIZ)) > 0)	//fd에서 BUFSIZ만큼 계속 읽어서 Receive_BUF에 넣은다음에
-				{
-					write(ns, Receive_Buf, n);	//그것을 클라이언트에게 전송해준다.
-				}
-			}
-
-
-
-
-
-
-
-
-			//저수준 파일 입출력을 이용한 log file 생성.
-
-			struct stat file_info;	//파일크기를 측정하기위한 stat 구조체
-			stat(uri, &file_info);
-
-
-			//memcpy strcat 속도 측정
-			//memcpy(address_log, inet_ntoa(cli.sin_addr), sizeof(inet_ntoa(cli.sin_addr)));
-			//strcpy(address_log, inet_ntoa(cli.sin_addr));
-			//strcat(address_log, " ");
-			//strcat(address_log, uri);
-			//sprintf(address_log, "%s %d\n", address_log, (int)file_info.st_size);
-
-			//위에꺼하니 더느려짐
-
-			sprintf(address_log, "%s %s %d \n", inet_ntoa(cli.sin_addr), uri, (int)file_info.st_size);
-			//접속 IP, 요청 경로, NOTFOUND의 파일 크기를 addrss_log에 넣음.
-
-			mode_t mode = S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH;	//파일권한 0644
-
-			fd_log = open("log.txt", O_CREAT | O_WRONLY | O_APPEND, mode);	//log.txt파일을 연다.
-			if (fd_log == -1) {
-				perror("Open log.txt");
-				exit(1);
-			}
-			write(fd_log, address_log, strlen(address_log));	//로그를 기록한다.
-			close(fd_log);
-
-
-			close(ns);
-			exit(-1);
 
 		default:
 			close(ns);
