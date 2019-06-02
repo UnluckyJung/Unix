@@ -92,7 +92,7 @@ int main(int argc, char *argv[])
 	}
 
 
-	if (listen(sd, 20)) {	//클라이언트 접속 요청을 대기한다.
+	if (listen(sd, 200)) {	//클라이언트 접속 요청을 대기한다.
 		perror("listen");
 		exit(1);
 	}
